@@ -30,7 +30,7 @@ var bookId;
 /* --------------- Checking validity of email when typing in input -----------*/
 // $('.orderEmail').keyup(function(event) {
 //     var email = $(this).val();
-//     var isEmail = controller.validateEmail(email);
+//     var isEmail = controllers.validateEmail(email);
 //     if (email === '') {
 //         $('.input-group').removeClass('has-error has-success');
 //         view.hideElement('.glyphicon-remove', '.glyphicon-ok');
@@ -50,7 +50,7 @@ var bookId;
 /*------------------ Sending email by clicking on the button ----------------*/
 $('.btnBookID').click(function (event) {
     // var email = $('.orderEmail').val();
-    // var isEmail = controller.validateEmail(email);
+    // var isEmail = controllers.validateEmail(email);
     // if (isEmail) {
     //     view.showSuccessEmail();
     //     var id = $('#bookID').attr('book-id');
