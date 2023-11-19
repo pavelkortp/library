@@ -15,6 +15,12 @@ class BookModel {
     private _description: string;
 
     /**
+     * Book's year of publication
+     * @private
+     */
+    private _year: number;
+
+    /**
      * Book's language.
      * @private
      */
@@ -32,7 +38,8 @@ class BookModel {
      */
     private _rating: number = 0;
 
-    constructor(name: string, author:string, language: string, description: string) {
+    constructor(name: string, year:number,  author:string, language: string, description: string) {
+        this._year = year;
         this._name = name;
         this._description = description;
         this._language = language;
@@ -45,5 +52,25 @@ class BookModel {
 
     set rating(value: number) {
         this._rating = value;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get description(): string {
+        return this._description;
+    }
+
+    get year(): number {
+        return this._year;
+    }
+
+    get language(): string {
+        return this._language;
+    }
+
+    get author(): string {
+        return this._author;
     }
 }

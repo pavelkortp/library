@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "build": "rd /s /q dist && tsc",
-        "start": "node dist/test.js",
+        "start": "node dist/server.js",
         "bs": "npm run build && npm run start"
     },
     "keywords": [],
