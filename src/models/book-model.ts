@@ -1,7 +1,7 @@
 /**
  * Library book representation
  */
-class BookModel {
+export class BookModel {
     /**
      * Book's name
      * @private
