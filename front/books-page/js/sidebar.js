@@ -15,7 +15,7 @@ $('.sidebar_item').click(function (event) {
 });
 
 function changeHistoryStateWithParams(action, filter, offset) {
-    if (action = '') {
+    if (action === '') {
         return;
     }
 

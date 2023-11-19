@@ -52,7 +52,7 @@ var view = {
         $('#content').html(contentNotFound);
     },
     nullToDash: function (string) {
-        return (((string == null) || (string == 0)) ? '-' : string);
+        return (((string == null) || (string === 0)) ? '-' : string);
     },
     addBooksListRow: function (book) {
         var date;
@@ -161,7 +161,7 @@ var view = {
             });
     },
     addMiniItemSearch: function (pathUrl, book) {
-        var id = (book.id == 'no-cover') ? '#not_found' : '#miniItem';
+        var id = (book.id === 'no-cover') ? '#not_found' : '#miniItem';
         return $(id).html()
             .replace(/{id}/g, book.id)
             .replace(/{path}/g, pathUrl)
