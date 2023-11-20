@@ -5,5 +5,4 @@ CREATE TABLE IF NOT EXISTS books (
     year INT NOT NULL,
     language VARCHAR(50) NOT NULL,
     art BLOB NOT NULL,
-    pass VARCHAR(255) NOT NULL
 );
