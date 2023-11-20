@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
+    year INT NOT NULL,
+    language VARCHAR(50) NOT NULL,
+    art BLOB NOT NULL,
+    pass VARCHAR(255) NOT NULL
+);
