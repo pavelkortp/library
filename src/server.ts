@@ -5,9 +5,9 @@ export const app: Express = express();
 const PORT = 3000;
 
 app.set('view engine', 'ejs');
-app.use(express.static('views'));
+app.use(express.static('static'));
 app.use(booksRouter);
-app.use('/books', express.static('views'));
+app.use('/books', express.static('static'));
 
 app.listen(PORT, () => {
     console.log(`Server listening at port ${PORT}`);
