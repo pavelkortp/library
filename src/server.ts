@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import { booksRouter } from './routes/books-router.js';
 import mysql, { Connection } from 'mysql2';
 import { user, password, host, database } from './db-controls/db-config.js';
+import { connect } from './db-controls/db-scrypst.js';
 
 
 export const app: Express = express();
@@ -15,14 +16,8 @@ export const con: Connection = mysql.createConnection({
     database: database
 });
 
-(async () => {
-    try {
-        await con.connect();
-        console.log('Connected to the database');
-    } catch (err) {
-        console.error('Error connecting to the database:', err);
-    }
-})();
+await connect(con);
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('static'));
