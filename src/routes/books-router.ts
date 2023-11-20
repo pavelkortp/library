@@ -1,8 +1,11 @@
 import express from 'express';
-import {getBook, getBooks} from '../controllers/books-controller';
+import {getBook, getBooks} from '../controllers/books-controller.js';
+
 export const booksRouter = express.Router();
 
 booksRouter
-    .get('/books', getBooks)
-    .get('/books/{book_id}', getBook);
+    .get('/',getBooks);
+
+booksRouter
+    .get('/books/:book_id', getBook);
 
