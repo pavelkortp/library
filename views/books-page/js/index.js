@@ -84,7 +84,6 @@ function setSidebarActiveButton(activeElem, filterStringValue) {
     $('.sidebar_item').removeClass('active');
     if (activeElem) {
         activeElem.closest('a').addClass('active');
-        return;
     } else {
         $('a[data-filter=' + filterStringValue + ']').addClass('active');
     }

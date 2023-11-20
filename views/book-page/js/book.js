@@ -4,7 +4,7 @@ var isBookInUse = false;
 var bookId;
 
 // doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
-//     view.fillBookInfo(res.data);
+//     views.fillBookInfo(res.data);
 //     if (res.data.event) {
 //         isBookInUse = true;
 //         bookId = res.data.id;
@@ -33,17 +33,17 @@ var bookId;
 //     var isEmail = controllers.validateEmail(email);
 //     if (email === '') {
 //         $('.input-group').removeClass('has-error has-success');
-//         view.hideElement('.glyphicon-remove', '.glyphicon-ok');
+//         views.hideElement('.glyphicon-remove', '.glyphicon-ok');
 //     } else {
 //         if (isEmail) {
-//             view.showSuccessEmail();
+//             views.showSuccessEmail();
 //             if (event.keyCode == 13) {
 //
 //                 var id = $('#bookID').attr('book-id');
 //                 sendEmailToQueue(id, email);
 //             }
 //         } else {
-//             view.showErrEmail();
+//             views.showErrEmail();
 //         }
 //     }
 // });
@@ -52,14 +52,14 @@ $('.btnBookID').click(function (event) {
     // var email = $('.orderEmail').val();
     // var isEmail = controllers.validateEmail(email);
     // if (isEmail) {
-    //     view.showSuccessEmail();
+    //     views.showSuccessEmail();
     //     var id = $('#bookID').attr('book-id');
     //     sendEmailToQueue(id, email);
     // } else {
-    //     view.showErrEmail();
+    //     views.showErrEmail();
     // }
     // if (isBookInUse) {
-    //     view.showSubscribe(
+    //     views.showSubscribe(
     //         "Сейчас эта книга находится на руках, у одного из наших учеников." +
     //         " Оставь свой email и мы сообщим, как только книга вновь" +
     //         " появится в библиотеке", bookId);

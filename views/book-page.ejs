@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="library Sh++">
 
-    <link rel="stylesheet" href="./book-page_files/libs.min.css">
-    <link rel="stylesheet" href="./book-page_files/style.css">
+    <link rel="stylesheet" href="book-page/styles/libs.min.css">
+    <link rel="stylesheet" href="book-page/styles/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
@@ -40,7 +40,7 @@
                                         }
                                     })
                                 </script>
-                                <div class="loader"><img src="./book-page_files/loading.gif"></div>
+                                <div class="loader"><img src="./media/photos/loading.gif"></div>
                                 <div id="list" size="" class="bAutoComplete mSearchAutoComplete"></div>
                             </div>
                         </form>
@@ -62,13 +62,13 @@
             <script id="pattern" type="text/template">
                 <div data-book-id="{id}" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
                     <div class="book">
-                        <a href="/book/{id}"><img src="img/books/{id}.jpg" alt="{title}">
+                        <a href="/books/{id}"><img src="media/photos/22.jpg" alt="{title}">
                             <div data-title="{title}" class="blockI">
                                 <div data-book-title="{title}" class="title size_text">{title}</div>
                                 <div data-book-author="{author}" class="author">{author}</div>
                             </div>
                         </a>
-                        <a href="/book/{id}">
+                        <a href="/books/{id}">
                             <button type="button" class="details btn btn-success">Читать</button>
                         </a>
                     </div>
@@ -77,7 +77,7 @@
             <div id="id" book-id="22">
                 <div id="bookImg" class="col-xs-12 col-sm-3 col-md-3 item" style="
     margin:;
-"><img src="./book-page_files/22.jpg" alt="Responsive image" class="img-responsive">
+"><img src="./media/photos/22.jpg" alt="Responsive image" class="img-responsive">
 
                     <hr>
                 </div>
@@ -110,7 +110,7 @@
                     <p class="description">Лекции и практикум по программированию на Си++</p>
                 </div>
             </div>
-            <script src="./book-page_files/book.js" defer=""></script>
+            <script src="book-page/js/book.js" defer=""></script>
         </div>
     </div>
 </section>
@@ -118,7 +118,7 @@
     <div class="navbar-bottom row-fluid">
         <div class="navbar-inner">
             <div class="container-fuild">
-                <div class="content_footer"> Made with<a href="http://programming.kr.ua/" class="heart"><i
+                <div class="content_footer"> Made with<a href="https://programming.kr.ua/" class="heart"><i
                                 aria-hidden="true" class="fa fa-heart"></i></a>by HolaTeam
                 </div>
             </div>
