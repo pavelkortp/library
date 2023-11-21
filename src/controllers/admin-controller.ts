@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
 import { testSpawner } from './books-controller.js';
 import { BookModel } from '../models/book-model.js';
-const books = await testSpawner(10);
+const books = await testSpawner(5);
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+    res.set('Authorization', 'Basic required')
+    res.status(401).redirect('http://localhost:3000/');
+}
 
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
     res.render('admin-page', { books });
