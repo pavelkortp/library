@@ -21,19 +21,19 @@ const testSpawner = async (N: number) => {
             `pavlo ${i}`,
             `en`,
             `description`,
-            pic
-        ))
+            pic,
+            i
+        ));
     }
     return books;
 }
 
 /**
- *
+ * 
  * @param req
  * @param res
- * @param next
  */
 export const getBooks = async (req: Request, res: Response) => {
     const books = await testSpawner(18);
-    res.render('books-page', {books: books});
+    res.render('books-page', { books });
 }

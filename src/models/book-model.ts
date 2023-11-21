@@ -5,7 +5,7 @@ export class BookModel {
     /**
      * Book's id.
      */
-    private _id?: number;
+    private _id: number;
 
     /**
      * Books cover image.
@@ -48,7 +48,7 @@ export class BookModel {
      */
     private _rating: number = 0;
 
-    constructor(name: string, year: number, author: string, language: string, description: string, art: Buffer, id?:number) {
+    constructor(name: string, year: number, author: string, language: string, description: string, art: Buffer, id: number) {
         this._year = year;
         this._name = name;
         this._description = description;
@@ -88,5 +88,9 @@ export class BookModel {
 
     get author(): string {
         return this._author;
+    }
+
+    get id(): number {
+        return this._id;
     }
 }
