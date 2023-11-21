@@ -37,6 +37,11 @@ export class BookModel {
     private _language: string;
 
     /**
+     * Count of pages.
+     */
+    private _pages: number
+
+    /**
      * Book's author .... or s
      * @private
      */
@@ -48,7 +53,11 @@ export class BookModel {
      */
     private _rating: number = 0;
 
-    constructor(name: string, year: number, author: string, language: string, description: string, art: Buffer, id: number) {
+    constructor(name: string, year: number,
+        author: string, language: string,
+        description: string, art: Buffer,
+        id: number, pages: number
+    ) {
         this._year = year;
         this._name = name;
         this._description = description;
@@ -56,6 +65,7 @@ export class BookModel {
         this._author = author;
         this._art = art;
         this._id = id;
+        this._pages = pages;
     }
 
     get art(): Buffer {
@@ -88,6 +98,10 @@ export class BookModel {
 
     get author(): string {
         return this._author;
+    }
+
+    get pages(): number {
+        return this._pages;
     }
 
     get id(): number {

@@ -1,14 +1,16 @@
 import { Request, Response } from 'express';
-import { BookModel } from "../models/book-model.js";
+import { BookModel } from '../models/book-model.js';
 import { readFile } from 'fs/promises';
 
 /**
- *
- * @param req
- * @param res
+ * Renders book-page
+ * @param req HTTP Request.
+ * @param res html page.
  */
-export const getBook = async (req: Request, res: Response) => {
-    res.render('book-page');
+export const getBook = async (req: Request, res: Response): Promise<void> => {
+    const books = await testSpawner(100);
+    const id = parseInt(req.params.book_id);
+    res.render('book-page', { book: books[id] });
 }
 
 const testSpawner = async (N: number) => {
@@ -22,7 +24,8 @@ const testSpawner = async (N: number) => {
             `en`,
             `description`,
             pic,
-            i
+            i,
+            i*10
         ));
     }
     return books;
@@ -33,7 +36,7 @@ const testSpawner = async (N: number) => {
  * @param req
  * @param res
  */
-export const getBooks = async (req: Request, res: Response) => {
-    const books = await testSpawner(18);
+export const getBooks = async (req: Request, res: Response): Promise<void> => {
+    const books = await testSpawner(100);
     res.render('books-page', { books });
 }
