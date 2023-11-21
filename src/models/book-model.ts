@@ -8,6 +8,16 @@ export class BookModel {
     private _id: number;
 
     /**
+     * Views count on this book.
+     */
+    private _views: number
+
+    /**
+     * Clicks count on this book.
+     */
+    private _clicks: number
+
+    /**
      * Books cover image.
      */
     private _art: Buffer;
@@ -56,7 +66,8 @@ export class BookModel {
     constructor(name: string, year: number,
         author: string, language: string,
         description: string, art: Buffer,
-        id: number, pages: number
+        id: number, pages: number,
+        views: number, clicks: number
     ) {
         this._year = year;
         this._name = name;
@@ -66,6 +77,8 @@ export class BookModel {
         this._art = art;
         this._id = id;
         this._pages = pages;
+        this._views = views;
+        this._clicks = clicks;
     }
 
     get art(): Buffer {
@@ -106,5 +119,13 @@ export class BookModel {
 
     get id(): number {
         return this._id;
+    }
+
+    get clicks(): number{
+        return this._clicks;
+    }
+
+    get views(): number{
+        return this._views;
     }
 }
