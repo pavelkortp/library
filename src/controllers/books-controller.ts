@@ -13,7 +13,7 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
     res.render('book-page', { book: books[id] });
 }
 
-const testSpawner = async (N: number) => {
+export const testSpawner = async (N: number) => {
     const pic = await readFile('./static/media/22.jpg');
     const books: BookModel[] = []
     for (let i = 0; i < N; i++) {
@@ -25,7 +25,9 @@ const testSpawner = async (N: number) => {
             `description`,
             pic,
             i,
-            i*10
+            i*10,
+            0,
+            0
         ));
     }
     return books;
