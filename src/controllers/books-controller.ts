@@ -13,6 +13,9 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
     res.render('book-page', { book: books[id] });
 }
 
+/**
+ * NOT REAL METHOD ONLY TEST
+ */
 export const testSpawner = async (N: number) => {
     const pic = await readFile('./static/img/22.jpg');
     const books: BookModel[] = []
