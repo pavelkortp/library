@@ -31,7 +31,7 @@
         <div class="container">
             <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <% books.forEach((book) => {  %>
-                    <div data-book-id="48" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
+                    <div data-book-id="<%- book.id %>" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
                         <div class="book">
                             <a href="http://localhost:3000/books/<%- book.id %>">
                                 <img src="data:image/jpeg;base64,<%= book.art.toString('base64') %>" alt="<%- book.name %>">
