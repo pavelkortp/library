@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { testSpawner } from './books-controller.js';
 import { BookModel } from '../models/book-model.js';
-import { writeFile } from 'fs/promises';
 const books = await testSpawner(10);
 
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
@@ -18,7 +17,6 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         description: string,
         pages: string
     } = req.body;
-    await writeFile('src/img/f.jpg', book.art, 'utf-8');
     books.push(new BookModel(
         book.name,
         parseInt(book.year),
