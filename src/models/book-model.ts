@@ -67,7 +67,7 @@ export class BookModel {
         author: string, language: string,
         description: string, art: Buffer,
         id: number, pages: number,
-        views: number, clicks: number
+        views: number = 0, clicks: number = 0
     ) {
         this._year = year;
         this._name = name;
