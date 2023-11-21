@@ -21,6 +21,7 @@ await connect(con);
 await createTables(con);
 
 app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
 app.use(booksRouter);
 app.use(adminRouter);
