@@ -4,11 +4,13 @@ import mysql, { Connection } from 'mysql2';
 import { user, password, host, database } from './db-controls/db-config.js';
 import { connect, createTables } from './db-controls/db-scrypst.js';
 import { adminRouter } from './routes/admin-router.js';
-
+import basicAuth from 'express-basic-auth';
 
 export const app: Express = express();
 const PORT = 3000;
 
+
+ 
 
 export const con: Connection = mysql.createConnection({
     host: host,
@@ -24,7 +26,12 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
 app.use(booksRouter);
+app.use('/admin', basicAuth({
+    challenge:true,
+    users: { admin: '1234'}
+}));
 app.use(adminRouter);
+
 app.use('/books', express.static('static'));
 
 app.listen(PORT, () => {
