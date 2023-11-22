@@ -32,26 +32,28 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
  */
 export const createBook = async (req: Request, res: Response): Promise<void> => {
     const book: {
-        name: string,
+        title: string,
         year: string,
         language: string,
-        art: Buffer,
         author1: string,
         description: string,
         pages: string
     } = req.body;
-
+    console.log(req.body);
+    console.log(book.title);
     await save(new BookModel(
-        book.name,
+        book.title,
         parseInt(book.year),
         book.author1,
         book.language,
         book.description,
-        book.art,
         0,
         parseInt(book.pages)
     ));
+   
+    
     const books = await getAll();
+   
     res.render('admin-page', { books });
 }
 
