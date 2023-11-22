@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
 import { BookModel } from '../models/book-model.js';
 import { readFile } from 'fs/promises';
 import { con } from '../server.js';
-import { createBook } from '../db-controls/db-scrypst.js';
+import { createBook, getAllBooks } from '../db-controls/db-scrypst.js';
 
 
 /**
@@ -35,4 +34,8 @@ export const findByName = async (name: string) => {
  */
 export const save = async (book: BookModel): Promise<void> => {
     await createBook(book);
+}
+
+export const getAll =async ():Promise<BookModel[]> => {
+    return await getAllBooks();
 }
