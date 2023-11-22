@@ -26,21 +26,7 @@
     <section id="main" class="main-wrapper">
         <div class="container">
             <div id="content" class="book_block col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <script id="pattern" type="text/template">
-                    <div data-book-id="<%- book.id %>" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
-                        <div class="book">
-                            <a href="/books/<%- book.id %>"><img src="media/22.jpg" alt="<%- book.name %>">
-                                <div data-title="<%- book.name %>" class="blockI">
-                                    <div data-book-title="<%- book.name %>" class="title size_text"><%- book.name %></div>
-                                    <div data-book-author="<%- book.author %>" class="author"><%- book.author %></div>
-                                </div>
-                            </a>
-                            <a href="/books/<%- book.id %>">
-                                <button type="button" class="details btn btn-success">Читати</button>
-                            </a>
-                        </div>
-                    </div>
-                </script>
+                
                 <div id="id" book-id="<%- book.id %>">
                     <div id="bookImg" class="col-xs-12 col-sm-3 col-md-3 item">
                         <img src="data:image/jpeg;base64,<%= book.art.toString('base64') %>" class="img-responsive"
