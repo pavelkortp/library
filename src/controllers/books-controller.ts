@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { BookModel } from '../models/book-model.js';
 import { readFile } from 'fs/promises';
 import { getAll } from '../repositories/books-repository.js';
+import { getBookById } from '../db-controls/db-scrypst.js';
 
 /**
  * Renders book-page
@@ -9,9 +10,9 @@ import { getAll } from '../repositories/books-repository.js';
  * @param res html page.
  */
 export const getBook = async (req: Request, res: Response): Promise<void> => {
-    const books = await getAll();
     const id = parseInt(req.params.book_id);
-    res.render('book-page', { book: books[id] });
+    const book = await getBookById(id);
+    res.render('book-page', { book });
 }
 
 /**
@@ -21,18 +22,18 @@ export const testSpawner = async (N: number) => {
     const pic = await readFile('./static/img/22.jpg');
     const books: BookModel[] = [];
     for (let i = 0; i < N; i++) {
-        await 
-        books.push(new BookModel(
-            `${i}`,
-            2023,
-            `pavlo ${i}`,
-            `en`,
-            `description`,
-            pic,
-            i,
-            i*10,
-            0, 0
-        ));
+        await
+            books.push(new BookModel(
+                `${i}`,
+                2023,
+                `pavlo ${i}`,
+                `en`,
+                `description`,
+                pic,
+                i,
+                i * 10,
+                0, 0
+            ));
     }
     return books;
 }
