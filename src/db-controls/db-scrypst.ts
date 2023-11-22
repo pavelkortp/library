@@ -1,4 +1,4 @@
-import mysql, { Connection, RowDataPacket } from 'mysql2/promise';
+import { Connection, RowDataPacket } from 'mysql2/promise';
 import { readFile } from 'fs/promises';
 import { BookModel } from '../models/book-model.js';
 import { con } from '../server.js';
@@ -6,9 +6,9 @@ import { con } from '../server.js';
 /**
  * Connects to db.
  */
-export const connect = async (con: Connection) => {
+export const connect = async (db: Connection) => {
     try {
-        await con.connect();
+        await db.connect();
         console.log('Connected to the database');
     } catch (err) {
         console.error('Error connecting to the database:', err);
@@ -17,26 +17,26 @@ export const connect = async (con: Connection) => {
 
 /**
  * Creates tables books, authors ... if not exists
- * @param con 
+ * @param db database.
  */
-export const createTables = async (con: Connection) => {
-    await createTable(con, 'src/db-controls/sql/create-books-table.sql');
-    await createTable(con, 'src/db-controls/sql/create-authors-table.sql');
+export const createTables = async (db: Connection) => {
+    await createTable(db, 'src/db-controls/sql/create-books-table.sql');
+    await createTable(db, 'src/db-controls/sql/create-authors-table.sql');
 }
 
 /**
- * 
- * @param con 
- * @param scryptPath 
+ * Creates tables if not exist.
+ * @param db database.
+ * @param scryptPath path to scrypt which creates table.
  */
-const createTable = async (con: Connection, scryptPath: string) => {
+const createTable = async (db: Connection, scryptPath: string) => {
     const q = await readFile(scryptPath, 'utf-8');
-    con.query(q);
+    db.query(q);
 }
 
 /**
- * Returns all teble's entrys
- * @returns book array
+ * Returns all book's table entries.
+ * @returns book array.
  */
 export const getAllBooks = async (): Promise<BookModel[]> => {
     const q = await readFile('src/db-controls/sql/get-all-books.sql', 'utf-8');
@@ -57,11 +57,10 @@ export const getAllBooks = async (): Promise<BookModel[]> => {
 }
 
 /**
- * Creates new book in books table ----- NOT TESTED
- * @param book 
+ * Creates new entry in books's table.
+ * @param book new book.
  */
 export const createBook = async (book: BookModel) => {
-    
     const sqlQuery = await readFile('src/db-controls/sql/create-book.sql', 'utf-8');
     const values = [
         book.name,
