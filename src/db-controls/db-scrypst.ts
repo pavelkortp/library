@@ -77,7 +77,7 @@ export const createBook = async (book: BookModel) => {
 }
 
 export const getBookById = async (id: number): Promise<BookModel> => {
-    const sqlQuery = await readFile('src/db-controls/sql/create-book.sql', 'utf-8');
+    const sqlQuery = await readFile('src/db-controls/sql/get-book-by-id.sql', 'utf-8');
     const values = [id];
     const [row] = await con.execute<RowDataPacket[]>(sqlQuery, values);
 
