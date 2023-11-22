@@ -8,5 +8,5 @@ adminRouter
     .get(getBooksTable)
     .post(createBook);
 
-adminRouter.get('/admin/logout', logout)
+adminRouter.get('/admin/api/v1/logout', logout)
 

@@ -1,38 +1,57 @@
 import { Request, Response } from 'express';
-import { testSpawner } from './books-controller.js';
+// import { testSpawner } from './books-controller.js';
 import { BookModel } from '../models/book-model.js';
-const books = await testSpawner(5);
+import { save, getAll } from '../repositories/books-repository.js';
+import { getAllBooks } from '../db-controls/db-scrypst.js';
 
+
+/**
+ * NOT WORK
+ * @param req 
+ * @param res 
+ */
 export const logout = async (req: Request, res: Response): Promise<void> => {
     res.set('Authorization', 'Basic required')
     res.status(401).redirect('http://localhost:3000/');
 }
 
+/**
+ * Returns page with books.
+ * @param req HTTP Request.
+ * @param res HTML page.
+ */
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
+    const books = await getAllBooks();
     res.render('admin-page', { books });
 }
 
+/**
+ * Creates new book and saves it to db
+ * @param req HTTP Request with book's data in body.
+ * @param res HTML admin-page with books.
+ */
 export const createBook = async (req: Request, res: Response): Promise<void> => {
     const book: {
         name: string,
         year: string,
-        lang: string,
+        language: string,
         art: Buffer,
         author1: string,
         description: string,
         pages: string
     } = req.body;
-    books.push(new BookModel(
+
+    await save(new BookModel(
         book.name,
         parseInt(book.year),
         book.author1,
-        book.lang,
+        book.language,
         book.description,
         book.art,
         0,
         parseInt(book.pages)
-    ))
-
+    ));
+    const books = await getAll();
     res.render('admin-page', { books });
 }
 
