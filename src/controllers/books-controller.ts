@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { BookModel } from '../models/book-model.js';
 import { readFile } from 'fs/promises';
-import { getAll } from '../repositories/books-repository.js';
-import { getBookById } from '../db-controls/db-scrypst.js';
+import { findById, getAll } from '../repositories/books-repository.js';
 
 /**
  * Renders book-page
@@ -11,7 +10,7 @@ import { getBookById } from '../db-controls/db-scrypst.js';
  */
 export const getBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    const book = await getBookById(id);
+    const book = await findById(id);
     res.render('book-page', { book });
 }
 
