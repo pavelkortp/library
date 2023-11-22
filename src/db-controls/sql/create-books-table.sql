@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS books (
     description VARCHAR(1000) NOT NULL,
     year INT NOT NULL,
     language VARCHAR(50) NOT NULL,
-    art BLOB NOT NULL,
     pages INT NOT NULL,
     rating INT NOT NULL DEFAULT 0,
     views INT NOT NULL DEFAULT 0,

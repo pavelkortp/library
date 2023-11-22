@@ -18,6 +18,5 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
  * @param res HTML page wich contains all books.
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
-    const books = await getAll();
-    
+    const books = await getAll(); 
 }

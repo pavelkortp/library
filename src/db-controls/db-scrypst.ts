@@ -48,7 +48,6 @@ export const getAllBooks = async (): Promise<BookModel[]> => {
         'without author', //
         e.language,
         e.description,
-        e.art,
         e.id,
         e.pages,
         e.views,
@@ -69,7 +68,6 @@ export const createBook = async (book: BookModel) => {
         book.description,
         book.year,
         book.language,
-        book.art,
         book.pages,
         book.rating,
         book.views,
@@ -90,7 +88,6 @@ export const getBookById = async (id: number): Promise<BookModel> => {
         "row[0].author",
         row[0].language,
         row[0].description,
-        row[0].art,
         row[0].id,
         row[0].pages,
         row[0].views,
