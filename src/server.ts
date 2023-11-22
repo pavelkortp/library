@@ -10,7 +10,7 @@ export const app: Express = express();
 const PORT = 3000;
 
 
- 
+
 
 export const con: Connection = await mysql.createConnection({
     host: host,
@@ -25,10 +25,10 @@ await createTables(con);
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
-app.use(booksRouter);
+app.use('/api/v1/books', booksRouter);
 app.use('/admin', basicAuth({
-    challenge:true,
-    users: { admin: '1234'}
+    challenge: true,
+    users: { admin: '1234' }
 }));
 app.use(adminRouter);
 
