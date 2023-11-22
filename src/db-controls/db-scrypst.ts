@@ -1,4 +1,4 @@
-import mysql, { Connection } from 'mysql2';
+import mysql, { Connection } from 'mysql2/promise';
 import { readFile } from 'fs/promises';
 import { BookModel } from '../models/book-model.js';
 import { con } from '../server.js';
@@ -8,7 +8,7 @@ import { con } from '../server.js';
  */
 export const connect = async (con: Connection) => {
     try {
-        con.connect();
+        await con.connect();
         console.log('Connected to the database');
     } catch (err) {
         console.error('Error connecting to the database:', err);

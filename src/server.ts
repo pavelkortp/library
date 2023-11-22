@@ -1,6 +1,6 @@
 import express, { Express } from 'express';
 import { booksRouter } from './routes/books-router.js';
-import mysql, { Connection } from 'mysql2';
+import mysql, { Connection } from 'mysql2/promise';
 import { user, password, host, database } from './db-controls/db-config.js';
 import { connect, createTables } from './db-controls/db-scrypst.js';
 import { adminRouter } from './routes/admin-router.js';
@@ -12,7 +12,7 @@ const PORT = 3000;
 
  
 
-export const con: Connection = mysql.createConnection({
+export const con: Connection = await mysql.createConnection({
     host: host,
     user: user,
     password: password,
