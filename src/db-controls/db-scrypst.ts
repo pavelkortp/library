@@ -62,12 +62,15 @@ export const getAllBooks = async (): Promise<BookModel[]> => {
  */
 export const createBook = async (book: BookModel) => {
     const sqlQuery = await readFile('src/db-controls/sql/create-book.sql', 'utf-8');
+    
+    
     const values = [
-        book.name,
+        book.title,
         book.description,
         book.year,
         book.language,
         book.art,
+        book.pages,
         book.rating,
         book.views,
         book.clicks,
@@ -80,11 +83,11 @@ export const getBookById = async (id: number): Promise<BookModel> => {
     const sqlQuery = await readFile('src/db-controls/sql/get-book-by-id.sql', 'utf-8');
     const values = [id];
     const [row] = await con.execute<RowDataPacket[]>(sqlQuery, values);
-
+    console.log(row[0]);
     return new BookModel(
-        row[0].name,
-        parseInt(row[0].year),
-        row[0].author,
+        row[0].title,
+        row[0].year,
+        "row[0].author",
         row[0].language,
         row[0].description,
         row[0].art,
@@ -92,5 +95,5 @@ export const getBookById = async (id: number): Promise<BookModel> => {
         row[0].pages,
         row[0].views,
         row[0].clicks
-    )
+    );
 }

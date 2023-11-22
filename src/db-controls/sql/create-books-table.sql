@@ -1,10 +1,11 @@
 CREATE TABLE IF NOT EXISTS books (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    title VARCHAR(100) NOT NULL,
     description VARCHAR(1000) NOT NULL,
     year INT NOT NULL,
     language VARCHAR(50) NOT NULL,
     art BLOB NOT NULL,
+    pages INT NOT NULL,
     rating INT NOT NULL DEFAULT 0,
     views INT NOT NULL DEFAULT 0,
     clicks INT NOT NULL DEFAULT 0,

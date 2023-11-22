@@ -26,7 +26,7 @@ export class BookModel {
      * Book's name
      * @private
      */
-    private _name: string;
+    private _title: string;
 
     /**
      * Book's short description.
@@ -63,14 +63,14 @@ export class BookModel {
      */
     private _rating: number = 0;
 
-    constructor(name: string, year: number,
+    constructor(title: string, year: number,
         author: string, language: string,
         description: string, art: Buffer,
         id: number, pages: number,
         views: number = 0, clicks: number = 0
     ) {
         this._year = year;
-        this._name = name;
+        this._title = title;
         this._description = description;
         this._language = language;
         this._author = author;
@@ -93,8 +93,8 @@ export class BookModel {
         this._rating = value;
     }
 
-    get name(): string {
-        return this._name;
+    get title(): string {
+        return this._title;
     }
 
     get description(): string {
@@ -121,11 +121,11 @@ export class BookModel {
         return this._id;
     }
 
-    get clicks(): number{
+    get clicks(): number {
         return this._clicks;
     }
 
-    get views(): number{
+    get views(): number {
         return this._views;
     }
 }

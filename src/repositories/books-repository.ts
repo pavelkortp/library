@@ -18,13 +18,13 @@ export const findByYear = async (year: number): Promise<BookModel[]> => {
 }
 
 /**
- * Searches in db book with name and return it.
- * @param name book's name.
+ * Searches in db book with title and return it.
+ * @param title book's title.
  * @returns found book.
  */
-export const findByName = async (name: string) => {
-    const q: string = await readFile('src/db-controls/sql/get-book-by-name.sql', 'utf-8');
-    const r = await con.execute(q, [name]);
+export const findByTitle = async (title: string) => {
+    const q: string = await readFile('src/db-controls/sql/get-book-by-title.sql', 'utf-8');
+    const r = await con.execute(q, [title]);
     // return new BookModel();
 }
 
@@ -36,10 +36,19 @@ export const save = async (book: BookModel): Promise<void> => {
     await createBook(book);
 }
 
+/**
+ * Returns all books from store.
+ * @returns array of books.
+ */
 export const getAll = async (): Promise<BookModel[]> => {
     return await getAllBooks();
 }
 
+/**
+ * 
+ * @param id 
+ * @returns 
+ */
 export const findById = async (id: number): Promise<BookModel> => {
     return await getBookById(id);
 }

@@ -1,0 +1,1 @@
+SELECT * FROM books WHERE title = ? LIMIT 1;
