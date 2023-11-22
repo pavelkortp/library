@@ -1,10 +1,14 @@
 import express, { Express } from 'express';
-import { booksRouter } from './routes/books-router.js';
 import mysql, { Connection } from 'mysql2/promise';
+import basicAuth from 'express-basic-auth';
+
+import { booksRouter } from './routes/books-router.js';
+import { adminRouter } from './routes/admin-router.js';
+import { mainRouter } from './routes/home-router.js';
+
 import { user, password, host, database } from './db-controls/db-config.js';
 import { connect, createTables } from './db-controls/db-scrypst.js';
-import { adminRouter } from './routes/admin-router.js';
-import basicAuth from 'express-basic-auth';
+
 
 export const app: Express = express();
 const PORT = 3000;
@@ -26,7 +30,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
 app.use('/api/v1/books', booksRouter);
-app.use()
+app.use(mainRouter);
 app.use('/admin', basicAuth({
     challenge: true,
     users: { admin: '1234' }

@@ -1,6 +1,6 @@
 import express from 'express';
 import { getHomePage } from '../controllers/home-controller.js';
 
-export const booksRouter = express.Router();
+export const mainRouter = express.Router();
 
-booksRouter.get('/', getHomePage);
+mainRouter.get('/', getHomePage);
