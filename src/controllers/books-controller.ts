@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { BookModel } from '../models/book-model.js';
 import { readFile } from 'fs/promises';
+import { getAll } from '../repositories/books-repository.js';
 
 /**
  * Renders book-page
@@ -8,7 +9,7 @@ import { readFile } from 'fs/promises';
  * @param res html page.
  */
 export const getBook = async (req: Request, res: Response): Promise<void> => {
-    const books = await testSpawner(100);
+    const books = await getAll();
     const id = parseInt(req.params.book_id);
     res.render('book-page', { book: books[id] });
 }
@@ -18,8 +19,9 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
  */
 export const testSpawner = async (N: number) => {
     const pic = await readFile('./static/img/22.jpg');
-    const books: BookModel[] = []
+    const books: BookModel[] = [];
     for (let i = 0; i < N; i++) {
+        await 
         books.push(new BookModel(
             `${i}`,
             2023,
@@ -36,11 +38,11 @@ export const testSpawner = async (N: number) => {
 }
 
 /**
- * 
- * @param req
- * @param res
+ * Renders home books-page with books.
+ * @param req HTTP Request
+ * @param res HTML page wich contains all books.
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
-    const books = await testSpawner(100);
+    const books = await getAll();
     res.render('books-page', { books });
 }
