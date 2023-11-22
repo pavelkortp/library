@@ -43,7 +43,7 @@ export const getAllBooks = async (): Promise<BookModel[]> => {
     const [rows] = await con.execute<RowDataPacket[]>(q);
 
     return rows.map((e: any) => new BookModel(
-        e.name,
+        e.title,
         e.year,
         'without author', //
         e.language,
