@@ -21,7 +21,7 @@
 
 
             <div class="col-md-3 text-end">
-                <a href="http://localhost:3000/admin/logout" type="button" id="logout" class="btn btn-outline-primary me-2">Logout</a>
+                <a href="http://localhost:3000/admin/api/v1/logout" type="button" id="logout" class="btn btn-outline-primary me-2">Logout</a>
             </div>
         </header>
     </div>
@@ -45,13 +45,13 @@
                     <tr>
                         <th scope="row"><%- book.id%></th>
                         <td class="d-flex align-items-cente">
-                            <img src="data:image/jpeg;base64,<%= book.art.toString('base64') %>" width="10%"
-                                alt="<%- book.name %>">
+                            <img src="http://localhost:3000/img/<%- book.id%>.jpg" width="10%"
+                                alt="<%- book.title %>">
                             <b><%- book.name %></b>
                         </td>
                         <td><%- book.author %></td>
                         <td><%- book.year%></td>
-                        <td><a href="http://localhost:3000/admin/api/v1/books/<%- book.id%>">Видалити</a></td>
+                        <td><a href="http://localhost:3000/api/v1/books/<%- book.id%>">Видалити</a></td>
                         <td><%- book.clicks%></td>
                     </tr>
                     <% });%>
@@ -62,7 +62,7 @@
         <form action="http://localhost:3000/admin/api/v1/" method="post" class="was-validated d-flex">
             <div class="container">
                 <div class="mb-3">
-                    <input type="text" name="name" placeholder="Назва книжечки..." required>
+                    <input type="text" name="title" placeholder="Назва книжечки..." required>
                 </div>
                 <div class="mb-3">
                     <input type="number" name="year" placeholder="Рік видання" required>

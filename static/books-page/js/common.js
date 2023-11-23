@@ -111,16 +111,16 @@ var view = {
     },
     showSubscribe: function (text, bookId) {
         swal({
-                title: 'Хотите почитать?',
-                text: text,
-                type: 'input',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                animation: 'slide-from-top',
-                inputPlaceholder: 'Введите свой e-mail',
-                confirmButtonColor: '#27AE60',
-                showLoaderOnConfirm: true
-            },
+            title: 'Хотите почитать?',
+            text: text,
+            type: 'input',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: 'slide-from-top',
+            inputPlaceholder: 'Введите свой e-mail',
+            confirmButtonColor: '#27AE60',
+            showLoaderOnConfirm: true
+        },
             function (inputValue) {
                 if (inputValue === false) {
                     return false;
@@ -138,22 +138,22 @@ var view = {
     },
     showConfirm: function (bookId) {
         swal({
-                title: 'Вы уверены?',
-                text: 'Согласие приведет к невозвратимому удалению книги',
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonText: 'Льолик, не надо!',
-                confirmButtonColor: '#27AE60',
-                confirmButtonText: 'Да, уверен!',
-                closeOnConfirm: false
-            },
+            title: 'Вы уверены?',
+            text: 'Согласие приведет к невозвратимому удалению книги',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Льолик, не надо!',
+            confirmButtonColor: '#27AE60',
+            confirmButtonText: 'Да, уверен!',
+            closeOnConfirm: false
+        },
             function () {
                 doAjaxQuery('GET', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
                     swal({
-                            title: 'Удалено!',
-                            text: 'Надеюсь, вы осознаете что сейчас произошло ))',
-                            type: 'success'
-                        },
+                        title: 'Удалено!',
+                        text: 'Надеюсь, вы осознаете что сейчас произошло ))',
+                        type: 'success'
+                    },
                         function () {
                             window.location.href = '/admin';
                         });
@@ -208,7 +208,7 @@ var controller = {
 function doAjaxQuery(method, url, data, callback) {
     $.ajax({
         type: method,
-        url: url,
+        url: 'http://localhost:3000'+url,
         contentType: 'application/json',
         dataType: 'json',
         data: ((method == 'POST') ? JSON.stringify(data) : data),

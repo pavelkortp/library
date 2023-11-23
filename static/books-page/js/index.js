@@ -13,6 +13,7 @@ $(document).ready(function () {
         };
 
         setSidebarActiveButton(null, data.filter);
+        
         doAjaxQuery('GET', '/api/v1/books', data, function (res) {
             console.log('qindex');
             view.addBooksItems(res.data.books, true);

@@ -8,19 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="library Sh++">
-    <link rel="stylesheet" href="styles/libs.min.css">
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="books-page/styles/libs.min.css">
+    <link rel="stylesheet" href="books-page/styles/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         crossorigin="anonymous" />
 
     <link rel="shortcut icon" href="http://localhost:3000/favicon.ico">
-    <style>
-        .details {
-            display: none;
-        }
-    </style>
+
 </head>
 
 <body data-gr-c-s-loaded="true" class="">
@@ -29,37 +25,29 @@
 
     <section id="main" class="main-wrapper">
         <div class="container">
-            <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <% books.forEach((book) => {  %>
-                    <div data-book-id="<%- book.id %>" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
-                        <div class="book">
-                            <a href="http://localhost:3000/books/<%- book.id %>">
-                                <img src="data:image/jpeg;base64,<%= book.art.toString('base64') %>" alt="<%- book.name %>">
-                                <div data-title="<%- book.name %>" class="blockI" style="height: 46px;">
-                                    <div data-book-title="<%- book.name %>" class="title size_text"><%- book.name %></div>
-                                    <div data-book-author="<%- book.author %>" class="author"><%- book.author %></div>
-                                </div>
-                            </a>
-                            <a href="http://localhost:3000/books/<%- book.id %>">
-                                <button type="button" class="details btn btn-success">Читати</button>
-                            </a>
-                        </div>
+            <script id="pattern" type="text/template">
+                <div data-book-id="{id}" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
+                    <div class="book">
+                        <a href="/books/{id}"><img src="img/{id}.jpg" alt="{title}">
+                            <div data-title="{title}" class="blockI">
+                                <div data-book-title="{title}" class="title size_text">{title}</div>
+                                <div data-book-author="{author}" class="author">{author}</div>
+                            </div>
+                        </a>
+                        <a href="/books/{id}">
+                            <button type="button" class="details btn btn-success">Читати</button>
+                        </a>
                     </div>
-                <% }); %>
+                </div>
+            </script>
+            <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                
             </div>
         </div>
-
-        <center>оопс... в этом хтмл не реализованы кнопки "вперед" и "назад", а книг на странице должно быть не больше
-            20
-        </center>
-
     </section>
 
 
-    <%- include('./parts/footer.ejs') %>
-
-
-
+    <%- include('parts/footer.ejs') %>
 
         <div class="sweet-overlay" tabindex="-1" style="opacity: -0.02; display: none;"></div>
         <div class="sweet-alert hideSweetAlert" data-custom-class="" data-has-cancel-button="false"
@@ -95,6 +83,13 @@
                 <p>Not valid!</p>
             </div>
         </div>
+
+        
+        <script src="books-page/js/common.js"></script>
+        <script src="books-page/js/sidebar.js"></script>
+        <script src="books-page/js/libs.min.js"></script>
+        <script src="books-page/js/search.js"></script>
+        <script src="books-page/js/index.js"></script>
 </body>
 
 </html>

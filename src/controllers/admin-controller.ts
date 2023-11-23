@@ -39,8 +39,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         description: string,
         pages: string
     } = req.body;
-    console.log(req.body);
-    console.log(book.title);
+    
     await save(new BookModel(
         book.title,
         parseInt(book.year),

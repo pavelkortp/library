@@ -29,15 +29,15 @@ await createTables(con);
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
+
 app.use('/api/v1/books', booksRouter);
 app.use(mainRouter);
+app.use(adminRouter);
+
 app.use('/admin', basicAuth({
     challenge: true,
     users: { admin: '1234' }
 }));
-app.use(adminRouter);
-
-app.use('/books', express.static('static'));
 
 app.listen(PORT, () => {
     console.log(`Server listening at port ${PORT}`);
