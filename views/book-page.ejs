@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="library Sh++">
 
-    <link rel="stylesheet" href="book-page/styles/libs.min.css">
-    <link rel="stylesheet" href="book-page/styles/style.css">
+    <link rel="stylesheet" href="../book-page/styles/libs.min.css">
+    <link rel="stylesheet" href="../book-page/styles/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         crossorigin="anonymous" />
 
-    <link rel="shortcut icon" href="http://localhost:3000/books/favicon.ico">
+    <link rel="shortcut icon" href="../icons/library.png" type="image/x-icon">
 </head>
 
 <body data-gr-c-s-loaded="true" class="">
@@ -27,29 +27,27 @@
         <div class="container">
             <div id="content" class="book_block col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 
-                <div id="id" book-id="<%- book.id %>">
+                <div id="id" book-id="">
                     <div id="bookImg" class="col-xs-12 col-sm-3 col-md-3 item">
-                        <img src="data:image/jpeg;base64,<%= book.art.toString('base64') %>" class="img-responsive"
-                            alt="<%- book.name %>">
+                        <img src="../img/books/{id}" class="img-responsive"
+                            alt="">
                         <hr>
                     </div>
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 info">
                         <div class="bookInfo col-md-12">
-                            <div id="title" class="titleBook"><%- book.name %></div>
+                            <div id="title" class="titleBook"></div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="bookLastInfo">
-                                <div class="bookRow"><span class="properties">Автор:</span><span id="author"><%-
-                                            book.author %></span>
+                                <div class="bookRow"><span class="properties">Автор:</span><span id="author"></span>
                                 </div>
-                                <div class="bookRow"><span class="properties">Рік:</span><span id="year"><%-
-                                            book.year %></span>
+                                <div class="bookRow"><span class="properties">Рік:</span><span id="year"></span>
                                 </div>
-                                <div class="bookRow"><span class="properties">Сторінок:</span><span id="pages"><%-
-                                            book.pages %></span>
+                                <div class="bookRow"><span class="properties">Сторінок:</span><span id="pages"></span>
                                 </div>
-                                <div class="bookRow"><span class="properties">Мова:</span><span id="lang"><%-
-                                            book.language %></span>
+                                <div class="bookRow"><span class="properties">ISBN:</span><span id="isbn"></span>
+                                </div>
+                                <div class="bookRow"><span class="properties">Мова:</span><span id="language"></span>
                                 </div>
                             </div>
                         </div>
@@ -59,11 +57,11 @@
                         <div class="bookDescription col-xs-12 col-sm-12 col-md-12 hidden-xs hidden-sm">
                             <h4>Про книгу</h4>
                             <hr>
-                            <p id="description"><%- book.description %></p>
+                            <p id="description"></p>
                         </div>
                     </div>
                 </div>
-                <script src="book-page/js/book.js" defer=""></script>
+                
             </div>
         </div>
     </section>
@@ -115,6 +113,10 @@
             </div>
         </div>
     </div>
+    <script src="../books-page/js/libs.min.js" defer=""></script>
+    <script src="../book-page/js/common.js" defer=""></script>
+    <script src="../book-page/js/search.js" defer=""></script>
+    <script src="../book-page/js/book.js" defer=""></script>
 </body>
 
 </html>
