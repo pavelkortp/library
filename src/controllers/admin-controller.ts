@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-// import { testSpawner } from './books-controller.js';
 import { BookModel } from '../models/book-model.js';
 import { save, getAll, removeById } from '../repositories/books-repository.js';
 
@@ -31,7 +30,15 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
  */
 export const removeBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    await removeById(id);
+    try {
+        await removeById(id);
+        res.render('admin-page', {books: await getAll()});
+    }
+    catch (e) {
+        res.render('error-page');
+    }
+
+
 }
 
 /**
