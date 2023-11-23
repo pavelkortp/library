@@ -10,6 +10,18 @@ import { BookModel } from '../models/book-model.js';
 export const getBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
     const book = await findById(id);
+    res.json({
+        data: {
+            id: book.id,
+            title: book.title,
+            author: book.author,
+            description: book.description,
+            pages: book.pages,
+            year: book.year,
+            event: true
+        },
+        success:true
+    });
 }
 
 
@@ -21,7 +33,7 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const books = await getAll();
     res.json({
-        filter: '',
+        filter: req.body.filter,
         data: {
             books: books.map((e: BookModel) => {
                 return { id: e.id, title: e.title, author: e.author }
@@ -30,7 +42,6 @@ export const getBooks = async (req: Request, res: Response): Promise<void> => {
                 amount: books.length
             },
         },
-        
         success: true
     });
 }
