@@ -6,7 +6,7 @@ import {
     getBookByTitle,
     getBookByYear,
     removeBookById
-} from '../db-controls/db-scrypst.js';
+} from '../db-controls/db-scripst.js';
 
 
 /**

@@ -109,5 +109,6 @@ export const getBookByYear = async (year: number) => {
 }
 
 export const removeBookById = async (id: number)=> {
-    
+    const q: string = await readFile('src/db-controls/sql/remove-book-by-id.sql', 'utf-8');
+    await con.execute(q, [id]);
 }
