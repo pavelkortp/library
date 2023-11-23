@@ -208,7 +208,7 @@ var controller = {
 function doAjaxQuery(method, url, data, callback) {
     $.ajax({
         type: method,
-        url: 'http://localhost:3000'+url,
+        url: url,
         contentType: 'application/json',
         dataType: 'json',
         data: ((method == 'POST') ? JSON.stringify(data) : data),
