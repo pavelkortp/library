@@ -1,1 +1,3 @@
-SELECT * FROM books WHERE year = ?;
+SELECT * FROM books 
+WHERE year = ? 
+ORDER BY year DESC;

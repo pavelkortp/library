@@ -22,6 +22,7 @@ export const connect = async (db: Connection) => {
 export const createTables = async (db: Connection) => {
     await createTable(db, 'src/db-controls/sql/create-books-table.sql');
     await createTable(db, 'src/db-controls/sql/create-authors-table.sql');
+    await createTable(db, 'src/db-controls/sql/create-links-table.sql');
 }
 
 /**
@@ -48,8 +49,8 @@ export const getAllBooks = async (): Promise<BookModel[]> => {
         'without author', //
         e.language,
         e.description,
-        e.id,
         e.pages,
+        e.id,
         e.views,
         e.clicks
     ));
@@ -60,8 +61,15 @@ export const getAllBooks = async (): Promise<BookModel[]> => {
  * @param book new book.
  */
 export const createBook = async (book: BookModel) => {
-    const sqlQuery = await readFile('src/db-controls/sql/create-book.sql', 'utf-8');
+    const createBookQuerry = await readFile('src/db-controls/sql/create-book.sql', 'utf-8');
+    const checkAuthorQuerry = await readFile('src/db-controls/sql/get-author-id-by-name.sql', 'utf-8');
 
+    const [author] = await con.execute<RowDataPacket[]>(checkAuthorQuerry, [book.author]);
+    if (!author[0].id) {
+
+    }
+
+    console.log(book)
 
     const values = [
         book.title,
@@ -69,46 +77,52 @@ export const createBook = async (book: BookModel) => {
         book.year,
         book.language,
         book.pages,
-        book.rating,
-        book.views,
-        book.clicks,
+        0, 0, 0
     ];
 
-    con.execute(sqlQuery, values);
+
 }
 
-export const getBookById = async (id: number): Promise<BookModel> => {
+export const getBookById = async (id: number): Promise<BookModel | undefined> => {
     const sqlQuery = await readFile('src/db-controls/sql/get-book-by-id.sql', 'utf-8');
     const values = [id];
     const [row] = await con.execute<RowDataPacket[]>(sqlQuery, values);
-    console.log(row[0]);
-    return new BookModel(
-        row[0].title,
-        row[0].year,
-        "row[0].author",
-        row[0].language,
-        row[0].description,
-        row[0].id,
-        row[0].pages,
-        row[0].views,
-        row[0].clicks
-    );
+    if(row[0]){
+        return new BookModel(
+            row[0].title,
+            row[0].year,
+            "row[0].author",
+            row[0].language,
+            row[0].description,
+            row[0].pages,
+            row[0].id,
+            row[0].views,
+            row[0].clicks
+        );
+    }
 }
 
 export const getBookByTitle = async (title: string) => {
     const q: string = await readFile('src/db-controls/sql/get-book-by-title.sql', 'utf-8');
-    const r = await con.execute(q, [title]);
+    const r = await con.execute<RowDataPacket[]>(q, [title]);
     // return new BookModel();
 }
 
 export const getBookByYear = async (year: number) => {
     const q: string = await readFile('src/db-controls/sql/get-books-by-year.sql', 'utf-8');
-    const [rows] = await con.execute(q, [year]);
+    const [rows] = await con.execute<RowDataPacket[]>(q, [year]);
 
     return [];
 }
 
-export const removeBookById = async (id: number)=> {
+export const getAuthorIdByName = async (name: string): Promise<number | undefined> => {
+    const q: string = await readFile('src/db-controls/sql/get-author-id-by-name.sql', 'utf-8');
+    const [rows] = await con.execute<RowDataPacket[]>(q, [`%${name}%`]);
+
+    return rows[0].id as number | undefined;
+}
+
+export const removeBookById = async (id: number) => {
     const q: string = await readFile('src/db-controls/sql/remove-book-by-id.sql', 'utf-8');
     await con.execute(q, [id]);
 }

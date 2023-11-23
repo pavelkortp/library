@@ -1,1 +1,1 @@
-SELECT * FROM books WHERE id = ? LIMIT 1;
+SELECT * FROM books WHERE id = ? LIMIT 1

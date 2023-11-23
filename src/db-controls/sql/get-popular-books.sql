@@ -1,0 +1,2 @@
+SELECT * FROM books
+ORDER BY views DESC
