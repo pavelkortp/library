@@ -4,10 +4,10 @@ import basicAuth from 'express-basic-auth';
 
 import { booksRouter } from './routes/books-router.js';
 import { adminRouter } from './routes/admin-router.js';
-import { mainRouter } from './routes/home-router.js';
+import { mainRouter } from './routes/pages-router.js';
 
 import { user, password, host, database } from './db-controls/db-config.js';
-import { connect, createTables } from './db-controls/db-scrypst.js';
+import { connect, createTables } from './db-controls/db-scripst.js';
 
 
 export const app: Express = express();
@@ -32,13 +32,13 @@ app.use(express.static('static'));
 
 app.use('/api/v1/books', booksRouter);
 app.use(mainRouter);
-app.use('/admin/api/v1', adminRouter);
 
-app.use('/admin', basicAuth({
+
+app.use('/admin/api/v1', basicAuth({
     challenge: true,
     users: { admin: '1234' }
 }));
-
+app.use('/admin/api/v1', adminRouter);
 app.listen(PORT, () => {
     console.log(`Server listening at port ${PORT}`);
 });
