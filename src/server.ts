@@ -32,7 +32,7 @@ app.use(express.static('static'));
 
 app.use('/api/v1/books', booksRouter);
 app.use(mainRouter);
-app.use(adminRouter);
+app.use('/admin/api/v1', adminRouter);
 
 app.use('/admin', basicAuth({
     challenge: true,
