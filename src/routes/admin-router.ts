@@ -1,12 +1,11 @@
 import express from 'express';
-import { getBooksTable, createBook, logout } from '../controllers/admin-controller.js';
+import { getBooksTable, createBook, logout, removeBook } from '../controllers/admin-controller.js';
 
 export const adminRouter = express.Router();
 
-adminRouter
-    .route('/admin/api/v1/')
-    .get(getBooksTable)
-    .post(createBook);
+adminRouter.get('', getBooksTable);
+adminRouter.post('', createBook);
+adminRouter.get('/logout', logout);
+adminRouter.get('/books/:book_id/remove', removeBook);
 
-adminRouter.get('/admin/api/v1/logout', logout)
 

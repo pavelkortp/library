@@ -1,7 +1,12 @@
 import { BookModel } from '../models/book-model.js';
-import { readFile } from 'fs/promises';
-import { con } from '../server.js';
-import { createBook, getAllBooks, getBookById } from '../db-controls/db-scrypst.js';
+import {
+    createBook,
+    getAllBooks,
+    getBookById,
+    getBookByTitle,
+    getBookByYear,
+    removeBookById
+} from '../db-controls/db-scrypst.js';
 
 
 /**
@@ -9,12 +14,8 @@ import { createBook, getAllBooks, getBookById } from '../db-controls/db-scrypst.
  * @param year book's realese year
  * @returns found books.
  */
-export const findByYear = async (year: number): Promise<BookModel[]> => {
-    const q: string = await readFile('src/db-controls/sql/get-books-by-year.sql', 'utf-8');
-    const [rows] = await con.execute(q, [year]);
-
-    return [];
-
+export const findByYear = async (year: number) => {
+    return await getBookByYear(year);
 }
 
 /**
@@ -23,9 +24,7 @@ export const findByYear = async (year: number): Promise<BookModel[]> => {
  * @returns found book.
  */
 export const findByTitle = async (title: string) => {
-    const q: string = await readFile('src/db-controls/sql/get-book-by-title.sql', 'utf-8');
-    const r = await con.execute(q, [title]);
-    // return new BookModel();
+    return await getBookByTitle(title);
 }
 
 /**
@@ -45,10 +44,18 @@ export const getAll = async (): Promise<BookModel[]> => {
 }
 
 /**
- * 
- * @param id 
- * @returns 
+ * Searches book by id in storage.
+ * @param id unique number.
+ * @returns found book.
  */
 export const findById = async (id: number): Promise<BookModel> => {
     return await getBookById(id);
+}
+
+/**
+ * Removes book from storage.
+ * @param id unique number.
+ */
+export const removeById = async (id: number) => {
+    await removeBookById(id);
 }

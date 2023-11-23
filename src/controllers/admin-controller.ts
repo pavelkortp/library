@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 // import { testSpawner } from './books-controller.js';
 import { BookModel } from '../models/book-model.js';
-import { save, getAll } from '../repositories/books-repository.js';
-import { getAllBooks } from '../db-controls/db-scrypst.js';
+import { save, getAll, removeById } from '../repositories/books-repository.js';
 
 
 /**
@@ -21,8 +20,18 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
  * @param res HTML page.
  */
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
-    const books = await getAllBooks();
+    const books = await getAll();
     res.render('admin-page', { books });
+}
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ */
+export const removeBook = async (req: Request, res: Response): Promise<void> => {
+    const id = parseInt(req.params.book_id);
+    await removeById(id);
 }
 
 /**
@@ -39,7 +48,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         description: string,
         pages: string
     } = req.body;
-    
+
     await save(new BookModel(
         book.title,
         parseInt(book.year),
@@ -49,10 +58,10 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         0,
         parseInt(book.pages)
     ));
-   
-    
+
+
     const books = await getAll();
-   
+
     res.render('admin-page', { books });
 }
 
