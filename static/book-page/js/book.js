@@ -3,13 +3,14 @@ var bookIdPosition = pathname.lastIndexOf('/') + 1;
 var isBookInUse = false;
 var bookId;
 
-// doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
-//     views.fillBookInfo(res.data);
-//     if (res.data.event) {
-//         isBookInUse = true;
-//         bookId = res.data.id;
-//     }
-// });
+doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
+    console.log('HEREEEEEEE');
+    view.fillBookInfo(res.data);
+    if (res.data.event) {
+        isBookInUse = true;
+        bookId = res.data.id;
+    }
+});
 
 /* --------------------Show the result, for sending the -----------------------
 ----------------------email in the queue for the book ---------------------- */

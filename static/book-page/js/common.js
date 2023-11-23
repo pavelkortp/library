@@ -87,7 +87,7 @@ var view = {
         });
     },
     fillBookInfo: function (book) {
-        // console.log(book);
+        console.log(book);
         view.fillFields(book, 'title,author,year,pages,isbn,description', "html");
         $('#id').attr({
             'book-id': book.id,
@@ -206,9 +206,10 @@ var controller = {
 /* ------------------------ Jquery Ajax function ---------------------------- */
 
 function doAjaxQuery(method, url, data, callback) {
+    
     $.ajax({
         type: method,
-        url: url,
+        url: 'http://localhost:3000'+url,
         contentType: 'application/json',
         dataType: 'json',
         data: ((method == 'POST') ? JSON.stringify(data) : data),
