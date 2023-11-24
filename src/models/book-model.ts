@@ -61,7 +61,7 @@ export class BookModel {
     constructor(title: string, year: number,
         author: string, language: string,
         description: string,
-        id: number, pages: number,
+        pages: number, id: number = 0,
         views: number = 0, clicks: number = 0
     ) {
         this._year = year;
@@ -69,8 +69,8 @@ export class BookModel {
         this._description = description;
         this._language = language;
         this._author = author;
-        this._id = id;
         this._pages = pages;
+        this._id = id;
         this._views = views;
         this._clicks = clicks;
     }

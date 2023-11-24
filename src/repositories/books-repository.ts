@@ -7,7 +7,7 @@ import {
     getBookByYear,
     removeBookById
 } from '../db-controls/db-scripst.js';
-
+import {writeFile} from 'fs/promises';
 
 /**
  * Searches in db books with year and return it.
@@ -48,7 +48,7 @@ export const getAll = async (): Promise<BookModel[]> => {
  * @param id unique number.
  * @returns found book.
  */
-export const findById = async (id: number): Promise<BookModel> => {
+export const findById = async (id: number): Promise<BookModel | undefined> => {
     return await getBookById(id);
 }
 
