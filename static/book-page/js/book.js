@@ -4,7 +4,6 @@ var isBookInUse = false;
 var bookId;
 
 doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, function(res) {
-    console.log('HEREEEEEEE');
     view.fillBookInfo(res.data);
     if (res.data.event) {
         isBookInUse = true;
