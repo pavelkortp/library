@@ -23,6 +23,19 @@
 
     <%- include('./parts/header.ejs') %>
 
+        <section class="sidebar2">
+            <div class="nav2">
+                <div class="filterBlock">
+                    <a class="sidebar_item" data-filter="new" href="">Нові</a>
+                   
+                    <a class="sidebar_item" data-filter="popular" href="">Популярні</a>
+                
+                    <a class="sidebar_item" data-filter="all" href="">Всі</a>
+                
+                </div>
+            </div>
+        </section>
+
         <section id="main" class="main-wrapper">
             <div class="container">
                 <script id="pattern" type="text/template">
@@ -86,8 +99,8 @@
 
 
             <script src="books-page/js/common.js"></script>
-            <script src="books-page/js/sidebar.js"></script>
             <script src="books-page/js/libs.min.js"></script>
+            <script src="books-page/js/sidebar.js"></script>
             <script src="books-page/js/search.js"></script>
             <script src="books-page/js/index.js"></script>
 </body>
