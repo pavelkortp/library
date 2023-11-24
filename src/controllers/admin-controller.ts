@@ -30,14 +30,8 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
  */
 export const removeBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    try {
-        await removeById(id);
-        res.render('admin-page', {books: await getAll()});
-    }
-    catch (e) {
-        res.render('error-page');
-    }
-
+    await removeById(id);
+    res.render('admin-page', { books: await getAll() });
 
 }
 
@@ -51,20 +45,28 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         title: string,
         year: string,
         language: string,
-        author1: string,
+        author1: string[],
         description: string,
         pages: string
     } = req.body;
-
-    await save(new BookModel(
-        book.title,
-        parseInt(book.year),
-        book.author1,
-        book.language,
-        book.description,
-        0,
-        parseInt(book.pages)
-    ));
+    console.log(book);
+    try {
+        await save(new BookModel(
+            book.title,
+            parseInt(book.year),
+            book.author1.join(' '),
+            book.language,
+            book.description,
+            parseInt(book.pages),
+        ));
+    } catch (err) {
+        console.log(err);
+        res.render('error-page', { error:{
+            status: 400,
+            message: 'Книга з такою назвою вже існує!'
+        } });
+        return
+    }
 
 
     const books = await getAll();

@@ -10,9 +10,9 @@ export const getHomePage = async (req:Request, res:Response) => {
 }
 
 /**
- * 
- * @param req 
- * @param res 
+ * Renders book's page.
+ * @param req HTTP Request.
+ * @param res HTML page.
  */
 export const getBookPage = async (req:Request, res:Response) => {
     res.render('book-page');
