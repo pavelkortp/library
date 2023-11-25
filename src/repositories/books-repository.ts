@@ -3,29 +3,29 @@ import {
     createBook,
     getAllBooks,
     getBookById,
-    getBookByTitle,
-    getBookByYear,
+    // getBookByTitle,
+    // getBookByYear,
     removeBookById
 } from '../db-controls/db-scripst.js';
 import {writeFile} from 'fs/promises';
 
-/**
- * Searches in db books with year and return it.
- * @param year book's realese year
- * @returns found books.
- */
-export const findByYear = async (year: number) => {
-    return await getBookByYear(year);
-}
+// /**
+//  * Searches in db books with year and return it.
+//  * @param year book's realese year
+//  * @returns found books.
+//  */
+// export const findByYear = async (year: number) => {
+//     return await getBookByYear(year);
+// }
 
-/**
- * Searches in db book with title and return it.
- * @param title book's title.
- * @returns found book.
- */
-export const findByTitle = async (title: string) => {
-    return await getBookByTitle(title);
-}
+// /**
+//  * Searches in db book with title and return it.
+//  * @param title book's title.
+//  * @returns found book.
+//  */
+// export const findByTitle = async (title: string) => {
+//     return await getBookByTitle(title);
+// }
 
 /**
  * Satored book in db.
@@ -39,8 +39,8 @@ export const save = async (book: BookModel): Promise<void> => {
  * Returns all books from store.
  * @returns array of books.
  */
-export const getAll = async (): Promise<BookModel[]> => {
-    return await getAllBooks();
+export const getAll = async (filter:'all' | 'new' | 'popular' = 'all'): Promise<BookModel[]> => {
+    return await getAllBooks(filter);
 }
 
 /**

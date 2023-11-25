@@ -36,7 +36,8 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
  * @param res HTML page wich contains all books.
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
-    const books = await getAll();
+    const filter = req.query.filter as 'all' | 'new' | 'popular' || 'all';
+    const books = await getAll(filter);
     res.json({
         
         data: {
@@ -46,7 +47,7 @@ export const getBooks = async (req: Request, res: Response): Promise<void> => {
             total: {
                 amount: books.length
             },
-            filter: req.body.filter,
+            filter: filter,
             offset: 10
         },
         success: true
