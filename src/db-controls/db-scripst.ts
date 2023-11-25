@@ -39,7 +39,7 @@ const createTable = async (db: Connection, scryptPath: string) => {
  * Returns all book's table entries.
  * @returns book array.
  */
-export const getAllBooks = async (filter: 'all' | 'new' | 'popular' = 'all'): Promise<BookModel[]> => {
+export const getAllBooks = async (filter: Filter = 'all'): Promise<BookModel[]> => {
     const q = await readFile(`src/db-controls/sql/get-${filter}-books.sql`, 'utf-8');
     const [rows] = await con.execute<RowDataPacket[]>(q);
 
