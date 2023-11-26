@@ -84,6 +84,7 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
     const values = [id];
     const [row] = await con.execute<RowDataPacket[]>(sqlQuery, values);
     if (row[0]) {
+        await updateBookData(id);
         return new BookModel(
             row[0].title,
             row[0].year,
@@ -92,10 +93,15 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
             row[0].description,
             row[0].pages,
             row[0].id,
-            row[0].views,
+            ++row[0].views,
             row[0].clicks
         );
     }
+}
+
+export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'views'): Promise<void> =>{
+    const sqlQuery = await readFile(`src/db-controls/sql/update-book-${option}.sql`, 'utf-8');
+    await con.execute<RowDataPacket[]>(sqlQuery, [id]);
 }
 
 // /**

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { findById, getAll } from '../repositories/books-repository.js';
+import { findById, getAll, increaseBookClicks } from '../repositories/books-repository.js';
 import { BookModel } from '../models/book-model.js';
-
 /**
  * Renders book-page
  * @param req HTTP Request.
@@ -20,13 +19,29 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
                 pages: book.pages,
                 language: book.language,
                 year: book.year,
+                views: book.views,
                 event: true
             },
             success: true
         });
+        return;
     }
     res.status(404).render('error-page', { error: { status: 404, message: 'Такої книжки не існує' } });
 
+}
+
+export const increaseClicks =  async (req: Request, res: Response): Promise<void> => {
+    const id = parseInt(req.params.book_id);
+    console.log(req.body);
+    if(req.body.clicks){
+        await increaseBookClicks(id);
+        res.json({success: true});
+    }else{
+        res.status(400).json({success: false, msg:'В тілі запиту немає необхідного параметру'});
+    }
+    
+    
+    
 }
 
 
@@ -38,17 +53,19 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const filter = req.query.filter as Filter || 'all';
     const books = await getAll(filter);
+    const offset = req.query.offset as string || '18';
+
     res.json({
-        
+
         data: {
-            books: books.map((e: BookModel) => {
+            books: books.slice(0, parseInt(offset)).map((e: BookModel) => {
                 return { id: e.id, title: e.title, author: e.author }
             }),
             total: {
                 amount: books.length
             },
             filter: filter,
-            offset: 10
+            offset: offset
         },
         success: true
     });

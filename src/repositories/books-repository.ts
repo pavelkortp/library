@@ -5,9 +5,10 @@ import {
     getBookById,
     // getBookByTitle,
     // getBookByYear,
-    removeBookById
+    removeBookById,
+    updateBookData
 } from '../db-controls/db-scripst.js';
-import {writeFile} from 'fs/promises';
+import { writeFile } from 'fs/promises';
 
 // /**
 //  * Searches in db books with year and return it.
@@ -39,7 +40,7 @@ export const save = async (book: BookModel): Promise<void> => {
  * Returns all books from store.
  * @returns array of books.
  */
-export const getAll = async (filter:Filter = 'all'): Promise<BookModel[]> => {
+export const getAll = async (filter: Filter = 'all'): Promise<BookModel[]> => {
     return await getAllBooks(filter);
 }
 
@@ -50,6 +51,14 @@ export const getAll = async (filter:Filter = 'all'): Promise<BookModel[]> => {
  */
 export const findById = async (id: number): Promise<BookModel | undefined> => {
     return await getBookById(id);
+}
+
+/**
+ * 
+ * @param id 
+ */
+export const increaseBookClicks = async (id: number): Promise<void> => {
+    await updateBookData(id, 'clicks');
 }
 
 /**

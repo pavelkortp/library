@@ -88,7 +88,7 @@ var view = {
     },
     fillBookInfo: function (book) {
         console.log(book);
-        view.fillFields(book, 'title,author,year,pages,isbn,description,language', "html");
+        view.fillFields(book, 'title,author,year,pages,isbn,description,language,views', "html");
         $('#id').attr({
             'book-id': book.id,
             'busy': book.event
