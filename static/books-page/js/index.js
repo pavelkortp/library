@@ -7,15 +7,13 @@ $(document).ready(function () {
     (function () {
 
         data = {
-            filter: getParameterByName('filter') || "new",
+            filter: getParameterByName('filter') || global.filter,
             offset: getParameterByName('offset'),
             limit: getParameterByName('count') || global.items_limit_on_page_load
         };
 
         setSidebarActiveButton(null, data.filter);
-        
         doAjaxQuery('GET', '/api/v1/books', data, function (res) {
-            console.log('qindex');
             view.addBooksItems(res.data.books, true);
             drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
             if (localStorage.getItem('h')) {
@@ -74,7 +72,7 @@ var initDrawItemsOnScroll = function (maxItems) {
 };
 
 function loadIndexPage(reqData) {
-    doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {
+    doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {     
         view.addBooksItems(res.data.books, true);
         changeHistoryStateWithParams('push', res.data.filter, res.data.offset);
         drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
