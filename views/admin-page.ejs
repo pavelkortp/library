@@ -49,12 +49,11 @@
                         <td class="d-flex align-items-cente">
                             <img src="http://localhost:3000/img/books/<%- book.id%>.jpg" width="10%"
                                 alt="<%- book.title %>">
-                            <b><%- book.title %></b>
+                            <b><a href="http://localhost:3000/books/<%- book.id%>"><%- book.title %></a></b>
                         </td>
                         <td><%- book.author %></td>
                         <td><%- book.year%></td>
-                        <td><a class="btn btn-danger" id="remove"
-                                href="http://localhost:3000/admin/api/v1/books/<%- book.id%>/remove">Видалити</a></td>
+                        <td><a href="http://localhost:3000/admin/api/v1/books/<%- book.id%>/remove">Видалити</a></td>
                         <td><%- book.clicks%></td>
                     </tr>
                     <% });%>
@@ -62,7 +61,8 @@
         </table>
     </div>
     <div class="container">
-        <form action="http://localhost:3000/admin/api/v1/" method="post" class="was-validated d-flex">
+        <form action="http://localhost:3000/admin/api/v1/" method="post"
+            class="was-validated d-flex">
             <div class="container">
                 <div class="mb-3">
                     <input type="text" name="title" placeholder="Назва книжечки..." required>
@@ -91,10 +91,10 @@
                     <input type="text" name="author1" placeholder="Автор 1">
                 </div>
                 <div class="mb-3">
-                    <input type="text" name="author1" placeholder="Автор 2">
+                    <input type="text"  name="author1" placeholder="Автор 2">
                 </div>
                 <div class="mb-3">
-                    <input type="text" name="author2" placeholder="Автор 3">
+                    <input type="text"  name="author2" placeholder="Автор 3">
                 </div>
                 <div class="mb-3">
                     <textarea class="form-control is-invalid" name="description" placeholder="Опис цієї книжечки"
@@ -154,7 +154,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
         </script>
-    <script src="../../../../../admin-page/js/common.js"></script>
 </body>
 
 </html>
