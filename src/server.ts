@@ -2,18 +2,18 @@ import express, { Express } from 'express';
 import mysql, { Connection } from 'mysql2/promise';
 import basicAuth from 'express-basic-auth';
 
+
 import { booksRouter } from './routes/books-router.js';
 import { adminRouter } from './routes/admin-router.js';
 import { mainRouter } from './routes/pages-router.js';
 
 import { user, password, host, database } from './db-controls/db-config.js';
 import { connect, createTables } from './db-controls/db-scripst.js';
+import { fillBooksTable } from './db-controls/test-data.js';
 
 
 export const app: Express = express();
 const PORT = 3000;
-
-
 
 
 export const con: Connection = await mysql.createConnection({
@@ -25,6 +25,8 @@ export const con: Connection = await mysql.createConnection({
 
 await connect(con);
 await createTables(con);
+//await fillBooksTable();
+
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
