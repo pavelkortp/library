@@ -6,27 +6,49 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="col-xs-5 col-sm-2 col-md-2 col-lg-2">
-                <div class="logo"><a href="http://localhost:3000/" class="navbar-brand"><span
-                            class="sh">Ш</span><span class="plus">++</span></a></div>
+                <div class="logo"><a href="http://localhost:3000/" class="navbar-brand"><span class="sh">Ш</span><span
+                            class="plus">++</span></a></div>
             </div>
             <div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">
                 <div class="main-menu">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <form class="navbar-form navbar-right">
                             <div class="form-group">
-                                <input id="search" type="text" placeholder="Найти книгу" class="form-control">
-                                <script>
-                                    $("#search").bind("keypress", function (e) {
-                                        if (e.keyCode == 13) {
-                                            e.preventDefault();
-                                            alert("а вот это придется сделать самому. Ваш @rshmelev");
-                                        }
-                                    })
-                                </script>
-
+                                <input id="search" type="text" placeholder="Шукати книгу" class="form-control">
                                 <div class="loader"><img src="../img/loading.gif"></div>
-                                <div id="list" size="" class="bAutoComplete mSearchAutoComplete"></div>
+                                <div id="list" size="" class="bAutoComplete mSearchAutoComplete">
+                                </div>
+                                <script id="miniItem" type="text/template">
+                                    <div class="eAutoComplete_itemList">
+                                        <a class="" href="/books/{id}">
+                                          <img class="col-my-2" src="img/books/{id}.jpg">
+                                          <div class="infoBook col-my-10">
+                                            <div class="title">{title}</div>
+                                            <div>{author}</div>
+                                          </div>
+                                        </a>
+                                      </div>
+                                </script>
+                                <script id="more" type="text/template">
+                                    <div class="eAutoComplete_itemMore">
+                                        <a href="{pathUrl}/search?search={text}">
+                                          <span>Показати більше "{text}"</span>
+                                        </a>
+                                      </div>
+                                </script>
+                                <script id="not_found" type="text/template">
+                                    <div class="eAutoComplete_itemList">
+                                        <a class="" href="">
+                                          <img class="col-my-2" src="img/sad-monke.gif">
+                                          <div class="infoBook col-my-10">
+                                            <div class="title">{title}</div>
+                                            <div>{author}</div>
+                                          </div>
+                                        </a>
+                                      </div>
+                                </script>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -34,8 +56,8 @@
             <div class="col-xs-2 col-sm-3 col-md-2 col-lg-2 hidden-xs">
                 <div class="social"><a href="https://www.facebook.com/shpp.kr/" target="_blank"><span
                             class="fa-stack fa-sm"><i class="fa fa-facebook fa-stack-1x"></i></span></a><a
-                        href="http://programming.kr.ua/ru/courses#faq" target="_blank"><span
-                            class="fa-stack fa-sm"><i class="fa fa-book fa-stack-1x"></i></span></a></div>
+                        href="http://programming.kr.ua/ru/courses#faq" target="_blank"><span class="fa-stack fa-sm"><i
+                                class="fa fa-book fa-stack-1x"></i></span></a></div>
             </div>
         </div>
     </nav>

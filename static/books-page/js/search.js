@@ -10,8 +10,8 @@ var callbackQueryMiniItemsSearch = function (res, text) {
     } else {
         view.addMiniItemsSearch(pathUrl, [{
             id: 'no-cover',
-            title: 'По запросу "' + text + '" ничего не найдено :(',
-            author: 'Миллионы натренированных обезьян облазили всю библиотеку и не нашли ничего подходящего, что могло бы соответствовать Вашему запросу.'
+            title: 'За запитом "' + text + '"нічого не знайдено :(',
+            author: 'Мільйони натренованих мавп облазили всю бібліотеку і не знайшли нічого підходящого, що могло б відповідати Вашому запиту.'
         }]);
     }
     setTimeout(function () {
@@ -22,7 +22,7 @@ var callbackQueryMiniItemsSearch = function (res, text) {
 /*-------------------The message on the search result -----------------------*/
 var msgResultSearchText = function (text, number_found) {
     $('.text_found').text(text);
-    var titles = ['совпадение', 'совпадения', 'совпадений'];
+    var titles = ['збіг', 'збіги', 'збігів'];
     var cases = [2, 0, 1, 1, 1, 2];
     var coincidence = titles[(number_found % 100 > 4 && number_found % 100 < 20) ? 2 :
         cases[(number_found % 10 < 5) ? number_found % 10 : 5]];

@@ -44,6 +44,11 @@ export const getAllBooks = async (filter: Filter = 'all', search?: string): Prom
     let rows;
     if (search) {
         q = await readFile(`src/db-controls/sql/search-book.sql`, 'utf-8');
+        let f = 'id';
+        if(filter == 'new') f = 'creation_date';
+        else if(filter == 'popular') f = 'views';
+        
+        q += ` ORDER BY ${f} DESC`;
         [rows] = await con.execute<RowDataPacket[]>(q, [`%${search}%`]);
     } else {
         q = await readFile(`src/db-controls/sql/get-${filter}-books.sql`, 'utf-8');

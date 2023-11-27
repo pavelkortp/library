@@ -52,8 +52,6 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const filter = req.query.filter as Filter || 'all';
     const param = req.query.search as string || undefined;
-    console.log("PARAM " + param);
-    console.log("FILTER " + filter);
 
     const books = await getAll(filter, param);
     const offset = req.query.offset as string || '18';

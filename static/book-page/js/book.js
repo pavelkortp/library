@@ -14,8 +14,7 @@ doAjaxQuery('GET', '/api/v1/books/' + pathname.substr(bookIdPosition), null, fun
 
 
 $('.btnBookID').click(function () {
-
-    doAjaxQuery('PATCH', '/api/v1/books/' + pathname.substr(bookIdPosition), { clicks: true }, function (res) {
+    doAjaxQuery('PATCH', '/api/v1/books/' + pathname.substr(bookIdPosition)+'?increase_clicks=true', { clicks: true }, function (res) {
         alert(
             "Книга свободна и ты можешь прийти за ней." +
             " Наш адрес: г. Кропивницкий, переулок Васильевский 10, 5 этаж." +
