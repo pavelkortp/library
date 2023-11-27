@@ -40,8 +40,8 @@ export const save = async (book: BookModel): Promise<void> => {
  * Returns all books from store.
  * @returns array of books.
  */
-export const getAll = async (filter: Filter = 'all'): Promise<BookModel[]> => {
-    return await getAllBooks(filter);
+export const getAll = async (filter: Filter = 'all', search?:string): Promise<BookModel[]> => {
+    return await getAllBooks(filter, search);
 }
 
 /**

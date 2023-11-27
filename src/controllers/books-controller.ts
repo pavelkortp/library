@@ -30,17 +30,17 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
 
 }
 
-export const increaseClicks =  async (req: Request, res: Response): Promise<void> => {
+export const increaseClicks = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    if(req.query.increase_clicks){
+    if (req.query.increase_clicks) {
         await increaseBookClicks(id);
-        res.json({success: true});
-    }else{
-        res.status(400).json({success: false, msg:'В тілі запиту немає необхідного параметру'});
+        res.json({ success: true });
+    } else {
+        res.status(400).json({ success: false, msg: 'В тілі запиту немає необхідного параметру' });
     }
-    
-    
-    
+
+
+
 }
 
 
@@ -51,7 +51,11 @@ export const increaseClicks =  async (req: Request, res: Response): Promise<void
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const filter = req.query.filter as Filter || 'all';
-    const books = await getAll(filter);
+    const param = req.query.search as string || undefined;
+    console.log("PARAM " + param);
+    console.log("FILTER " + filter);
+
+    const books = await getAll(filter, param);
     const offset = req.query.offset as string || '18';
 
     res.json({
@@ -64,8 +68,10 @@ export const getBooks = async (req: Request, res: Response): Promise<void> => {
                 amount: books.length
             },
             filter: filter,
+            search: param,
             offset: offset
         },
+
         success: true
     });
 }

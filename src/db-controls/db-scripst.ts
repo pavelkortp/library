@@ -39,9 +39,17 @@ const createTable = async (db: Connection, scryptPath: string) => {
  * Returns all book's table entries.
  * @returns book array.
  */
-export const getAllBooks = async (filter: Filter = 'all'): Promise<BookModel[]> => {
-    const q = await readFile(`src/db-controls/sql/get-${filter}-books.sql`, 'utf-8');
-    const [rows] = await con.execute<RowDataPacket[]>(q);
+export const getAllBooks = async (filter: Filter = 'all', search?: string): Promise<BookModel[]> => {
+    let q;
+    let rows;
+    if (search) {
+        q = await readFile(`src/db-controls/sql/search-book.sql`, 'utf-8');
+        [rows] = await con.execute<RowDataPacket[]>(q, [`%${search}%`]);
+    } else {
+        q = await readFile(`src/db-controls/sql/get-${filter}-books.sql`, 'utf-8');
+        [rows] = await con.execute<RowDataPacket[]>(q);
+    }
+
 
     return rows.map((e: any) => new BookModel(
         e.title,
@@ -99,7 +107,7 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
     }
 }
 
-export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'views'): Promise<void> =>{
+export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'views'): Promise<void> => {
     const sqlQuery = await readFile(`src/db-controls/sql/update-book-${option}.sql`, 'utf-8');
     await con.execute<RowDataPacket[]>(sqlQuery, [id]);
 }
