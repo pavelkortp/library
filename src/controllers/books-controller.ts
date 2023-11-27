@@ -32,8 +32,7 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
 
 export const increaseClicks =  async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    console.log(req.body);
-    if(req.body.clicks){
+    if(req.query.increase_clicks){
         await increaseBookClicks(id);
         res.json({success: true});
     }else{

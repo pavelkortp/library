@@ -36,10 +36,13 @@ app.use('/api/v1/books', booksRouter);
 app.use(mainRouter);
 
 
-app.use('/admin/api/v1', basicAuth({
+app.use('/admin', basicAuth({
     challenge: true,
     users: { admin: '1234' }
 }));
+
+
+
 app.use('/admin/api/v1', adminRouter);
 app.listen(PORT, () => {
     console.log(`Server listening at port ${PORT}`);
