@@ -1,7 +1,9 @@
 import express from 'express';
 import { getBooksTable, createBook, logout, removeBook } from '../controllers/admin-controller.js';
-// import multer from 'multer';
-// const upload = multer({ dest: '../../static/books/img/' });
+import multer from 'multer';
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 
 
@@ -9,7 +11,7 @@ import { getBooksTable, createBook, logout, removeBook } from '../controllers/ad
 export const adminRouter = express.Router();
 
 adminRouter.get('', getBooksTable);
-adminRouter.post('', createBook);
+adminRouter.post('', upload.single('image'), createBook);
 adminRouter.get('/books/:book_id/remove', removeBook);
 
 

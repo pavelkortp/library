@@ -27,7 +27,6 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
         return;
     }
     res.status(404).render('error-page', { error: { status: 404, message: 'Такої книжки не існує' } });
-
 }
 
 export const increaseClicks = async (req: Request, res: Response): Promise<void> => {
@@ -36,11 +35,8 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
         await increaseBookClicks(id);
         res.json({ success: true });
     } else {
-        res.status(400).json({ success: false, msg: 'В тілі запиту немає необхідного параметру' });
+        res.status(400).json({ success: false });
     }
-
-
-
 }
 
 
@@ -49,27 +45,82 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
  * @param req HTTP Request
  * @param res HTML page wich contains all books.
  */
-export const getBooks = async (req: Request, res: Response): Promise<void> => {
-    const filter = req.query.filter as Filter || 'all';
-    const param = req.query.search as string || undefined;
+// export const getBooks = async (req: Request, res: Response): Promise<void> => {
+//     const filter = req.query.filter as Filter || 'new';
+//     const param = req.query.search as string;
+//     console.log(`OFFSET ${parseInt(req.query.offset as string)}, LIMIT: ${req.query.limit}`);
 
-    const books = await getAll(filter, param);
-    const offset = req.query.offset as string || '18';
+//     let offset = req.query.offset as string || '0';
+//     const limit = parseInt(req.query.limit as string) || 20;
+//     let b = (await getAll(filter, param));
+//     let books
+//     if (!req.query.offset) {
+//         offset = '10';
+//         books = b
+//             .slice(0, limit)
+//             .map((e: BookModel) => {
+//                 return {
+//                     id: e.id,
+//                     author: e.author,
+//                     title: e.title
+//                 }
+//             });
+//     } else {
+//         books = b
+//             .slice(parseInt(offset), parseInt(offset)+10)
+//             .map((e: BookModel) => {
+//                 return {
+//                     id: e.id,
+//                     author: e.author,
+//                     title: e.title
+//                 }
+//             });
+//     }
+
+
+//     res.json({
+//         data: {
+//             books: books,
+//             total: {
+//                 amount: b.length
+//             },
+//             filter: filter,
+//             search: param,
+//             offset: parseInt(offset),
+//             limit: limit + parseInt(offset)
+//         },
+//         success: true
+//     });
+// }
+export const getBooks = async (req: Request, res: Response): Promise<void> => {
+    const filter = req.query.filter as Filter || 'new';
+    const param = req.query.search as string;
+
+    const offset = parseInt(req.query.offset as string) || 0;
+    const limit = parseInt(req.query.limit as string) || 20;
+
+    const allBooks = await getAll(filter, param);
+    const books = allBooks
+        .slice(offset, offset + limit)
+        .map((e: BookModel) => {
+            return {
+                id: e.id,
+                author: e.author,
+                title: e.title
+            }
+        });
 
     res.json({
-
         data: {
-            books: books.slice(0, parseInt(offset)).map((e: BookModel) => {
-                return { id: e.id, title: e.title, author: e.author }
-            }),
+            books: books,
             total: {
-                amount: books.length
+                amount: allBooks.length
             },
             filter: filter,
             search: param,
-            offset: offset
+            offset: offset,
+            limit: limit
         },
-
         success: true
     });
 }

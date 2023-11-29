@@ -49,7 +49,9 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         description: string,
         pages: string
     } = req.body;
-    console.log(book);
+    const image = req.file;
+    // console.log(image);
+    
     try {
         await save(new BookModel(
             book.title,
@@ -58,12 +60,13 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
             book.language,
             book.description,
             parseInt(book.pages),
+            image!
         ));
     } catch (err) {
         console.log(err);
         res.render('error-page', { error:{
             status: 400,
-            message: 'Книга з такою назвою вже існує!'
+            message: err
         } });
         return
     }
