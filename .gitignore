@@ -4,3 +4,4 @@ dist
 package-lock.json
 db-config.ts
 .vscode
+./static/img/books
