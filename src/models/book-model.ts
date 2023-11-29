@@ -13,6 +13,11 @@ export class BookModel {
     private _views: number
 
     /**
+     * Book's art.
+     */
+    private _image?: Express.Multer.File;
+
+    /**
      * Clicks count on this book.
      */
     private _clicks: number
@@ -61,8 +66,11 @@ export class BookModel {
     constructor(title: string, year: number,
         author: string, language: string,
         description: string,
-        pages: number, id: number = 0,
-        views: number = 0, clicks: number = 0
+        pages: number,
+        image?: Express.Multer.File,
+        id: number = 0,
+        views: number = 0,
+        clicks: number = 0
     ) {
         this._year = year;
         this._title = title;
@@ -71,6 +79,7 @@ export class BookModel {
         this._author = author;
         this._pages = pages;
         this._id = id;
+        this._image = image;
         this._views = views;
         this._clicks = clicks;
     }
@@ -114,6 +123,10 @@ export class BookModel {
 
     get clicks(): number {
         return this._clicks;
+    }
+
+    get image(): Express.Multer.File | undefined {
+        return this._image;
     }
 
     get views(): number {
