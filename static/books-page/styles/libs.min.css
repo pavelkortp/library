@@ -5440,7 +5440,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
     cursor: default;
     background-color: #337ab7;
     border-color: #337ab7
-}
+}content
 
 .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
     color: #777;
