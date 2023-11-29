@@ -26,12 +26,12 @@
         <section class="sidebar2">
             <div class="nav2">
                 <div class="filterBlock">
-                    <a class="sidebar_item" data-filter="new" href="">Нові</a>
-                   
-                    <a class="sidebar_item" data-filter="popular" href="">Популярні</a>
-                
-                    <a class="sidebar_item" data-filter="all" href="">Всі</a>
-                
+                    <a class="sidebar_item" href="" data-filter='new'>Нові</a>
+
+                    <a class="sidebar_item" href="" data-filter='popular'>Популярні</a>
+
+                    <a class="sidebar_item" href="" data-filter='all'>Всі</a>
+
                 </div>
             </div>
         </section>
@@ -39,63 +39,36 @@
         <section id="main" class="main-wrapper">
             <div class="container">
                 <script id="pattern" type="text/template">
-                <div data-book-id="{id}" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
-                    <div class="book">
-                        <a href="/books/{id}"><img src="img/books/{id}.jpg" alt="{title}">
-                            <div data-title="{title}" class="blockI">
-                                <div data-book-title="{title}" class="title size_text">{title}</div>
-                                <div data-book-author="{author}" class="author">{author}</div>
-                            </div>
-                        </a>
-                        <a href="/books/{id}">
-                            <button type="button" class="details btn btn-success">Читати</button>
-                        </a>
+                    <div data-book-id="{id}" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
+                        <div class="book">
+                            <a href="/books/{id}"><img src="img/books/{id}.jpg" alt="{title}">
+                                <div data-title="{title}" class="blockI">
+                                    <div data-book-title="{title}" class="title size_text">{title}</div>
+                                    <div data-book-author="{author}" class="author">{author}</div>
+                                </div>
+                            </a>
+                            <a href="/books/{id}">
+                                <button type="button" class="details btn btn-success">Читати</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </script>
-                <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-                </div>
+                </script>
+                <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
             </div>
         </section>
 
+        <center>
+            <ul class="pagination pagination-lg">
+                <li>
+                    <a href="">Назад</a>
+                </li>
+                <li>
+                    <a id="loading" href="">Показати більше</a>
+                </li>
+            </ul>
+        </center>
 
         <%- include('parts/footer.ejs') %>
-
-            <div class="sweet-overlay" tabindex="-1" style="opacity: -0.02; display: none;"></div>
-            <div class="sweet-alert hideSweetAlert" data-custom-class="" data-has-cancel-button="false"
-                data-has-confirm-button="true" data-allow-outside-click="false" data-has-done-function="false"
-                data-animation="pop" data-timer="null" style="display: none; margin-top: -169px; opacity: -0.03;">
-                <div class="sa-icon sa-error" style="display: block;">
-                    <span class="sa-x-mark">
-                        <span class="sa-line sa-left"></span>
-                        <span class="sa-line sa-right"></span>
-                    </span>
-                </div>
-                <div class="sa-icon sa-warning" style="display: none;">
-                    <span class="sa-body"></span>
-                    <span class="sa-dot"></span>
-                </div>
-                <div class="sa-icon sa-info" style="display: none;"></div>
-                <div class="sa-icon sa-success" style="display: none;">
-                    <span class="sa-line sa-tip"></span>
-                    <span class="sa-line sa-long"></span>
-
-                    <div class="sa-placeholder"></div>
-                    <div class="sa-fix"></div>
-                </div>
-                <div class="sa-icon sa-custom" style="display: none;"></div>
-                <h2>Ооопс!</h2>
-                <p style="display: block;">Ошибка error</p>
-                <fieldset>
-                    <input type="text" tabindex="3" placeholder="">
-                    <div class="sa-input-error"></div>
-                </fieldset>
-                <div class="sa-error-container">
-                    <div class="icon">!</div>
-                    <p>Not valid!</p>
-                </div>
-            </div>
 
 
             <script src="books-page/js/common.js"></script>
