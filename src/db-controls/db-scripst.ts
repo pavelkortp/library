@@ -1,8 +1,7 @@
 import { Connection, RowDataPacket } from 'mysql2/promise';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile, unlink } from 'fs/promises';
 import { BookModel } from '../models/book-model.js';
 import { con } from '../server.js';
-import { OkPacket } from 'mysql';
 
 /**
  * Connects to db.
@@ -90,7 +89,6 @@ export const createBook = async (book: BookModel) => {
     const [res] = await con.query(sqlQuery, values);
     
     if('insertId' in res){
-        console.log(res);
         const id = res.insertId as number;
         await writeFile(`static/img/books/${id}.jpg`, book.image!.buffer);
     }else{
@@ -116,7 +114,7 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
             row[0].language,
             row[0].description,
             row[0].pages,
-            
+            undefined,
             row[0].id,
             ++row[0].views,
             row[0].clicks
@@ -166,4 +164,5 @@ export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'v
 export const removeBookById = async (id: number) => {
     const q: string = await readFile('src/db-controls/sql/remove-book-by-id.sql', 'utf-8');
     await con.execute(q, [id]);
+    await unlink(`static/img/books/${id}.jpg`);
 }

@@ -240,8 +240,8 @@ $(function () {
 });
 
 var global = {
-    items_limit_on_page_load: 24,
-    number_of_items_onscroll: 6,
+    items_limit_on_page_load: 20,
+    number_of_items_onscroll: 10,
     filter: 'new'
 };
 
