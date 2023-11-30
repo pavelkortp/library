@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { BookModel } from '../models/book-model.js';
 import { save, getAll, removeById } from '../repositories/books-repository.js';
-
+/**
+ * Count of books per one page on admin pannel.
+ */
+const BOOKS_PER_PAGE: number = 5;
 
 /**
  * NOT WORK
@@ -20,7 +23,27 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
  */
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
     const books = await getAll();
-    res.render('admin-page', { books });
+    const page = parseInt(req.query.page as string || '1');
+   
+    
+    const totalPages = books.length / BOOKS_PER_PAGE;
+
+    const offset = (page - 1) * BOOKS_PER_PAGE;
+    const o ={
+        data: {
+            books: books
+                .slice(offset, offset+BOOKS_PER_PAGE)
+                .map((e) => {
+                    return { id: e.id, author: e.author, clicks: e.clicks, year: e.year, title: e.title };
+                }),
+            totalPages: totalPages,
+            page: page
+        },
+
+        success: true
+    }
+    
+    res.json(o);
 }
 
 /**
@@ -31,8 +54,12 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
 export const removeBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
     await removeById(id);
-    res.render('admin-page', { books: await getAll() });
+    res.json({
+        data: {
 
+        },
+        success: true
+    });
 }
 
 /**
@@ -51,7 +78,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
     } = req.body;
     const image = req.file;
     // console.log(image);
-    
+
     try {
         await save(new BookModel(
             book.title,
@@ -62,19 +89,21 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
             parseInt(book.pages),
             image!
         ));
+        res.json({
+            success: true
+        })
     } catch (err) {
         console.log(err);
-        res.render('error-page', { error:{
-            status: 400,
-            message: err
-        } });
-        return
+        res.render('error-page', {
+            error: {
+                status: 400,
+                message: err
+            }
+        });
+        res.json({
+            success: false
+        })
     }
-
-
-    const books = await getAll();
-
-    res.render('admin-page', { books });
 }
 
 

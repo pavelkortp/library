@@ -33,18 +33,33 @@ var view = {
         return $('#pattern').html()
             .replace(/{id}/g, book.id)
             .replace(/{title}/g, book.title)
-            .replace(/{author}/g, book.author);
+            .replace(/{author}/g, book.author)
+            .replace(/{year}/g, book.year)
+            .replace(/{clicks}/g, book.clicks);
+    },
+    addPageListItem: (pageNumber) => {
+        return $('#pages-pattern').html()
+            .replace(/{page}/g, pageNumber);
     },
     addBooksItems: function (books, doClean) {
         var content = $('#content');
         var contentHTML = ((doClean) ? '' : content.html());
-
+        
         for (var i in books) {
             contentHTML += view.addBookItem(books[i]);
         }
-
+        
         content.html(contentHTML);
         $('.blockI').matchHeight(); // Aligns all the height of the book
+    },
+    addPages: function (count, doClean) {
+        var content = $('#pages');
+        var contentHTML = ((doClean) ? '' : content.html());
+        for (let i = 1; i <= count; i++) {
+            contentHTML += view.addPageListItem(i);
+        }
+
+        content.html(contentHTML);
     },
     showNot_found: function (searchText, pathUrl) {
         var contentNotFound = $('#not_found').html()
@@ -239,9 +254,7 @@ $(function () {
 });
 
 var global = {
-    items_limit_on_page_load: 24,
-    number_of_items_onscroll: 6,
-    filter: 'new'
+    items_limit_on_page_load: 5
 };
 
 function htmlspecialchars(html) {

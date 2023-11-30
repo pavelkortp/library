@@ -10,8 +10,8 @@ const upload = multer({ storage: storage });
 
 export const adminRouter = express.Router();
 
-adminRouter.get('', getBooksTable);
-adminRouter.post('', upload.single('image'), createBook);
-adminRouter.get('/books/:book_id/remove', removeBook);
+adminRouter.get('/books', getBooksTable);
+adminRouter.post('/books/create', upload.single('image'), createBook);
+adminRouter.delete('/books/:book_id/remove', removeBook);
 
 

@@ -18,7 +18,21 @@ export const getBookPage = async (req: Request, res: Response): Promise<void> =>
     res.render('book-page');
 }
 
+/**
+ * Renders search results page.
+ * @param req HTTP request.
+ * @param res HTML page with results of searching.
+ */
 export const getSearchedPage = async (req: Request, res: Response): Promise<void> => {
-    res.render('search-page', {search: req.query.search});
+    res.render('search-page', { search: req.query.search });
+}
+
+/**
+ * Renders admin page.
+ * @param req HTTP request
+ * @param res HTML admin page.
+ */
+export const getAdminPage = async (req: Request, res: Response): Promise<void> => {
+    res.render('admin-page');
 }
 
