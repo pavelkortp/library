@@ -96,8 +96,8 @@ export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const filter = req.query.filter as Filter || 'new';
     const param = req.query.search as string;
 
-    const offset = parseInt(req.query.offset as string) || 0;
-    const limit = parseInt(req.query.limit as string) || 20;
+    const offset = parseInt(req.query.offset as string || '0');
+    const limit = parseInt(req.query.limit as string || '20');
 
     const allBooks = await getAll(filter, param);
     const books = allBooks
