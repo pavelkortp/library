@@ -1,31 +1,53 @@
-var drawItemsOnScroll,
-    isScrollRunning = false;
-console.log(isScrollRunning);
+var drawItemsOnClick;
+    // isScrollRunning = true;
+// console.log(isScrollRunning);
 
+//Executed when the page is loaded
 $(document).ready(function () {
-
+    //Anonymous function called during creation: sends a request to the api
     (function () {
 
+        // Data that sends to the server
         data = {
             filter: getParameterByName('filter') || global.filter,
             offset: getParameterByName('offset'),
             limit: getParameterByName('count') || global.items_limit_on_page_load
         };
 
+        // The default filter is set on the page
         setSidebarActiveButton(null, data.filter);
 
+        // The request for the books
+        doAjaxQuery('GET', '/api/v1/books', data, function (res) {
+            // Adding received books
+            view.addBooksItems(res.data.books, true);
+            // ....
+            drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
+
+
+            if (localStorage.getItem('h')) {
+                $(window).scrollTop(localStorage.getItem('h'));
+                localStorage.removeItem('h');
+            }
+        });
     }());
+    
+    $('#next').click((event)=>{
+        event.preventDefault();
+        
+        drawItemsOnClick();
+    })
 
     $('#content').on('click', '.book', function () {
         localStorage.setItem('h', $(window).scrollTop());
     });
 
-    $(document).scroll(function () {
-        if ((($(document).height() - $(window).scrollTop()) < (2 * $(window).height())) && !isScrollRunning) {
-            isScrollRunning = true;
-            drawItemsOnScroll();
-        }
-    });
+    // $(document).scroll(function () {
+    //     if ((($(document).height() - $(window).scrollTop()) < (2 * $(window).height())) && !isScrollRunning) {
+    //         isScrollRunning = false;
+    //         // drawItemsOnClick();
+    //     }
+    // });
 });
 
 function getParameterByName(name, url) {
@@ -39,7 +61,24 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-var initDrawItemsOnScroll = function (maxItems) {
+function loadIndexPage(reqData) {
+    doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {
+        view.addBooksItems(res.data.books, true);
+        changeHistoryStateWithParams('push',res.data.search, res.data.filter, res.data.offset);
+        drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
+    });
+}
+
+function setSidebarActiveButton(activeElem, filterStringValue) {
+    $('.sidebar_item').removeClass('active');
+    if (activeElem) {
+        activeElem.closest('a').addClass('active');
+    } else {
+        $('a[data-filter=' + filterStringValue + ']').addClass('active');
+    }
+}
+
+function initDrawItemsOnClick(maxItems) {
     var maxNumOfItems = maxItems,
         limit = global.number_of_items_onscroll,
         offset = parseInt(getParameterByName('count')) || global.items_limit_on_page_load;
@@ -47,6 +86,7 @@ var initDrawItemsOnScroll = function (maxItems) {
     return function () {
         if (offset < maxNumOfItems) {
             var data = {
+                'search':getParameterByName('search'),
                 'filter': getParameterByName('filter') || "new",
                 'limit': limit,
                 'offset': offset
@@ -61,22 +101,5 @@ var initDrawItemsOnScroll = function (maxItems) {
                 });
             offset += limit;
         }
-    }
-};
-
-function loadIndexPage(reqData) {
-    doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {     
-        view.addBooksItems(res.data.books, true);
-        changeHistoryStateWithParams('push', res.data.search, res.data.filter, res.data.offset);
-        drawItemsOnScroll = initDrawItemsOnScroll(res.data.total.amount);
-    });
-}
-
-function setSidebarActiveButton(activeElem, filterStringValue) {
-    $('.sidebar_item').removeClass('active');
-    if (activeElem) {
-        activeElem.closest('a').addClass('active');
-    } else {
-        $('a[data-filter=' + filterStringValue + ']').addClass('active');
     }
 }

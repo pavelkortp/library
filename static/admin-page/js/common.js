@@ -148,7 +148,7 @@ var view = {
             closeOnConfirm: false
         },
             function () {
-                doAjaxQuery('GET', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
+                doAjaxQuery('DELETE', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
                     swal({
                         title: 'Удалено!',
                         text: 'Надеюсь, вы осознаете что сейчас произошло ))',

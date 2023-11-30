@@ -5,7 +5,7 @@ console.log(isScrollRunning);
 $(document).ready(function () {
 
     $('#remove').on('click', function () {
-        var id = 15;
+        var id = 29;
         view.showConfirm(id);
     });
 
