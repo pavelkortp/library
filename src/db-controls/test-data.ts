@@ -4,11 +4,13 @@ import { BookModel } from '../models/book-model.js';
 
 export const fillBooksTable = async () => {
     const books: BookModel[] = JSON.parse(await readFile('./test-books.json', 'utf-8'));
-    try {
-        books.forEach(async (e) => {
+
+    books.forEach(async (e) => {
+        try {
             createBook(e);
-        });
-    } catch (err) {
-        console.log('test data already exists');
-    }
+        } catch (err) {
+            console.log(`${e} data already exists`);
+        }
+    });
+
 }

@@ -1,14 +1,10 @@
-var drawItemsOnScroll,
-    isScrollRunning = false;
-console.log(isScrollRunning);
-
 $(document).ready(function () {
 
-    (() => {
-        data = {
-            page: 1,
-        };
-    })();
+    const data = {
+        page: 1,
+    };
+    $('#logout').on('click', logout);
+    $('#create').on('click', create);
     doAjaxQuery('GET', 'admin/api/v1/books', data, function (res) {
         // Adding received books
         view.addBooksItems(res.data.books, true);
@@ -37,9 +33,71 @@ function removeBook(id) {
     view.showConfirm(id);
 }
 
+function create(e) {
+    e.preventDefault();
+
+    const formData = new FormData($('#bookForm')[0]); // Замініть 'yourFormId' на ID вашої форми
+
+    fetch('http://localhost:3000/admin/api/v1/books/create', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            swal({
+                title: 'Чудово',
+                text: 'Книгу успішно додано!',
+                type: 'success',
+                confirmButtonColor: '#27AE60',
+                confirmButtonText: 'Закрити',
+                closeOnConfirm: false
+            });
+        } else {
+            swal({
+                title: 'Погані новини',
+                text: 'При додаванні книги виникла помилка(',
+                type: 'warning',
+                confirmButtonColor: '#27AE60',
+                confirmButtonText: 'Закрити',
+                closeOnConfirm: false
+            });
+        }
+    })
+    .catch(error => {
+        swal({
+            title: 'Погані новини',
+            text: 'Ви ввели некоректні/не всі дані',
+            type: 'warning',
+            confirmButtonColor: '#27AE60',
+            confirmButtonText: 'Закрити',
+            closeOnConfirm: false
+        });
+    });
+}
+
+
+
+function logout() {
+    fetch('admin', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Basic ' + btoa('none:none'),
+        }
+    }).then(
+        () => {
+            window.location.href = '/';
+        }
+    );
+}
+
 function getBooks(pageNumber) {
-    
-    data = {
+    const data = {
         page: pageNumber
     };
     doAjaxQuery('GET', 'admin/api/v1/books', data, function (res) {

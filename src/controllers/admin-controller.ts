@@ -24,15 +24,15 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
     const books = await getAll();
     const page = parseInt(req.query.page as string || '1');
-   
-    
-    const totalPages = books.length / BOOKS_PER_PAGE;
+
+
+    const totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
 
     const offset = (page - 1) * BOOKS_PER_PAGE;
-    const o ={
+    const o = {
         data: {
             books: books
-                .slice(offset, offset+BOOKS_PER_PAGE)
+                .slice(offset, offset + BOOKS_PER_PAGE)
                 .map((e) => {
                     return { id: e.id, author: e.author, clicks: e.clicks, year: e.year, title: e.title };
                 }),
@@ -42,7 +42,7 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
 
         success: true
     }
-    
+
     res.json(o);
 }
 
@@ -77,8 +77,8 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         pages: string
     } = req.body;
     const image = req.file;
-    // console.log(image);
 
+    let success = true;
     try {
         await save(new BookModel(
             book.title,
@@ -89,21 +89,15 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
             parseInt(book.pages),
             image!
         ));
-        res.json({
-            success: true
-        })
     } catch (err) {
         console.log(err);
-        res.render('error-page', {
-            error: {
-                status: 400,
-                message: err
-            }
-        });
+        success = false;
+    } finally {
         res.json({
-            success: false
-        })
+            success: success
+        });
     }
+
 }
 
 

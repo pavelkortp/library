@@ -9,6 +9,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="admin-page/styles/style.css">
+    <link rel="stylesheet" href="admin-page/styles/libs.min.css">
     <link rel="shortcut icon" href="icons/admin.png" type="image/x-icon">
     <title>Admin-page</title>
 </head>
@@ -24,8 +25,8 @@
 
 
             <div class="col-md-3 text-end">
-                <a href="http://localhost:3000/admin/api/v1/logout" type="button" id="logout"
-                    class="btn btn-outline-primary me-2">Logout</a>
+                <button href="http://localhost:3000/admin" type="button" id="logout"
+                    class="btn btn-outline-primary me-2" onclick="" >Logout</button>
             </div>
         </header>
     </div>
@@ -70,8 +71,8 @@
         </div>
     </div>
     <div class="container">
-        <form action="http://localhost:3000/admin/api/v1/" method="post" enctype="multipart/form-data"
-            class="was-validated d-flex">
+        <form action="http://localhost:3000/admin/api/v1/books/create" method="post" enctype="multipart/form-data"
+            class="was-validated d-flex" id="bookForm">
             <div class="container">
                 <div class="mb-3">
                     <input type="text" name="title" placeholder="Назва книжечки..." required>
@@ -93,7 +94,7 @@
                 </script>
                 <img id="frame" src="" width="15%" class="img-fluid" />
 
-                <button class="btn btn-primary" type="submit">Додати книжку</button>
+                <button class="btn btn-primary" id="create" type="submit">Додати книжку</button>
             </div>
             <div class="container">
                 <div class="mb-3">

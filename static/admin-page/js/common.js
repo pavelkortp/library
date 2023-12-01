@@ -44,7 +44,6 @@ var view = {
     addBooksItems: function (books, doClean) {
         var content = $('#content');
         var contentHTML = ((doClean) ? '' : content.html());
-        
         for (var i in books) {
             contentHTML += view.addBookItem(books[i]);
         }
@@ -153,20 +152,20 @@ var view = {
     },
     showConfirm: function (bookId) {
         swal({
-            title: 'Вы уверены?',
-            text: 'Согласие приведет к невозвратимому удалению книги',
+            title: 'Ви впевнені?',
+            text: 'Згода призведе до безповоротного видалення книги',
             type: 'warning',
             showCancelButton: true,
-            cancelButtonText: 'Льолик, не надо!',
+            cancelButtonText: 'Льолік, не треба!',
             confirmButtonColor: '#27AE60',
-            confirmButtonText: 'Да, уверен!',
+            confirmButtonText: 'Так, упевнений!',
             closeOnConfirm: false
         },
             function () {
                 doAjaxQuery('DELETE', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
                     swal({
-                        title: 'Удалено!',
-                        text: 'Надеюсь, вы осознаете что сейчас произошло ))',
+                        title: 'Видалено!',
+                        text: 'Сподіваюся, ви усвідомлюєте що зараз сталося ))',
                         type: 'success'
                     },
                         function () {
