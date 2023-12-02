@@ -42,13 +42,6 @@ $(document).ready(function () {
     $('#content').on('click', '.book', function () {
         localStorage.setItem('h', $(window).scrollTop());
     });
-
-    // $(document).scroll(function () {
-    //     if ((($(document).height() - $(window).scrollTop()) < (2 * $(window).height())) && !isScrollRunning) {
-    //         isScrollRunning = false;
-    //         // drawItemsOnClick();
-    //     }
-    // });
 });
 
 function getParameterByName(name, url) {
