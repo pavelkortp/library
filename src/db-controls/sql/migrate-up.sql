@@ -15,9 +15,12 @@ CREATE TABLE IF NOT EXISTS library.books_authors(
     FOREIGN KEY (book_id) REFERENCES books(id)
 );
 
-INSERT INTO library.books_authors(books_id, author_id_1)
-SELECT authors.id
+INSERT INTO library.books_authors(book_id, author_id_1)
+SELECT books.id, authors.id
 FROM library.books
 RIGHT JOIN library.authors
 ON books.author = authors.name
 ORDER BY books.id;
+
+ALTER TABLE library.books
+DROP COLUMN author;
