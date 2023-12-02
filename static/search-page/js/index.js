@@ -9,6 +9,7 @@ $(document).ready(function () {
 
         // Data that sends to the server
         data = {
+            search: getParameterByName('search'),
             filter: getParameterByName('filter') || global.filter,
             offset: getParameterByName('offset'),
             limit: getParameterByName('count') || global.items_limit_on_page_load
