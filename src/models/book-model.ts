@@ -55,7 +55,7 @@ export class BookModel {
      * Book's author .... or s
      * @private
      */
-    private _author: string;
+    private _author1: string;
 
     /**
      * Book's rating ...
@@ -76,7 +76,7 @@ export class BookModel {
         this._title = title;
         this._description = description;
         this._language = language;
-        this._author = author;
+        this._author1 = author;
         this._pages = pages;
         this._id = id;
         this._image = image;
@@ -87,10 +87,6 @@ export class BookModel {
 
     get rating(): number {
         return this._rating;
-    }
-
-    set rating(value: number) {
-        this._rating = value;
     }
 
     get title(): string {
@@ -110,7 +106,7 @@ export class BookModel {
     }
 
     get author(): string {
-        return this._author;
+        return this._author1;
     }
 
     get pages(): number {

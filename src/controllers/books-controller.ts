@@ -26,7 +26,7 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
         });
         return;
     }
-    res.status(404).render('error-page', { error: { status: 404, message: 'Такої книжки не існує' } });
+    res.status(404);
 }
 
 export const increaseClicks = async (req: Request, res: Response): Promise<void> => {
@@ -45,61 +45,17 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
  * @param req HTTP Request
  * @param res HTML page wich contains all books.
  */
-// export const getBooks = async (req: Request, res: Response): Promise<void> => {
-//     const filter = req.query.filter as Filter || 'new';
-//     const param = req.query.search as string;
-//     console.log(`OFFSET ${parseInt(req.query.offset as string)}, LIMIT: ${req.query.limit}`);
-
-//     let offset = req.query.offset as string || '0';
-//     const limit = parseInt(req.query.limit as string) || 20;
-//     let b = (await getAll(filter, param));
-//     let books
-//     if (!req.query.offset) {
-//         offset = '10';
-//         books = b
-//             .slice(0, limit)
-//             .map((e: BookModel) => {
-//                 return {
-//                     id: e.id,
-//                     author: e.author,
-//                     title: e.title
-//                 }
-//             });
-//     } else {
-//         books = b
-//             .slice(parseInt(offset), parseInt(offset)+10)
-//             .map((e: BookModel) => {
-//                 return {
-//                     id: e.id,
-//                     author: e.author,
-//                     title: e.title
-//                 }
-//             });
-//     }
-
-
-//     res.json({
-//         data: {
-//             books: books,
-//             total: {
-//                 amount: b.length
-//             },
-//             filter: filter,
-//             search: param,
-//             offset: parseInt(offset),
-//             limit: limit + parseInt(offset)
-//         },
-//         success: true
-//     });
-// }
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const filter = req.query.filter as Filter || 'new';
-    const param = req.query.search as string;
+    const search = req.query.search as string;
+
+    const year = parseInt(req.query.year as string);
+    const author = parseInt(req.query.author as string);
 
     const offset = parseInt(req.query.offset as string || '0');
     const limit = parseInt(req.query.limit as string || '20');
 
-    const allBooks = await getAll(filter, param);
+    const allBooks = await getAll(filter, search);
     const books = allBooks
         .slice(offset, offset + limit)
         .map((e: BookModel) => {
@@ -117,7 +73,7 @@ export const getBooks = async (req: Request, res: Response): Promise<void> => {
                 amount: allBooks.length
             },
             filter: filter,
-            search: param,
+            search: search,
             offset: offset,
             limit: limit
         },

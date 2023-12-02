@@ -1,20 +1,12 @@
 import { Request, Response } from 'express';
 import { BookModel } from '../models/book-model.js';
 import { save, getAll, removeById } from '../repositories/books-repository.js';
+
 /**
  * Count of books per one page on admin pannel.
  */
 const BOOKS_PER_PAGE: number = 5;
 
-/**
- * NOT WORK
- * @param req 
- * @param res 
- */
-export const logout = async (req: Request, res: Response): Promise<void> => {
-    res.set('Authorization', 'Basic required')
-    res.status(401).redirect('http://localhost:3000/');
-}
 
 /**
  * Returns page with books.
@@ -24,12 +16,10 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
     const books = await getAll();
     const page = parseInt(req.query.page as string || '1');
-
-
     const totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
-
     const offset = (page - 1) * BOOKS_PER_PAGE;
-    const o = {
+
+    res.json({
         data: {
             books: books
                 .slice(offset, offset + BOOKS_PER_PAGE)
@@ -39,27 +29,25 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
             totalPages: totalPages,
             page: page
         },
-
         success: true
-    }
-
-    res.json(o);
+    });
 }
 
 /**
- * 
- * @param req 
+ * Removes book from storage by id.
+ * @param req HTTP Request which contains book_id in params.
  * @param res 
  */
 export const removeBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    await removeById(id);
-    res.json({
-        data: {
-
-        },
-        success: true
-    });
+    let success = true;
+    try {
+        await removeById(id);
+    } catch (err) {
+        success = false
+    } finally {
+        res.json({ success });
+    }
 }
 
 /**
@@ -73,6 +61,8 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         year: string,
         language: string,
         author1: string[],
+        author2: string[],
+        author3: string[],
         description: string,
         pages: string
     } = req.body;
@@ -93,11 +83,8 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         console.log(err);
         success = false;
     } finally {
-        res.json({
-            success: success
-        });
+        res.json({ success });
     }
-
 }
 
 

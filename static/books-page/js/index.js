@@ -1,6 +1,4 @@
 var drawItemsOnClick;
-    // isScrollRunning = true;
-// console.log(isScrollRunning);
 
 //Executed when the page is loaded
 $(document).ready(function () {
@@ -23,7 +21,7 @@ $(document).ready(function () {
             view.addBooksItems(res.data.books, true);
             // ....
             drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
-
+            
 
             if (localStorage.getItem('h')) {
                 $(window).scrollTop(localStorage.getItem('h'));
@@ -34,20 +32,14 @@ $(document).ready(function () {
     
     $('#next').click((event)=>{
         event.preventDefault();
-        
         drawItemsOnClick();
-    })
+    });
+
+
 
     $('#content').on('click', '.book', function () {
         localStorage.setItem('h', $(window).scrollTop());
     });
-
-    // $(document).scroll(function () {
-    //     if ((($(document).height() - $(window).scrollTop()) < (2 * $(window).height())) && !isScrollRunning) {
-    //         isScrollRunning = false;
-    //         // drawItemsOnClick();
-    //     }
-    // });
 });
 
 function getParameterByName(name, url) {
@@ -90,11 +82,10 @@ function initDrawItemsOnClick(maxItems) {
                 'limit': limit,
                 'offset': offset
             };
-            console.log('HEREEEEEEEE');
-            $("#loading").slideDown();
+            // $("#next").slideDown();
             doAjaxQuery('GET', '/api/v1/books', data,
                 function (res) {
-                    $("#loading").slideUp();
+                    // $("#next").slideUp();
                     isScrollRunning = false;
                     view.addBooksItems(res.data.books, false);
                     changeHistoryStateWithParams("replace", res.data.filter, res.data.offset);
