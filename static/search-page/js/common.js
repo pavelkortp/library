@@ -1,5 +1,10 @@
 /* ----------------------------- begin views ----------------------------------*/
 var view = {
+    hideLastBooks: function (n) {
+        $('.book_item').slice(-n).get().forEach((e)=>{
+            e.remove();
+        });
+    },
     fillFields: function (obj, fields, func) {
         fields = fields.split(/, */);
         fields.map(function (f) {

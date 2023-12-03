@@ -58,7 +58,9 @@ function getParameterByName(name, url) {
 }
 
 function loadIndexPage(reqData) {
+    booksCount = 0;
     doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {
+        booksCount+=res.data.books.length;
         view.addBooksItems(res.data.books, true);
         changeHistoryStateWithParams('push', res.data.filter, res.data.offset);
         drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);

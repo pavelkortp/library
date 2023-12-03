@@ -1,6 +1,5 @@
 var drawItemsOnClick;
-    // isScrollRunning = true;
-// console.log(isScrollRunning);
+var booksCount = 0;
 
 //Executed when the page is loaded
 $(document).ready(function () {
@@ -24,7 +23,7 @@ $(document).ready(function () {
             view.addBooksItems(res.data.books, true);
             // ....
             drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
-
+            booksCount += res.data.books.length;
 
             if (localStorage.getItem('h')) {
                 $(window).scrollTop(localStorage.getItem('h'));
@@ -32,11 +31,16 @@ $(document).ready(function () {
             }
         });
     }());
-    
-    $('#next').click((event)=>{
+
+    $('#next').click((event) => {
         event.preventDefault();
-        
+
         drawItemsOnClick();
+    })
+
+    $('#back').click((event) => {
+        event.preventDefault();
+        hideItemsOnClick()
     })
 
     $('#content').on('click', '.book', function () {
@@ -56,9 +60,11 @@ function getParameterByName(name, url) {
 }
 
 function loadIndexPage(reqData) {
+    booksCount = 0;
     doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {
         view.addBooksItems(res.data.books, true);
-        changeHistoryStateWithParams('push',res.data.search, res.data.filter, res.data.offset);
+        booksCount+=res.data.books.length;
+        changeHistoryStateWithParams('push', res.data.search, res.data.filter, res.data.offset);
         drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
     });
 }
@@ -74,26 +80,43 @@ function setSidebarActiveButton(activeElem, filterStringValue) {
 
 function initDrawItemsOnClick(maxItems) {
     var maxNumOfItems = maxItems,
-        limit = global.number_of_items_onscroll,
-        offset = parseInt(getParameterByName('count')) || global.items_limit_on_page_load;
+        limit = global.number_of_items_onscroll;
 
     return function () {
+        offset = parseInt(getParameterByName('count')) || global.items_limit_on_page_load;
         if (offset < maxNumOfItems) {
             var data = {
-                'search':getParameterByName('search'),
+                'search': getParameterByName('search'),
                 'filter': getParameterByName('filter') || "new",
                 'limit': limit,
                 'offset': offset
             };
-            $("#loading").slideDown();
             doAjaxQuery('GET', '/api/v1/books', data,
                 function (res) {
-                    $("#loading").slideUp();
+                    booksCount += res.data.books.length;
                     isScrollRunning = false;
                     view.addBooksItems(res.data.books, false);
-                    changeHistoryStateWithParams("replace",res.data.search, res.data.filter, res.data.offset);
+                    changeHistoryStateWithParams("replace", res.data.search, res.data.filter, res.data.offset);
                 });
             offset += limit;
         }
     }
+}
+
+function hideItemsOnClick() {
+    var filter = getParameterByName('filter') || "new";
+    var count = parseInt(getParameterByName('count')) - 20;
+    var search = getParameterByName('search');
+    const offset = (booksCount - roundTo10(booksCount)) || 10;
+    
+    if (booksCount - offset >= 20) {
+        
+        booksCount -= offset;
+        view.hideLastBooks(offset);
+        changeHistoryStateWithParams("replace", search, filter, count);
+    }
+}
+
+function roundTo10(number) {
+    return Math.round(number / 10) * 10;
 }
