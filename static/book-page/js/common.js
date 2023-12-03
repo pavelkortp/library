@@ -1,5 +1,13 @@
 /* ----------------------------- begin views ----------------------------------*/
 var view = {
+    fillRating: function (rating) {
+        $("#rating").rating({
+            initialRating: parseInt(rating),
+            strokeColor: '#894A00',
+            strokeWidth: 10,
+            starSize: 50
+          });
+    },
     fillFields: function (obj, fields, func) {
         fields = fields.split(/, */);
         fields.map(function (f) {
@@ -87,7 +95,6 @@ var view = {
         });
     },
     fillBookInfo: function (book) {
-        console.log(book);
         view.fillFields(book, 'title,author,year,pages,isbn,description,language,views', "html");
         $('#id').attr({
             'book-id': book.id,
@@ -95,6 +102,7 @@ var view = {
         });
         $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
         $('.description').html(book.description);
+        view.fillRating(book.rating);
     },
     normalDateFormat: function (date) {
         return date.toISOString().substring(0, 10);
