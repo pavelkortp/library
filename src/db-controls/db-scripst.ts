@@ -120,6 +120,11 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
     }
 }
 
+/**
+ * Updates book's statistics values (clicks or views)
+ * @param id unique book's id.
+ * @param option which data need to update, default views.
+ */
 export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'views'): Promise<void> => {
     const sqlQuery = await readFile(`src/db-controls/sql/v1/update-book-${option}.sql`, 'utf-8');
     await con.execute<RowDataPacket[]>(sqlQuery, [id]);
