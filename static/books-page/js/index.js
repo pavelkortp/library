@@ -1,4 +1,5 @@
 var drawItemsOnClick;
+var booksCount = 0;
 
 //Executed when the page is loaded
 $(document).ready(function () {
@@ -21,18 +22,22 @@ $(document).ready(function () {
             view.addBooksItems(res.data.books, true);
             // ....
             drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
-            
-
+            booksCount += res.data.books.length;
             if (localStorage.getItem('h')) {
                 $(window).scrollTop(localStorage.getItem('h'));
                 localStorage.removeItem('h');
             }
         });
     }());
-    
-    $('#next').click((event)=>{
+
+    $('#next').click((event) => {
         event.preventDefault();
         drawItemsOnClick();
+    });
+
+    $('#back').click((event) => {
+        event.preventDefault();
+        hideItemsOnClick();
     });
 
 
@@ -44,7 +49,6 @@ $(document).ready(function () {
 
 function getParameterByName(name, url) {
     if (!url) url = $(location).attr('href');
-    // console.log(url);
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
@@ -70,27 +74,49 @@ function setSidebarActiveButton(activeElem, filterStringValue) {
     }
 }
 
+
 function initDrawItemsOnClick(maxItems) {
     var maxNumOfItems = maxItems,
         limit = global.number_of_items_onscroll,
         offset = parseInt(getParameterByName('count')) || global.items_limit_on_page_load;
 
     return function () {
+        offset = parseInt(getParameterByName('count')) || global.items_limit_on_page_load;
+        $('#next').slideUp();
         if (offset < maxNumOfItems) {
             var data = {
                 'filter': getParameterByName('filter') || "new",
                 'limit': limit,
                 'offset': offset
             };
-            // $("#next").slideDown();
+
+            $("#next").slideDown();
             doAjaxQuery('GET', '/api/v1/books', data,
                 function (res) {
-                    // $("#next").slideUp();
+                    booksCount += res.data.books.length;
                     isScrollRunning = false;
                     view.addBooksItems(res.data.books, false);
                     changeHistoryStateWithParams("replace", res.data.filter, res.data.offset);
                 });
             offset += limit;
+        } else {
+            $('#next').slideDown();
         }
     }
+}
+
+function hideItemsOnClick() {
+    var filter = getParameterByName('filter') || "new";
+    var count = parseInt(getParameterByName('count')) - 20;
+
+    const offset = (booksCount - roundTo10(booksCount)) || 10;
+    if (booksCount - offset >= 20) {
+        booksCount -= offset;
+        view.hideLastBooks(offset);
+        changeHistoryStateWithParams("replace", filter, count);
+    } 
+}
+
+function roundTo10(number) {
+    return Math.round(number / 10) * 10;
 }
