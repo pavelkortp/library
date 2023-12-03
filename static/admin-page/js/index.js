@@ -3,8 +3,14 @@ $(document).ready(function () {
     const data = {
         page: 1,
     };
+
+    getTable(data);
     $('#logout').on('click', logout);
     $('#create').on('click', create);
+    
+});
+
+function getTable(data) {
     doAjaxQuery('GET', 'admin/api/v1/books', data, function (res) {
         // Adding received books
         view.addBooksItems(res.data.books, true);
@@ -15,7 +21,9 @@ $(document).ready(function () {
             localStorage.removeItem('h');
         }
     });
-});
+}
+
+
 function getParameterByName(name, url) {
     if (!url) url = $(location).attr('href');
     // console.log(url);
@@ -58,6 +66,7 @@ function create(e) {
                 confirmButtonText: 'Закрити',
                 closeOnConfirm: false
             });
+            getTable(data);
         } else {
             swal({
                 title: 'Погані новини',
