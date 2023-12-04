@@ -118,5 +118,5 @@ function hideItemsOnClick() {
 }
 
 function roundTo10(number) {
-    return Math.round(number / 10) * 10;
+    return Math.floor(number / 10) * 10
 }

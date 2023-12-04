@@ -84,7 +84,7 @@ function initDrawItemsOnClick(maxItems) {
 
     return function () {
         offset = parseInt(getParameterByName('count')) || global.items_limit_on_page_load;
-        $('#next').slideUp();
+        // $('#next').slideUp();
         if (offset < maxNumOfItems) {
             var data = {
                 'filter': getParameterByName('filter') || "new",
@@ -92,10 +92,10 @@ function initDrawItemsOnClick(maxItems) {
                 'offset': offset
             };
 
-            $("#next").slideDown();
+            // $("#next").slideDown();
             doAjaxQuery('GET', '/api/v1/books', data,
                 function (res) {
-                    booksCount += res.data.books.length;
+                    booksCount += res.data.books.length;      
                     isScrollRunning = false;
                     view.addBooksItems(res.data.books, false);
                     changeHistoryStateWithParams("replace", res.data.filter, res.data.offset);
@@ -112,6 +112,7 @@ function hideItemsOnClick() {
     var count = parseInt(getParameterByName('count')) - 20;
 
     const offset = (booksCount - roundTo10(booksCount)) || 10;
+    console.log(`OFFSET ${offset}`);
     if (booksCount - offset >= 20) {
         booksCount -= offset;
         view.hideLastBooks(offset);
@@ -120,5 +121,5 @@ function hideItemsOnClick() {
 }
 
 function roundTo10(number) {
-    return Math.round(number / 10) * 10;
+    return Math.floor(number / 10) * 10
 }
