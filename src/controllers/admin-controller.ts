@@ -64,7 +64,8 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         author2: string[],
         author3: string[],
         description: string,
-        pages: string
+        pages: string,
+        rating:string
     } = req.body;
     const image = req.file;
 
@@ -77,6 +78,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
             book.language,
             book.description,
             parseInt(book.pages),
+            parseInt(book.rating),
             image!
         ));
     } catch (err) {

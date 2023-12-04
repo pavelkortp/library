@@ -2,11 +2,15 @@
 var view = {
     fillRating: function (rating) {
         $("#rating").rating({
-            initialRating: parseInt(rating),
+            min:0,
+            max:5,
+            step:0.1, 
+            size:'lg',
             strokeColor: '#894A00',
-            strokeWidth: 10,
-            starSize: 50
-          });
+            showCaption: false,
+            displayOnly: true
+        });
+        $("#rating").rating('update', rating);
     },
     fillFields: function (obj, fields, func) {
         fields = fields.split(/, */);
@@ -100,9 +104,10 @@ var view = {
             'book-id': book.id,
             'busy': book.event
         });
+        view.fillRating(parseInt(book.rating));
         $('#bookImg img').attr('src', '/img/books/' + book.id + '.jpg');
         $('.description').html(book.description);
-        view.fillRating(book.rating);
+        
     },
     normalDateFormat: function (date) {
         return date.toISOString().substring(0, 10);
@@ -119,16 +124,16 @@ var view = {
     },
     showSubscribe: function (text, bookId) {
         swal({
-                title: 'Хотите почитать?',
-                text: text,
-                type: 'input',
-                showCancelButton: true,
-                closeOnConfirm: false,
-                animation: 'slide-from-top',
-                inputPlaceholder: 'Введите свой e-mail',
-                confirmButtonColor: '#27AE60',
-                showLoaderOnConfirm: true
-            },
+            title: 'Хотите почитать?',
+            text: text,
+            type: 'input',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: 'slide-from-top',
+            inputPlaceholder: 'Введите свой e-mail',
+            confirmButtonColor: '#27AE60',
+            showLoaderOnConfirm: true
+        },
             function (inputValue) {
                 if (inputValue === false) {
                     return false;
@@ -146,22 +151,22 @@ var view = {
     },
     showConfirm: function (bookId) {
         swal({
-                title: 'Вы уверены?',
-                text: 'Согласие приведет к невозвратимому удалению книги',
-                type: 'warning',
-                showCancelButton: true,
-                cancelButtonText: 'Льолик, не надо!',
-                confirmButtonColor: '#27AE60',
-                confirmButtonText: 'Да, уверен!',
-                closeOnConfirm: false
-            },
+            title: 'Вы уверены?',
+            text: 'Согласие приведет к невозвратимому удалению книги',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Льолик, не надо!',
+            confirmButtonColor: '#27AE60',
+            confirmButtonText: 'Да, уверен!',
+            closeOnConfirm: false
+        },
             function () {
                 doAjaxQuery('GET', '/admin/api/v1/books/' + bookId + '/remove', null, function (res) {
                     swal({
-                            title: 'Удалено!',
-                            text: 'Надеюсь, вы осознаете что сейчас произошло ))',
-                            type: 'success'
-                        },
+                        title: 'Удалено!',
+                        text: 'Надеюсь, вы осознаете что сейчас произошло ))',
+                        type: 'success'
+                    },
                         function () {
                             window.location.href = '/admin';
                         });
@@ -214,7 +219,7 @@ var controller = {
 /* ------------------------ Jquery Ajax function ---------------------------- */
 
 function doAjaxQuery(method, url, data, callback) {
-    
+
     $.ajax({
         type: method,
         url: url,

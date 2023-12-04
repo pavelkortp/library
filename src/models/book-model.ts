@@ -61,17 +61,19 @@ export class BookModel {
      * Book's rating ...
      * @private
      */
-    private _rating: number = 0;
+    private _rating: number;
 
     constructor(title: string, year: number,
         author: string, language: string,
         description: string,
         pages: number,
+        rating:number,
         image?: Express.Multer.File,
         id: number = 0,
         views: number = 0,
         clicks: number = 0
     ) {
+        this._rating = rating;
         this._year = year;
         this._title = title;
         this._description = description;

@@ -61,6 +61,7 @@ export const getAllBooks = async (filter: Filter = 'all', search?: string): Prom
         e.language,
         e.description,
         e.pages,
+        e.rating,
         undefined,
         e.id,
         e.views,
@@ -81,7 +82,8 @@ export const createBook = async (book: BookModel) => {
         book.year,
         book.language,
         book.pages,
-        0, 0, 0
+        book.rating,
+        0, 0
     ];
 
     const [res] = await con.query(sqlQuery, values);
@@ -112,6 +114,7 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
             row[0].language,
             row[0].description,
             row[0].pages,
+            row[0].rating,
             undefined,
             row[0].id,
             ++row[0].views,

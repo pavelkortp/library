@@ -9,6 +9,8 @@ import { BookModel } from '../models/book-model.js';
 export const getBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
     const book = await findById(id);
+    
+    
     if (book) {
         res.json({
             data: {
@@ -17,6 +19,7 @@ export const getBook = async (req: Request, res: Response): Promise<void> => {
                 author: book.author,
                 description: book.description,
                 pages: book.pages,
+                rating: book.rating,
                 language: book.language,
                 year: book.year,
                 views: book.views,
