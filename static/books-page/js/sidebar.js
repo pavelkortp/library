@@ -1,4 +1,6 @@
 $('.sidebar_item').click(function (event) {
+    booksCount = 0;
+    total = 0;
     event.preventDefault();
     var filter = $(this).attr('data-filter');
     $('#search').val('');

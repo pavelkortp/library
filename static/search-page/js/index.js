@@ -1,5 +1,6 @@
 var drawItemsOnClick;
 var booksCount = 0;
+var total = 0;
 
 //Executed when the page is loaded
 $(document).ready(function () {
@@ -24,17 +25,17 @@ $(document).ready(function () {
             // ....
             drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
             booksCount += res.data.books.length;
-
+            total = parseInt(res.data.total.amount);
             if (localStorage.getItem('h')) {
                 $(window).scrollTop(localStorage.getItem('h'));
                 localStorage.removeItem('h');
             }
+            checkCount();
         });
     }());
 
     $('#next').click((event) => {
         event.preventDefault();
-
         drawItemsOnClick();
     })
 
@@ -63,9 +64,11 @@ function loadIndexPage(reqData) {
     booksCount = 0;
     doAjaxQuery('GET', '/api/v1/books', reqData, function (res) {
         view.addBooksItems(res.data.books, true);
-        booksCount+=res.data.books.length;
+        booksCount += res.data.books.length;
+        total = parseInt(res.data.total.amount);
         changeHistoryStateWithParams('push', res.data.search, res.data.filter, res.data.offset);
         drawItemsOnClick = initDrawItemsOnClick(res.data.total.amount);
+        checkCount();
     });
 }
 
@@ -97,6 +100,7 @@ function initDrawItemsOnClick(maxItems) {
                     isScrollRunning = false;
                     view.addBooksItems(res.data.books, false);
                     changeHistoryStateWithParams("replace", res.data.search, res.data.filter, res.data.offset);
+                    checkCount();
                 });
             offset += limit;
         }
@@ -108,15 +112,38 @@ function hideItemsOnClick() {
     var count = parseInt(getParameterByName('count')) - 20;
     var search = getParameterByName('search');
     const offset = (booksCount - roundTo10(booksCount)) || 10;
-    
+
     if (booksCount - offset >= 20) {
-        
         booksCount -= offset;
         view.hideLastBooks(offset);
         changeHistoryStateWithParams("replace", search, filter, count);
+        checkCount();
     }
 }
 
 function roundTo10(number) {
     return Math.floor(number / 10) * 10
+}
+
+function checkCount() {
+    if (booksCount == global.items_limit_on_page_load) {
+        show($('#next'));
+        hide($('#back'));
+    } else if (booksCount > global.items_limit_on_page_load && booksCount < total) {
+        show($('#next'));
+        show($('#back'));
+    } else {
+        hide($('#next'));
+        show($('#back'));
+    }
+}
+
+
+function show(o) {
+    o.removeClass('invisible');
+    o.addClass('visible');
+}
+
+function hide(o) {
+    o.addClass('invisible');
 }
