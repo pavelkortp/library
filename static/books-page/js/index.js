@@ -131,14 +131,19 @@ function roundTo10(number) {
 
 
 function checkCount() {
-    if (booksCount == global.items_limit_on_page_load) {
-        show($('#next'))
-        hide($('#back'))
+    if(booksCount<global.items_limit_on_page_load){
+        hide($('#next'));
+        hide($('#back'));
+    }
+    else if (booksCount == global.items_limit_on_page_load) {
+        show($('#next'));
+        hide($('#back'));
     } else if (booksCount > global.items_limit_on_page_load && booksCount < total) {
-        show($('#next'))
-        show($('#back'))
-    }else{
-        hide($('#next'))
+        show($('#next'));
+        show($('#back'));
+    } else {
+        hide($('#next'));
+        show($('#back'));
     }
 }
 

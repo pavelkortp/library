@@ -126,7 +126,11 @@ function roundTo10(number) {
 }
 
 function checkCount() {
-    if (booksCount == global.items_limit_on_page_load) {
+    if(booksCount<global.items_limit_on_page_load){
+        hide($('#next'));
+        hide($('#back'));
+    }
+    else if (booksCount == global.items_limit_on_page_load) {
         show($('#next'));
         hide($('#back'));
     } else if (booksCount > global.items_limit_on_page_load && booksCount < total) {
