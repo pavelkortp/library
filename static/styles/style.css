@@ -3,6 +3,15 @@
     padding: 0;
 }
 
+.visible{
+    display: block;
+}
+
+.invisible{
+    display: none;
+}
+
+
 html, body {
     font-family: 'PT Sans', Arial, sans-serif;
     line-height: 1.5;
