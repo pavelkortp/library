@@ -8,25 +8,7 @@ import {
     removeBookById,
     updateBookData
 } from '../db-controls/db-scripst.js';
-import { writeFile } from 'fs/promises';
 
-// /**
-//  * Searches in db books with year and return it.
-//  * @param year book's realese year
-//  * @returns found books.
-//  */
-// export const findByYear = async (year: number) => {
-//     return await getBookByYear(year);
-// }
-
-// /**
-//  * Searches in db book with title and return it.
-//  * @param title book's title.
-//  * @returns found book.
-//  */
-// export const findByTitle = async (title: string) => {
-//     return await getBookByTitle(title);
-// }
 
 /**
  * Satored book in db.

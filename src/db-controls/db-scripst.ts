@@ -3,6 +3,9 @@ import { readFile, writeFile, unlink } from 'fs/promises';
 import { BookModel } from '../models/book-model.js';
 import { con } from '../server.js';
 
+import { version } from './migrator.js';
+import { addJob } from '../cron.js';
+
 /**
  * Connects to db.
  */
@@ -87,11 +90,11 @@ export const createBook = async (book: BookModel) => {
     ];
 
     const [res] = await con.query(sqlQuery, values);
-    
-    if('insertId' in res){
+
+    if ('insertId' in res) {
         const id = res.insertId as number;
         await writeFile(`static/img/books/${id}.jpg`, book.image!.buffer);
-    }else{
+    } else {
         throw new Error("Saving book error");
     }
 }
@@ -138,7 +141,9 @@ export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'v
  * @param id unique value.
  */
 export const removeBookById = async (id: number) => {
-    const q: string = await readFile('src/db-controls/sql/v1/remove-book-by-id.sql', 'utf-8');
-    await con.execute(q, [id]);
-    await unlink(`static/img/books/${id}.jpg`);
+    await addJob(24 * 60, false, async () => {
+        const q: string = await readFile('src/db-controls/sql/v1/remove-book-by-id.sql', 'utf-8');
+        await con.execute(q, [id]);
+        await unlink(`static/img/books/${id}.jpg`);
+    });
 }
