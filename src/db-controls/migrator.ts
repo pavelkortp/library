@@ -1,5 +1,6 @@
 import { readFile } from 'fs/promises';
-import { con } from '../app.js';
+import {connection} from "../config/db-connection.js";
+
 
 export const version: string = 'v1';
 
@@ -8,7 +9,7 @@ export const version: string = 'v1';
  */
 export const migrateUp = async () => {
     const sql: string = await readFile(`src/db-controls/sql/migrations/migrate-up.sql`, 'utf-8');
-    await con.query(sql);
+    await connection.query(sql);
 }
 
 /**
@@ -16,5 +17,5 @@ export const migrateUp = async () => {
  */
 export const migrateDown = async () => {
     const sql: string = await readFile(`src/db-controls/sql/migrations/migrate-down.sql`, 'utf-8');
-    await con.query(sql);
+    await connection.query(sql);
 }

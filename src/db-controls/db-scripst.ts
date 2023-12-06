@@ -1,20 +1,18 @@
-import { Connection, RowDataPacket } from 'mysql2/promise';
-import { readFile, writeFile, unlink } from 'fs/promises';
-import { BookModel } from '../models/book-model.js';
-import { con } from '../app.js';
-
-import { version } from './migrator.js';
-import { addJob } from '../cron.js';
+import {Connection, RowDataPacket} from 'mysql2/promise';
+import {readFile, writeFile, unlink} from 'fs/promises';
+import {BookModel} from '../models/book-model.js';
+import {connection} from '../config/db-connection.js';
+import {version} from './migrator.js';
+import {addJob} from '../cron.js';
 
 /**
- * Connects to db.
+ * Establishes connection with the database.
  */
-export const connect = async (db: Connection): Promise<void> => {
+export const connect = async () => {
     try {
-        await db.connect();
-        console.log('Connected to the database');
+        await connection.connect();
     } catch (err) {
-        console.error('Error connecting to the database:', err);
+        console.log(err);
     }
 }
 
@@ -22,8 +20,8 @@ export const connect = async (db: Connection): Promise<void> => {
  * Creates tables books, authors ... if not exists
  * @param db database.
  */
-export const createTables = async (db: Connection): Promise<void> => {
-    await createTable(db, 'src/db-controls/sql/v1/create-books-table.sql');
+export const createTables = async (): Promise<void> => {
+    await createTable(connection, 'src/db-controls/sql/v1/create-books-table.sql');
 }
 
 /**
@@ -50,14 +48,14 @@ export const getAllBooks = async (filter: Filter = 'all', search?: string): Prom
         else if (filter == 'popular') f = 'views DESC';
 
         q += ` ORDER BY ${f}`;
-        [rows] = await con.execute<RowDataPacket[]>(q, [`%${search}%`]);
+        [rows] = await connection.execute<RowDataPacket[]>(q, [`%${search}%`]);
     } else {
         q = await readFile(`src/db-controls/sql/v1/get-${filter}-books.sql`, 'utf-8');
-        [rows] = await con.execute<RowDataPacket[]>(q);
+        [rows] = await connection.execute<RowDataPacket[]>(q);
     }
 
-
     return rows.map((e: any) => e as BookModel);
+
 }
 
 /**
@@ -77,7 +75,7 @@ export const createBook = async (book: BookModel): Promise<void> => {
         0, 0
     ];
 
-    const [res] = await con.query(sqlQuery, values);
+    const [res] = await connection.query(sqlQuery, values);
 
     if ('insertId' in res) {
         const id = res.insertId as number;
@@ -95,7 +93,7 @@ export const createBook = async (book: BookModel): Promise<void> => {
 export const getBookById = async (id: number): Promise<BookModel | undefined> => {
     const sqlQuery = await readFile('src/db-controls/sql/v1/get-book-by-id.sql', 'utf-8');
     const values = [id];
-    const [row] = await con.execute<RowDataPacket[]>(sqlQuery, values);
+    const [row] = await connection.execute<RowDataPacket[]>(sqlQuery, values);
     if (row[0]) {
         await updateBookData(id);
         return new BookModel(
@@ -121,7 +119,7 @@ export const getBookById = async (id: number): Promise<BookModel | undefined> =>
  */
 export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'views'): Promise<void> => {
     const sqlQuery = await readFile(`src/db-controls/sql/v1/update-book-${option}.sql`, 'utf-8');
-    await con.execute<RowDataPacket[]>(sqlQuery, [id]);
+    await connection.execute<RowDataPacket[]>(sqlQuery, [id]);
 }
 
 /**
@@ -131,7 +129,7 @@ export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'v
 export const removeBookById = async (id: number): Promise<void> => {
     await addJob(24 * 60, false, async () => {
         const q: string = await readFile('src/db-controls/sql/v1/remove-book-by-id.sql', 'utf-8');
-        await con.execute(q, [id]);
+        await connection.execute(q, [id]);
         await unlink(`static/img/books/${id}.jpg`);
     });
 }
