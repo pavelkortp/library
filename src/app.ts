@@ -2,7 +2,6 @@ import express, { Express } from 'express';
 import mysql, { Connection } from 'mysql2/promise';
 import basicAuth from 'express-basic-auth';
 
-
 import { booksRouter } from './routes/books-router.js';
 import { adminRouter } from './routes/admin-router.js';
 import { mainRouter } from './routes/pages-router.js';

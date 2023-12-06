@@ -1,5 +1,5 @@
 import { readFile } from 'fs/promises';
-import { con } from '../server.js';
+import { con } from '../app.js';
 
 export const version: string = 'v1';
 

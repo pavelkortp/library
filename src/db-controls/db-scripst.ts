@@ -1,7 +1,7 @@
 import { Connection, RowDataPacket } from 'mysql2/promise';
 import { readFile, writeFile, unlink } from 'fs/promises';
 import { BookModel } from '../models/book-model.js';
-import { con } from '../server.js';
+import { con } from '../app.js';
 
 import { version } from './migrator.js';
 import { addJob } from '../cron.js';
@@ -9,7 +9,7 @@ import { addJob } from '../cron.js';
 /**
  * Connects to db.
  */
-export const connect = async (db: Connection) => {
+export const connect = async (db: Connection): Promise<void> => {
     try {
         await db.connect();
         console.log('Connected to the database');
@@ -22,7 +22,7 @@ export const connect = async (db: Connection) => {
  * Creates tables books, authors ... if not exists
  * @param db database.
  */
-export const createTables = async (db: Connection) => {
+export const createTables = async (db: Connection): Promise<void> => {
     await createTable(db, 'src/db-controls/sql/v1/create-books-table.sql');
 }
 
@@ -31,9 +31,9 @@ export const createTables = async (db: Connection) => {
  * @param db database.
  * @param scryptPath path to scrypt which creates table.
  */
-const createTable = async (db: Connection, scryptPath: string) => {
+const createTable = async (db: Connection, scryptPath: string): Promise<void> => {
     const q = await readFile(scryptPath, 'utf-8');
-    db.query(q);
+    await db.query(q);
 }
 
 /**
@@ -57,26 +57,14 @@ export const getAllBooks = async (filter: Filter = 'all', search?: string): Prom
     }
 
 
-    return rows.map((e: any) => new BookModel(
-        e.title,
-        e.year,
-        e.author,
-        e.language,
-        e.description,
-        e.pages,
-        e.rating,
-        undefined,
-        e.id,
-        e.views,
-        e.clicks
-    ));
+    return rows.map((e: any) => e as BookModel);
 }
 
 /**
  * Creates new entry in books's table.
  * @param book new book.
  */
-export const createBook = async (book: BookModel) => {
+export const createBook = async (book: BookModel): Promise<void> => {
     const sqlQuery = await readFile('src/db-controls/sql/v1/create-book.sql', 'utf-8');
     const values = [
         book.title,
@@ -140,7 +128,7 @@ export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'v
  * Removes book entry in books.
  * @param id unique value.
  */
-export const removeBookById = async (id: number) => {
+export const removeBookById = async (id: number): Promise<void> => {
     await addJob(24 * 60, false, async () => {
         const q: string = await readFile('src/db-controls/sql/v1/remove-book-by-id.sql', 'utf-8');
         await con.execute(q, [id]);
