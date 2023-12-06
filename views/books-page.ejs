@@ -13,7 +13,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-        crossorigin="anonymous" />
+          crossorigin="anonymous"/>
 
     <link rel="shortcut icon" href="icons/library.png" type="image/x-icon">
 
@@ -21,60 +21,60 @@
 
 <body data-gr-c-s-loaded="true" class="">
 
-    <%- include('./parts/header.ejs') %>
+<%- include('./parts/header.ejs') %>
 
-        <section class="sidebar2">
-            <div class="nav2">
-                <div class="filterBlock">
-                    <a class="sidebar_item" href="" data-filter='new'>Нові</a>
+<section class="sidebar2">
+    <div class="nav2">
+        <div class="filterBlock">
+            <a class="sidebar_item" href="" data-filter='new'>Нові</a>
 
-                    <a class="sidebar_item" href="" data-filter='popular'>Популярні</a>
+            <a class="sidebar_item" href="" data-filter='popular'>Популярні</a>
 
-                    <a class="sidebar_item" href="" data-filter='all'>Всі</a>
+            <a class="sidebar_item" href="" data-filter='all'>Всі</a>
 
+        </div>
+    </div>
+</section>
+
+<section id="main" class="main-wrapper">
+    <div class="container">
+        <script id="pattern" type="text/template">
+            <div data-book-id="{id}" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
+                <div class="book">
+                    <a href="/books/{id}"><img src="img/books/{id}.jpg" alt="{title}">
+                        <div data-title="{title}" class="blockI">
+                            <div data-book-title="{title}" class="title size_text">{title}</div>
+                            <div data-book-author="{author}" class="author">{author}</div>
+                        </div>
+                    </a>
+                    <a href="/books/{id}">
+                        <button type="button" class="details btn btn-success">Читати</button>
+                    </a>
                 </div>
             </div>
-        </section>
+        </script>
+        <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
+    </div>
+</section>
 
-        <section id="main" class="main-wrapper">
-            <div class="container">
-                <script id="pattern" type="text/template">
-                    <div data-book-id="{id}" class="book_item col-xs-6 col-sm-3 col-md-2 col-lg-2">
-                        <div class="book">
-                            <a href="/books/{id}"><img src="img/books/{id}.jpg" alt="{title}">
-                                <div data-title="{title}" class="blockI">
-                                    <div data-book-title="{title}" class="title size_text">{title}</div>
-                                    <div data-book-author="{author}" class="author">{author}</div>
-                                </div>
-                            </a>
-                            <a href="/books/{id}">
-                                <button type="button" class="details btn btn-success">Читати</button>
-                            </a>
-                        </div>
-                    </div>
-                </script>
-                <div id="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
-            </div>
-        </section>
+<center>
+    <ul class="pager">
+        <li>
+            <a id="back" href="#">Назад</a>
+        </li>
+        <li>
+            <a id="next" href="#">Показати більше</a>
+        </li>
+    </ul>
+</center>
 
-        <center>
-            <ul class="pager">
-                <li>
-                    <a id="back" href="#">Назад</a>
-                </li>
-                <li>
-                    <a id="next" href="#">Показати більше</a>
-                </li>
-            </ul>
-        </center>
+<%- include('parts/footer.ejs') %>
 
-        <%- include('parts/footer.ejs') %>
-
-            <script src="js/libs.min.js"></script>
-            <script src="books-page/js/common.js"></script>
-            <script src="books-page/js/sidebar.js"></script>
-            <script src="books-page/js/search.js"></script>
-            <script src="books-page/js/index.js"></script>
+<script src="js/libs.min.js"></script>
+<script src="books-page/js/common.js"></script>
+<script src="books-page/js/sidebar.js"></script>
+<script src="books-page/js/search.js"></script>
+<script src="books-page/js/index.js"></script>
 </body>
 
 </html>
