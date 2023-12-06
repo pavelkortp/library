@@ -1,5 +1,5 @@
 import express from 'express';
-import { getBooksTable, createBook, removeBook } from '../controllers/admin-controller.js';
+import { getBooksTable, createBook, removeBook } from '../controllers/api/admin-controller.js';
 import multer from 'multer';
 
 const storage = multer.memoryStorage();

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { BookModel } from '../models/book-model.js';
-import { save, getAll, removeById } from '../repositories/books-repository.js';
+import { BookModel } from '../../models/book-model.js';
+import { save, getAll, removeById } from '../../repositories/books-repository.js';
 
 /**
  * Count of books per one page on admin pannel.

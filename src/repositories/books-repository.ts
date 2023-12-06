@@ -36,8 +36,8 @@ export const findById = async (id: number): Promise<BookModel | undefined> => {
 }
 
 /**
- * 
- * @param id 
+ * Increases clicks number on current book.
+ * @param id unique number.
  */
 export const increaseBookClicks = async (id: number): Promise<void> => {
     await updateBookData(id, 'clicks');
