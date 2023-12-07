@@ -1,5 +1,5 @@
 import { readFile } from 'fs/promises';
-import { createBook } from './db-scripst.js';
+import { createBook } from './scripts.js';
 import { BookModel } from '../models/book-model.js';
 
 export const fillBooksTable = async () => {
