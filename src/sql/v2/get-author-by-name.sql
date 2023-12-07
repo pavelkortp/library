@@ -1,0 +1,2 @@
+SELECT * FROM authors
+WHERE LOWER(TRIM(name)) LIKE LOWER(TRIM(?));
