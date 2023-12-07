@@ -1,4 +1,5 @@
 import { BookModel } from '../models/book-model.js';
+import {Filter} from "../declarations.js";
 import {
     createBook,
     getAllBooks,
@@ -7,7 +8,7 @@ import {
     // getBookByYear,
     removeBookById,
     updateBookData
-} from '../db-controls/db-scripst.js';
+} from '../db/scripts.js';
 
 
 /**

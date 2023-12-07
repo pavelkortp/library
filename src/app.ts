@@ -5,8 +5,8 @@ import { booksRouter } from './routes/books-router.js';
 import { adminRouter } from './routes/admin-router.js';
 import { mainRouter } from './routes/pages-router.js';
 
-import {connect, createTables} from './db-controls/db-scripst.js';
-import { fillBooksTable } from './db-controls/test-data.js';
+import {connect, createTables} from './db/scripts.js';
+// import { fillBooksTable } from './db-controls/test-data.js';
 
 export const app: Express = express();
 const PORT = 3000;

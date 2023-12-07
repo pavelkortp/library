@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS books (
     rating INT NOT NULL DEFAULT 0,
     views INT NOT NULL DEFAULT 0,
     clicks INT NOT NULL DEFAULT 0,
-    creation_date DATETIME NOT NULL
+    creation_date DATETIME NOT NULL,
+    isbn VARCHAR(100) NOT NULL
 )
