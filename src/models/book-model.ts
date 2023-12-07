@@ -52,10 +52,18 @@ export class BookModel {
     private _pages: number
 
     /**
+     *
+     * @private
+     */
+    private _isbn:string
+
+    /**
      * Book's author .... or s
      * @private
      */
     private _author1: string;
+    private _author2?: string;
+    private _author3?: string;
 
     /**
      * Book's rating ...
@@ -71,7 +79,8 @@ export class BookModel {
         image?: Express.Multer.File,
         id: number = 0,
         views: number = 0,
-        clicks: number = 0
+        clicks: number = 0,
+        isbn:string = '0',
     ) {
         this._rating = rating;
         this._year = year;
@@ -84,6 +93,7 @@ export class BookModel {
         this._image = image;
         this._views = views;
         this._clicks = clicks;
+        this._isbn = isbn;
     }
 
 
@@ -129,5 +139,9 @@ export class BookModel {
 
     get views(): number {
         return this._views;
+    }
+
+    get isbn():string{
+        return this._isbn;
     }
 }

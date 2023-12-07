@@ -1,6 +1,11 @@
-import { Request, Response } from 'express';
-import { findById, getAll, increaseBookClicks } from '../../repositories/books-repository.js';
-import { BookModel } from '../../models/book-model.js';
+import {Request, Response} from 'express';
+import {increaseBookClicks} from '../../repositories/books-repository.js';
+import {Filter, RequestData} from "../../declarations.js";
+import {booksTransformData, bookTransformData} from "../../dto/books-dto.js";
+
+const DEFAULT_FILTER: Filter = 'new';
+
+
 /**
  * Renders book-page
  * @param req HTTP Request.
@@ -8,42 +13,22 @@ import { BookModel } from '../../models/book-model.js';
  */
 export const getBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    const book = await findById(id);
-    
-    
-    if (book) {
-        res.json({
-            data: {
-                id: book.id,
-                title: book.title,
-                author: book.author,
-                description: book.description,
-                pages: book.pages,
-                rating: book.rating,
-                language: book.language,
-                year: book.year,
-                views: book.views,
-                event: true
-            },
-            success: true
-        });
-        return;
-    }
-    res.status(404);
+    const result = await bookTransformData(id);
+    res.json(result);
 }
 
 /**
  * Increase clicks count on book.
  * @param req HTTP Request
- * @param res JSON 
+ * @param res JSON
  */
 export const increaseClicks = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
     if (req.query.increase_clicks) {
         await increaseBookClicks(id);
-        res.json({ success: true });
+        res.json({success: true});
     } else {
-        res.status(400).json({ success: false });
+        res.status(400).json({success: false});
     }
 }
 
@@ -54,37 +39,17 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
  * @param res HTML page wich contains all books.
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
-    const filter = req.query.filter as Filter || 'new';
-    const search = req.query.search as string;
-    const year = parseInt(req.query.year as string);
-    const author = parseInt(req.query.author as string);
-    const offset = parseInt(req.query.offset as string || '0');
-    const limit = parseInt(req.query.limit as string || '20');
+    const request: RequestData = {
+        filter: req.query.filter as Filter || DEFAULT_FILTER,
+        search: req.query.search as string,
+        year: parseInt(req.query.year as string),
+        author: parseInt(req.query.author as string),
+        offset: parseInt(req.query.offset as string || '0'),
+        limit: parseInt(req.query.limit as string || '20')
+    };
 
-    const allBooks = await getAll(filter, search);
-    const books = allBooks
-        .slice(offset, offset + limit)
-        .map((e: BookModel) => {
-            return {
-                id: e.id,
-                author: e.author,
-                title: e.title
-            }
-        });
-
-    res.json({
-        data: {
-            books: books,
-            total: {
-                amount: allBooks.length
-            },
-            filter: filter,
-            search: search,
-            offset: offset,
-            limit: limit
-        },
-        success: true
-    });
+    const response = await booksTransformData(request);
+    res.json(response);
 }
 
 

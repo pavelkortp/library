@@ -1,11 +1,16 @@
-import { Request, Response } from 'express';
-import { BookModel } from '../../models/book-model.js';
-import { save, getAll, removeById } from '../../repositories/books-repository.js';
+import {Request, Response} from 'express';
+import {BookModel} from '../../models/book-model.js';
+import {save, getAll, removeById} from '../../repositories/books-repository.js';
 
 /**
  * Count of books per one page on admin pannel.
  */
 const BOOKS_PER_PAGE: number = 5;
+
+/**
+ * Default page number.
+ */
+const DEFAULT_PAGE: number = 1;
 
 
 /**
@@ -15,8 +20,9 @@ const BOOKS_PER_PAGE: number = 5;
  */
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
     const books = await getAll();
-    const page = parseInt(req.query.page as string || '1');
+
     const totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
+    const page = parseInt(req.query.page as string) || DEFAULT_PAGE;
     const offset = (page - 1) * BOOKS_PER_PAGE;
 
     res.json({
@@ -24,7 +30,7 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
             books: books
                 .slice(offset, offset + BOOKS_PER_PAGE)
                 .map((e) => {
-                    return { id: e.id, author: e.author, clicks: e.clicks, year: e.year, title: e.title };
+                    return {id: e.id, author: e.author, clicks: e.clicks, year: e.year, title: e.title};
                 }),
             totalPages: totalPages,
             page: page
@@ -36,7 +42,7 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
 /**
  * Removes book from storage by id.
  * @param req HTTP Request which contains book_id in params.
- * @param res 
+ * @param res
  */
 export const removeBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
@@ -44,9 +50,10 @@ export const removeBook = async (req: Request, res: Response): Promise<void> => 
     try {
         await removeById(id);
     } catch (err) {
+        console.log(err);
         success = false
     } finally {
-        res.json({ success });
+        res.json({success});
     }
 }
 
@@ -65,7 +72,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         author3: string[],
         description: string,
         pages: string,
-        rating:string
+        rating: string
     } = req.body;
     const image = req.file;
 
@@ -85,7 +92,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         console.log(err);
         success = false;
     } finally {
-        res.json({ success });
+        res.json({success});
     }
 }
 
