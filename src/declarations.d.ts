@@ -4,12 +4,12 @@
  * new - sends all books ordered by date (DESC),
  * popular - sends all books ordered by views (DESC)
  */
-export type Filter = 'all' | 'new' | 'popular';
+declare type Filter = 'all' | 'new' | 'popular';
 
 /**
  * Requested data, which can be sand on server as query params.
  */
-export type RequestData = {
+declare type RequestData = {
     filter?: Filter,
     search?: string,
     year?: number,
