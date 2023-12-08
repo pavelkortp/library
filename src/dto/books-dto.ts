@@ -1,5 +1,4 @@
 import {BookModel} from "../models/book-model.js";
-import {RequestData} from "../declarations.js";
 import {findById, getAll} from "../repositories/books-repository.js";
 
 class BookDTO {

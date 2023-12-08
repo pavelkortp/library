@@ -1,5 +1,4 @@
 import { BookModel } from '../models/book-model.js';
-import {Filter} from "../declarations.js";
 import {
     createBook,
     getAllBooks,
@@ -9,6 +8,8 @@ import {
     removeBookById,
     updateBookData
 } from '../db/scripts.js';
+import {migrator} from "../db/migrator.js";
+
 
 
 /**
@@ -16,7 +17,11 @@ import {
  * @param book new book.
  */
 export const save = async (book: BookModel): Promise<void> => {
-    await createBook(book);
+    if(migrator.version == 'v1'){
+        await createBook(book);
+    }else {
+        await createBook(book);
+    }
 }
 
 /**

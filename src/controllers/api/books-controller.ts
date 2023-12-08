@@ -1,6 +1,5 @@
 import {Request, Response} from 'express';
 import {increaseBookClicks} from '../../repositories/books-repository.js';
-import {Filter, RequestData} from "../../declarations.js";
 import {booksTransformData, bookTransformData} from "../../dto/books-dto.js";
 
 const DEFAULT_FILTER: Filter = 'new';
