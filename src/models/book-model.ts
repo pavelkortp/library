@@ -2,117 +2,57 @@
  * Library book representation
  */
 export class BookModel {
-    /**
-     * Book's id.
-     */
-    private _id: number;
-
-    /**
-     * Views count on this book.
-     */
-    private _views: number
-
-    /**
-     * Book's art.
-     */
-    private _image?: Express.Multer.File;
-
-    /**
-     * Clicks count on this book.
-     */
-    private _clicks: number
-
-    /**
-     * Book's name
-     * @private
-     */
-    private _title: string;
-
-    /**
-     * Book's short description.
-     * @private
-     */
-    private _description: string;
-
-    /**
-     * Book's year of publication
-     * @private
-     */
-    private _year: number;
-
-    /**
-     * Book's language.
-     * @private
-     */
-    private _language: string;
-
-    /**
-     * Count of pages.
-     */
-    private _pages: number
-
-    /**
-     *
-     * @private
-     */
-    private _isbn:string
-
-    /**
-     * Book's author .... or s
-     * @private
-     */
-    private _author1: string;
     private _author2?: string;
     private _author3?: string;
+
+    constructor(
+        private _title: string,
+        private _year: number,
+        private _author1: string,
+        private _language: string,
+        private _description: string,
+        private _pages: number,
+        private _rating:number,
+        private _image?: Express.Multer.File,
+        private _id: number = 0,
+        private _views: number = 0,
+        private _clicks: number = 0,
+        private _isbn:string = '0',
+    ) {}
+
 
     /**
      * Book's rating ...
      * @private
      */
-    private _rating: number;
-
-    constructor(title: string, year: number,
-        author: string, language: string,
-        description: string,
-        pages: number,
-        rating:number,
-        image?: Express.Multer.File,
-        id: number = 0,
-        views: number = 0,
-        clicks: number = 0,
-        isbn:string = '0',
-    ) {
-        this._rating = rating;
-        this._year = year;
-        this._title = title;
-        this._description = description;
-        this._language = language;
-        this._author1 = author;
-        this._pages = pages;
-        this._id = id;
-        this._image = image;
-        this._views = views;
-        this._clicks = clicks;
-        this._isbn = isbn;
-    }
-
-
     get rating(): number {
         return this._rating;
     }
 
+    /**
+     * Book's name
+     */
     get title(): string {
         return this._title;
     }
 
+    /**
+     * Book's short description.
+     */
     get description(): string {
         return this._description;
     }
 
+    /**
+     * Book's year of publication
+     */
     get year(): number {
         return this._year;
     }
 
+    /**
+     * Book's language.
+     */
     get language(): string {
         return this._language;
     }
@@ -121,25 +61,41 @@ export class BookModel {
         return this._author1;
     }
 
+    /**
+     * Count of pages.
+     */
     get pages(): number {
         return this._pages;
     }
 
+    /**
+     * Book's id.
+     */
     get id(): number {
         return this._id;
     }
 
+    /**
+     * Clicks count on this book.
+     */
     get clicks(): number {
         return this._clicks;
     }
 
+    /**
+     * Book's art.
+     */
     get image(): Express.Multer.File | undefined {
         return this._image;
     }
 
+    /**
+     * Views count on this book.
+     */
     get views(): number {
         return this._views;
     }
+
 
     get isbn():string{
         return this._isbn;
