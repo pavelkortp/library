@@ -1,0 +1,3 @@
+SELECT * FROM books
+WHERE LOWER(TRIM(title)) LIKE LOWER(TRIM(?))
+ORDER BY creation_date DESC
