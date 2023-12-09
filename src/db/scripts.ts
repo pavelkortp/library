@@ -1,9 +1,8 @@
 import {Connection, RowDataPacket} from 'mysql2/promise';
-import {readFile, writeFile, unlink} from 'fs/promises';
+import {readFile, writeFile} from 'fs/promises';
 import {BookModel} from '../models/book-model.js';
 import {connection} from '../config/db-connection.js';
 import {migrator} from './migrator.js';
-import {addJob} from '../cron.js';
 
 /**
  * Establishes connection with the database.
@@ -21,14 +20,13 @@ export const connect = async () => {
  * @param version db version.
  * @param name name of query.
  */
-const getSqlQuery = async (name: string, version: 'v1' | 'v2' = 'v1'): Promise<string> => {
+export const getSqlQuery = async (name: string, version: 'v1' | 'v2' = 'v1'): Promise<string> => {
     return await readFile(`src/sql/${version}/${name}.sql`, 'utf-8');
 }
 
 
 /**
  * Creates tables books, authors ... if not exists
- * @param db database.
  */
 export const createTables = async (): Promise<void> => {
     await createTable(connection, 'src/sql/v1/create-books-table.sql');
@@ -161,10 +159,15 @@ export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'v
 export const removeBookById = async (id: number): Promise<void> => {
     const sql: string = await getSqlQuery('mark-as-deleted');
     await connection.execute(sql, [id]);
-    await addJob(1, false, async () => {
-        const deleteBook = await getSqlQuery('remove-book');
-        console.log(await connection.execute(deleteBook, [id]));
-        await unlink(`static/img/books/${id}.jpg`);
-    });
 }
+
+/**
+ * Returns all books id
+ */
+export const getDeletedId = async (): Promise<number[]> => {
+    const getAllId: string = await getSqlQuery('get-deleted-id');
+    const [rows] = await connection.query<RowDataPacket[]>(getAllId);
+    return rows.map((e) => e.id);
+}
+
 

@@ -1,16 +1,14 @@
 import {Request, Response} from 'express';
 import {BookModel} from '../../models/book-model.js';
-import {save, getAll, removeById} from '../../repositories/books-repository.js';
+import {save, removeById} from '../../repositories/books-repository.js';
+import {adminBooksData} from "../../dto/books-dto.js";
 
-/**
- * Count of books per one page on admin pannel.
- */
-const BOOKS_PER_PAGE: number = 5;
+
 
 /**
  * Default page number.
  */
-const DEFAULT_PAGE: number = 1;
+export const DEFAULT_PAGE: number = 1;
 
 
 /**
@@ -19,24 +17,9 @@ const DEFAULT_PAGE: number = 1;
  * @param res HTML page.
  */
 export const getBooksTable = async (req: Request, res: Response): Promise<void> => {
-    const books = await getAll();
-
-    const totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
     const page = parseInt(req.query.page as string) || DEFAULT_PAGE;
-    const offset = (page - 1) * BOOKS_PER_PAGE;
-
-    res.json({
-        data: {
-            books: books
-                .slice(offset, offset + BOOKS_PER_PAGE)
-                .map((e) => {
-                    return {id: e.id, author: e.author, clicks: e.clicks, year: e.year, title: e.title};
-                }),
-            totalPages: totalPages,
-            page: page
-        },
-        success: true
-    });
+    const response = await adminBooksData(page);
+    res.json(response);
 }
 
 /**

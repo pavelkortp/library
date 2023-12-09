@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {increaseBookClicks} from '../../repositories/books-repository.js';
-import {booksTransformData, bookTransformData} from "../../dto/books-dto.js";
+import {shortBooksData, fullBookData} from "../../dto/books-dto.js";
 
 const DEFAULT_FILTER: Filter = 'new';
 
@@ -12,7 +12,7 @@ const DEFAULT_FILTER: Filter = 'new';
  */
 export const getBook = async (req: Request, res: Response): Promise<void> => {
     const id = parseInt(req.params.book_id);
-    const result = await bookTransformData(id);
+    const result = await fullBookData(id);
     res.json(result);
 }
 
@@ -47,7 +47,7 @@ export const getBooks = async (req: Request, res: Response): Promise<void> => {
         limit: parseInt(req.query.limit as string || '20')
     };
 
-    const response = await booksTransformData(request);
+    const response = await shortBooksData(request);
     res.json(response);
 }
 
