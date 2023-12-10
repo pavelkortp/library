@@ -1,6 +1,5 @@
 import {BookModel} from "../models/book-model.js";
 import {findById, getAll} from "../repositories/books-repository.js";
-import {getAllBooks} from "../db/scripts.js";
 
 /**
  * Count of books per one page on admin panel.
@@ -19,7 +18,7 @@ class BookDTO {
     };
 
     static toBookDTO(book: BookModel): BookDTO {
-        return new BookDTO(book.id, book.title, book.author)
+        return new BookDTO(book.id, book.title, book.authors)
     };
 }
 
@@ -44,7 +43,7 @@ class FullBookDTO extends BookDTO {
         return new FullBookDTO(
             book.id,
             book.title,
-            book.author,
+            book.authors,
             book.description,
             book.year,
             book.language,
@@ -78,10 +77,10 @@ class AdminBookDTO extends BookDTO {
         return new AdminBookDTO(
             book.id,
             book.title,
-            book.author,
+            book.authors,
             book.clicks,
             book.year
-        )
+        );
     }
 }
 
@@ -106,7 +105,7 @@ export const shortBooksData = async (params: RequestData): Promise<ResponseData>
             limit: params.limit
         },
         success: true
-    }
+    };
 }
 
 /**
@@ -119,7 +118,7 @@ export const fullBookData = async (id: number) => {
         return {
             data: FullBookDTO.toFullBookDTO(book),
             success: true
-        }
+        };
     }
     return {success: false};
 }
@@ -130,18 +129,18 @@ export const fullBookData = async (id: number) => {
  * @return admin response object.
  */
 export const adminBooksData = async (page: number): Promise<AdminResponseData> => {
-    const books = await getAllBooks();
+    const books = await getAll();
     const totalPages = Math.ceil(books.length / BOOKS_PER_PAGE);
     const offset = (page - 1) * BOOKS_PER_PAGE;
     return {
         data: {
             books: books
                 .slice(offset, offset + BOOKS_PER_PAGE)
-                .map((e) => AdminBookDTO.toAdminBookDTO(e)),
+                .map(AdminBookDTO.toAdminBookDTO),
             totalPages: totalPages,
             page: page
         },
         success: true
-    }
+    };
 }
 

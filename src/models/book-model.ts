@@ -2,23 +2,21 @@
  * Library book representation
  */
 export class BookModel {
-    private _author2?: string;
-    private _author3?: string;
-
     constructor(
         private _title: string,
         private _year: number,
-        private _author1: string,
+        private _authors: string[],
         private _language: string,
         private _description: string,
         private _pages: number,
-        private _rating:number,
+        private _rating: number,
         private _image?: Express.Multer.File,
+        private _isbn: string = '0',
         private _id: number = 0,
         private _views: number = 0,
-        private _clicks: number = 0,
-        private _isbn:string = '0',
-    ) {}
+        private _clicks: number = 0
+    ) {
+    }
 
 
     /**
@@ -57,8 +55,8 @@ export class BookModel {
         return this._language;
     }
 
-    get author(): string {
-        return this._author1;
+    get authors(): string[] {
+        return this._authors;
     }
 
     /**
@@ -97,7 +95,7 @@ export class BookModel {
     }
 
 
-    get isbn():string{
+    get isbn(): string {
         return this._isbn;
     }
 }

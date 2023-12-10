@@ -4,7 +4,6 @@ import {shortBooksData, fullBookData} from "../../dto/books-dto.js";
 
 const DEFAULT_FILTER: Filter = 'new';
 
-
 /**
  * Renders book-page
  * @param req HTTP Request.

@@ -4,7 +4,6 @@ import {save, removeById} from '../../repositories/books-repository.js';
 import {adminBooksData} from "../../dto/books-dto.js";
 
 
-
 /**
  * Default page number.
  */
@@ -50,33 +49,30 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         title: string,
         year: string,
         language: string,
-        author1: string[],
-        author2: string[],
-        author3: string[],
+        author1: string,
+        author2: string,
+        author3: string,
         description: string,
         pages: string,
-        rating: string
+        rating: string,
+        isbn: string
     } = req.body;
     const image = req.file;
 
-    let success = true;
-    try {
-        await save(new BookModel(
+    let success = await save(
+        new BookModel(
             book.title,
             parseInt(book.year),
-            book.author1.join(' '),
+            [book.author1, book.author2, book.author3],
             book.language,
             book.description,
             parseInt(book.pages),
             parseInt(book.rating),
-            image!
-        ));
-    } catch (err) {
-        console.log(err);
-        success = false;
-    } finally {
-        res.json({success});
-    }
+            image!,
+            book.isbn
+        )
+    );
+    res.json({success});
 }
 
 

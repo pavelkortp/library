@@ -1,35 +1,38 @@
-import { BookModel } from '../models/book-model.js';
+import {BookModel} from '../models/book-model.js';
 import {
     createBook,
+    createEntry,
     getAllBooks,
+    getAllEntries,
     getBookById,
-    // getBookByTitle,
-    // getBookByYear,
+    findEntry,
     removeBookById,
     updateBookData
 } from '../db/scripts.js';
 import {migrator} from "../db/migrator.js";
 
 
-
 /**
  * Satored book in db.
  * @param book new book.
  */
-export const save = async (book: BookModel): Promise<void> => {
-    if(migrator.version == 'v1'){
-        await createBook(book);
-    }else {
-        await createBook(book);
+export const save = async (book: BookModel): Promise<boolean> => {
+    if (migrator.version == 'v1') {
+        return await createBook(book);
     }
+    return await createEntry(book);
 }
 
 /**
  * Returns all books from store.
  * @returns array of books.
  */
-export const getAll = async (filter: Filter = 'all', search?:string): Promise<BookModel[]> => {
-    return await getAllBooks(filter, search);
+export const getAll = async (filter: Filter = 'all', search?: string, authorId?: number, year?: number): Promise<BookModel[]> => {
+    if (migrator.version == 'v1') {
+        return await getAllBooks(filter, search, year);
+    }
+    return await getAllEntries(filter, search, authorId, year);
+
 }
 
 /**
@@ -37,22 +40,26 @@ export const getAll = async (filter: Filter = 'all', search?:string): Promise<Bo
  * @param id unique number.
  * @returns found book.
  */
-export const findById = async (id: number): Promise<BookModel | undefined> => {
-    return await getBookById(id);
+export const findById = async (id: number): Promise<BookModel | null> => {
+    if (migrator.version == 'v1') {
+        return await getBookById(id);
+    }
+    return await findEntry(id);
+
 }
 
 /**
  * Increases clicks number on current book.
  * @param id unique number.
  */
-export const increaseBookClicks = async (id: number): Promise<void> => {
-    await updateBookData(id, 'clicks');
+export const increaseBookClicks = async (id: number): Promise<boolean> => {
+    return await updateBookData(id, 'clicks');
 }
 
 /**
  * Removes book from storage.
  * @param id unique number.
  */
-export const removeById = async (id: number) => {
-    await removeBookById(id);
+export const removeById = async (id: number):Promise<boolean> => {
+    return await removeBookById(id);
 }
