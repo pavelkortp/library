@@ -18,6 +18,9 @@ declare type RequestData = {
     limit: number
 }
 
+/**
+ * Response data format to admin panel.
+ */
 declare type AdminResponseData = {
     data?:{
         books:AdminBookDTO[],
@@ -27,6 +30,9 @@ declare type AdminResponseData = {
     success:boolean
 }
 
+/**
+ * Response data to main page or search page.
+ */
 declare type ResponseData = {
     data:{
         books:BookDTO[],
