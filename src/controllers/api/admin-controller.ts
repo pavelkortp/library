@@ -58,7 +58,6 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
         isbn: string
     } = req.body;
     const image = req.file;
-
     let success = await save(
         new BookModel(
             book.title,
