@@ -1,10 +1,11 @@
 import * as cron from 'node-cron';
 import mysqldump from 'mysqldump';
-import {unlink} from "fs/promises";
+import {unlink} from 'fs/promises';
 
-import {getDeletedId, getSqlQuery} from "./db/scripts.js";
-import {connection} from "./config/db-connection.js";
-import {backupConfig} from "./config/db-backup.js";
+import {getDeletedId, getSqlQuery} from './db/scripts.js';
+import {connection} from './config/db-connection.js';
+import {backupConfig} from './config/db-backup.js';
+import {version} from './db/migrator.js';
 
 const UPDATE_TIME = '* * * * *';
 
@@ -12,18 +13,21 @@ const UPDATE_TIME = '* * * * *';
  * Removes all books marked as deleted
  */
 export const softRemove = async (): Promise<void> => {
-    const sql: string = await getSqlQuery('remove-books');
+    const sql: string = await getSqlQuery('remove-books', version);
     cron.schedule(UPDATE_TIME, async () => {
         const deletedId = await getDeletedId();
-        await connection.query(sql);
         for (const id of deletedId) {
             try {
+                if (version=='v2'){
+                    await connection.execute(await getSqlQuery('remove-links', version), [id]);
+                }
                 await unlink(`static/img/books/${id}.jpg`);
                 console.log(`REMOVED PICTURE WITH ID ${id}`);
             } catch (err) {
                 console.log('Error with removing book picture: ', err);
             }
         }
+        await connection.execute(sql);
     }).start();
 };
 

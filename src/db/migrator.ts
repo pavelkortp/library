@@ -7,7 +7,7 @@ import {connection} from "../config/db-connection.js";
  * <b>V2</b> - normalized version, authors and books_authors<br>
  * tables (From books removes author column).
  */
-let version: 'v1' | 'v2' = JSON.parse(await readFile('src/config/db-version.json', 'utf-8')).version;
+export let version: 'v1' | 'v2' = JSON.parse(await readFile('src/config/db-version.json', 'utf-8')).version;
 
 /**
  * Update db structure.
