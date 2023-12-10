@@ -14,7 +14,9 @@ let version: 'v1' | 'v2' = JSON.parse(await readFile('src/config/db-version.json
  */
 const migrateUp = async () => {
     await createAuthorsTable();
+    await fillAuthorsTable();
     await createBooksAuthorsTable();
+    await fillBooksAuthorsTable();
     await removeAuthorColumnFromBooks();
     await writeFile(
         'src/config/db-version.json',
@@ -28,6 +30,7 @@ const migrateUp = async () => {
  */
 const migrateDown = async () => {
     await addAuthorColumnToBooks();
+    await fillAuthorsColumn();
     await removeBooksAuthorsTable();
     await removeAuthorsTable();
     await writeFile(
@@ -40,20 +43,35 @@ const migrateDown = async () => {
 const createAuthorsTable = async (): Promise<void> => {
     const sql: string = await readFile(`src/sql/migrations/up/create-authors-table.sql`, 'utf-8');
     await connection.execute(sql);
-}
+};
+
+const fillAuthorsTable = async (): Promise<void> => {
+    const sql: string = await readFile(`src/sql/migrations/up/fill-authors-table.sql`, 'utf-8');
+    await connection.execute(sql);
+};
 
 const createBooksAuthorsTable = async (): Promise<void> => {
     const sql: string = await readFile(`src/sql/migrations/up/create-books_authors-table.sql`, 'utf-8');
     await connection.execute(sql);
-}
+};
+
+const fillBooksAuthorsTable = async (): Promise<void> => {
+    const sql: string = await readFile(`src/sql/migrations/up/fill-books_authors-table.sql`, 'utf-8');
+    await connection.execute(sql);
+};
 
 const removeAuthorColumnFromBooks = async (): Promise<void> => {
     const sql: string = await readFile(`src/sql/migrations/up/remove-column.sql`, 'utf-8');
     await connection.execute(sql);
-}
+};
 
 const addAuthorColumnToBooks = async (): Promise<void> => {
     const sql: string = await readFile(`src/sql/migrations/down/add-column.sql`, 'utf-8');
+    await connection.execute(sql);
+}
+
+const fillAuthorsColumn = async (): Promise<void> => {
+    const sql: string = await readFile(`src/sql/migrations/down/fill-authors-column.sql`, 'utf-8');
     await connection.execute(sql);
 }
 
@@ -72,6 +90,7 @@ export const migrator = {
         if (this.version == 'v1') {
             await migrateUp();
         } else {
+            this.version = 'v2'
             console.log('version v2 already exists')
         }
     },
@@ -79,10 +98,10 @@ export const migrator = {
         if (this.version == 'v2') {
             await migrateDown();
         } else {
+            this.version = 'v1'
             console.log('version v1 already exists')
         }
     },
     version: version
 }
-
 
