@@ -4,4 +4,4 @@ FROM (SELECT books.*, GROUP_CONCAT(authors.name) AS author
                JOIN books_authors ON books.id = books_authors.book_id
                JOIN authors ON authors.id = books_authors.author_id
       GROUP BY books.title, books.id) as entries
-WHERE entries.id = (?)
+ORDER BY entries.creation_date DESC

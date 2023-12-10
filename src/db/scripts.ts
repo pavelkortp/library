@@ -2,8 +2,8 @@ import {Connection, RowDataPacket} from 'mysql2/promise';
 import {readFile, writeFile} from 'fs/promises';
 import {BookModel} from '../models/book-model.js';
 import {connection} from '../config/db-connection.js';
-import {migrator} from './migrator.js';
-import e from "express";
+
+
 
 /**
  * Establishes connection with the database.
@@ -29,7 +29,7 @@ const toBookModel = (entry: RowDataPacket) => {
     return new BookModel(
         entry.title,
         entry.year,
-        [],
+        [entry.author],
         entry.language,
         entry.description,
         entry.pages,
@@ -43,6 +43,9 @@ const toBookModel = (entry: RowDataPacket) => {
 
 }
 
+// const savePic = async (name:string, picture:Buffer)=>{
+//     await writeFile(`static/img/books/${name}.jpg`, picture);
+// }
 
 /**
  * Creates tables books, authors ... if not exists
@@ -175,7 +178,16 @@ export const getDeletedId = async (): Promise<number[]> => {
  * @param year books of a certain year.
  */
 export const getAllEntries = async (filter: Filter, search?: string, authorId?: number, year?: number): Promise<BookModel[]> => {
-    return [];
+    let sql;
+    let rows;
+    if (search) {
+        sql = await getSqlQuery(`search-${filter}-entries`, 'v2');
+        [rows] = await connection.query<RowDataPacket[]>(sql, [`%${search}%`]);
+    } else {
+        sql = await getSqlQuery(`get-${filter}-entries`, 'v2');
+        [rows] = await connection.query<RowDataPacket[]>(sql);
+    }
+    return rows.map(toBookModel);
 }
 
 /**
@@ -202,18 +214,16 @@ export const createEntry = async (book: BookModel): Promise<boolean> => {
     }
     const sql = await getSqlQuery('create-entry', 'v2');
 
-    const author_id_1 = await createAuthor(book.authors[0]);
-    const author_id_2 = await createAuthor(book.authors[1]);
-    const author_id_3 = await createAuthor(book.authors[2]);
+    const id_1 = await createAuthor(book.authors[0]);
+    const id_2 = await createAuthor(book.authors[1]);
+    const id_3 = await createAuthor(book.authors[2]);
+    const authors = [id_1, id_2, id_3];
+    for (const id of authors) {
+        if (id) await connection.execute(sql, [bookId, id]);
+    }
 
-    const values = [
-        bookId,
-        author_id_1 || null,
-        author_id_2 || null,
-        author_id_3 || null
-    ];
+    await writeFile(`static/img/books/${bookId}.jpg`, book.image!.buffer);
 
-    await connection.execute(sql, values);
     return true;
 }
 
@@ -274,7 +284,7 @@ const createAuthor = async (name: string): Promise<number> => {
 const getAuthorByName = async (name: string): Promise<number> => {
     const sql = await getSqlQuery('get-author-by-name', 'v2');
     const [res] = await connection.query<RowDataPacket[]>(sql, [`%${name}%`]);
-    if (res) {
+    if (res[0]) {
         return res[0].id;
     }
     return 0;

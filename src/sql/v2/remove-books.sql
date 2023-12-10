@@ -1,0 +1,4 @@
+DELETE
+FROM books
+WHERE deleted IS NOT NULL;
+
