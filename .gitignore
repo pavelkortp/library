@@ -6,3 +6,4 @@ db-config.ts
 .vscode
 static/img/books
 src/sql/backup/
+src/config/db-version.json
