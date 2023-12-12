@@ -1,6 +1,13 @@
 import {Request, Response} from 'express';
 
+/**
+ * Max length for description column in db.
+ */
 const MAX_DESCRIPTION_LENGTH = 1000;
+
+/**
+ * Max length for other varchar columns in db.
+ */
 const MAX_COLUMN_LENGTH = 100;
 
 /**
@@ -9,10 +16,10 @@ const MAX_COLUMN_LENGTH = 100;
 const FORBIDDEN_SYMBOLS = /[;<>/^*&()$=]/;
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * Validates book_id param
+ * @param req HTTP request with query-params
+ * @param res HTTP response
+ * @param next callback
  */
 export const validate_book_id = async (req: Request, res: Response, next: Function) => {
     const id = parseInt(req.params.book_id);
@@ -25,9 +32,9 @@ export const validate_book_id = async (req: Request, res: Response, next: Functi
 
 /**
  *
- * @param req
- * @param res
- * @param next
+ * @param req HTTP request with query-params
+ * @param res HTTP response
+ * @param next callback
  */
 export const validate_page = async (req: Request, res: Response, next: Function) => {
     const page = parseInt(req.query.page as string);
@@ -39,34 +46,38 @@ export const validate_page = async (req: Request, res: Response, next: Function)
 }
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * Validates request to api
+ * @param req HTTP request with query-params
+ * @param res HTTP response
+ * @param next callback
  */
 export const validate_request_data = async (req: Request, res: Response, next: Function) => {
-    if (!(req.query.filter == 'new' || req.query.filter == 'popular' || req.query.filter == 'all' || !req.query.filter)) {
-        res.status(404).json({success: false});
-    } else if (typeof req.query.search == 'string' && req.query.search.includes(';')) {
-        res.status(404).json({success: false});
-    } else if (parseInt(req.query.year as string) <= 0) {
-        res.status(404).json({success: false});
-    } else if (parseInt(req.query.author as string) <= 0) {
-        res.status(404).json({success: false});
-    } else if (parseInt(req.query.offset as string) <= 0) {
-        res.status(404).json({success: false});
-    } else if (parseInt(req.query.limit as string) <= 0) {
-        res.status(404).json({success: false});
+    const filter = req.query.filter as string;
+    const search = req.query.search as string;
+    const year = req.query.year as string;
+    const author = req.query.author as string;
+    const offset = req.query.offset as string;
+    const limit = req.query.limit as string;
+    console.log(year)
+    if (
+        filter && filter != 'new' && filter != 'all' && filter != 'popular' ||
+        search && search.match(FORBIDDEN_SYMBOLS) ||
+        year && parseInt(year) <= 0 ||
+        author && parseInt(author) <= 0 ||
+        offset && parseInt(offset) < 0 ||
+        limit && parseInt(limit) < 0
+    ) {
+        res.status(400).json({success: false, msg: 'Запит містить некоректні дані'})
     } else {
         await next();
     }
 }
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * validates requests to admin/api
+ * @param req HTTP request with body-params
+ * @param res HTTP response
+ * @param next callback
  */
 export const validate_creation_data = async (req: Request, res: Response, next: Function) => {
     const newBook: CreationData = req.body;
