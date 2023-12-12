@@ -4,7 +4,6 @@ import {BookModel} from '../models/book-model.js';
 import {connection} from '../config/db-connection.js';
 
 
-
 /**
  * Establishes connection with the database.
  */
@@ -81,7 +80,9 @@ export const getAllBooks = async (filter: Filter, search?: string, year?: number
         sql = await getSqlQuery(`get-${filter}-books`);
         [rows] = await connection.execute<RowDataPacket[]>(sql);
     }
-
+    if (year) {
+        return rows.map(toBookModel).filter((e) => e.year == year);
+    }
     return rows.map(toBookModel);
 }
 
@@ -190,7 +191,11 @@ export const getAllEntries = async (filter: Filter, search?: string, authorId?: 
         sql = await getSqlQuery(`get-${filter}-entries`, 'v2');
         [rows] = await connection.query<RowDataPacket[]>(sql);
     }
+    if (year) {
+        return rows.map(toBookModel).filter((e) => e.year == year);
+    }
     return rows.map(toBookModel);
+
 }
 
 /**

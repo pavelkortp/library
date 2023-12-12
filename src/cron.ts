@@ -7,7 +7,7 @@ import {connection} from './config/db-connection.js';
 import {backupConfig} from './config/db-backup.js';
 import {migrator} from './migrator/migrator.js';
 
-const UPDATE_TIME = '* * * * *';
+const UPDATE_TIME = '59 23 * * *';
 
 /**
  * Removes all books marked as deleted

@@ -89,7 +89,7 @@ class AdminBookDTO extends BookDTO {
  * @param params params which describes what kind of data have requested.
  */
 export const shortBooksData = async (params: RequestData): Promise<ResponseData> => {
-    const allBooks = await getAll(params.filter, params.search);
+    const allBooks = await getAll(params.filter, params.search, params.author, params.year);
     const books = allBooks
         .slice(params.offset, params.offset + params.limit)
         .map(BookDTO.toBookDTO);
