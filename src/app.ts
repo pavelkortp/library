@@ -14,6 +14,9 @@ const PORT = 3000;
 await connect();
 await createTables();
 
+await softRemove();
+await backup();
+
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('static'));
@@ -25,13 +28,9 @@ app.use('/admin', basicAuth({
     users: {admin: '1234'}
 }));
 
-app.use(mainRouter);
-
-await softRemove();
-await backup();
-
 app.use('/admin/api/v1', adminRouter);
 
+app.use(mainRouter);
 
 app.listen(PORT, () => {
     console.log(`Server listening at port ${PORT}`);
