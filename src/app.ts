@@ -7,7 +7,6 @@ import {mainRouter} from './routes/pages-router.js';
 
 import {connect, createTables} from './db/scripts.js';
 import {backup, softRemove} from "./cron.js";
-import {migrator} from "./db/migrator.js";
 
 export const app: Express = express();
 const PORT = 3000;
@@ -30,8 +29,6 @@ app.use(mainRouter);
 
 await softRemove();
 await backup();
-
-await migrator.down();
 
 app.use('/admin/api/v1', adminRouter);
 app.listen(PORT, () => {

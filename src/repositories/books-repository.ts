@@ -9,7 +9,7 @@ import {
     removeBookById,
     updateBookData
 } from '../db/scripts.js';
-import {migrator} from "../db/migrator.js";
+import {migrator} from "../migrator/migrator.js";
 
 
 /**

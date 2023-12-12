@@ -7,7 +7,7 @@ import {connection} from "../config/db-connection.js";
  * <b>V2</b> - normalized version, authors and books_authors<br>
  * tables (From books removes author column).
  */
-export let version: 'v1' | 'v2' = JSON.parse(await readFile('src/config/db-version.json', 'utf-8')).version;
+let version: 'v1' | 'v2' = JSON.parse(await readFile('src/config/db-version.json', 'utf-8')).version;
 
 /**
  * Update db structure.
@@ -90,7 +90,6 @@ export const migrator = {
         if (this.version == 'v1') {
             await migrateUp();
         } else {
-            this.version = 'v2'
             console.log('version v2 already exists')
         }
     },
@@ -98,7 +97,6 @@ export const migrator = {
         if (this.version == 'v2') {
             await migrateDown();
         } else {
-            this.version = 'v1'
             console.log('version v1 already exists')
         }
     },

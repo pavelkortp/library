@@ -25,6 +25,10 @@ export const getSqlQuery = async (name: string, version: 'v1' | 'v2' = 'v1'): Pr
     return await readFile(`src/sql/${version}/${name}.sql`, 'utf-8');
 }
 
+/**
+ * Converts table entry to BookModel
+ * @param entry entry which contains info about book.
+ */
 const toBookModel = (entry: RowDataPacket) => {
     return new BookModel(
         entry.title,
@@ -42,10 +46,6 @@ const toBookModel = (entry: RowDataPacket) => {
     );
 
 }
-
-// const savePic = async (name:string, picture:Buffer)=>{
-//     await writeFile(`static/img/books/${name}.jpg`, picture);
-// }
 
 /**
  * Creates tables books, authors ... if not exists
@@ -66,6 +66,9 @@ const createTable = async (db: Connection, scryptPath: string): Promise<void> =>
 
 /**
  * Returns all book's table entries.
+ * @param filter how to order entries.
+ * @param search key word of books titles.
+ * @param year books of a certain year.
  * @returns books array.
  */
 export const getAllBooks = async (filter: Filter, search?: string, year?: number): Promise<BookModel[]> => {
@@ -275,7 +278,6 @@ const createAuthor = async (name: string): Promise<number> => {
     }
     return id;
 }
-
 
 /**
  * Searches and returns author id from 'authors' or 0.
