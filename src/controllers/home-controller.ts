@@ -36,3 +36,12 @@ export const getAdminPage = async (req: Request, res: Response): Promise<void> =
     res.render('admin-page');
 }
 
+/**
+ * Renders error page for incorrect routes.
+ * @param req HTTP request
+ * @param res HTML error page.
+ */
+export const getErrorPage = async (req:Request, res:Response):Promise<void> =>{
+    res.status(404).render('404');
+}
+

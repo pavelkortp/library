@@ -31,6 +31,8 @@ await softRemove();
 await backup();
 
 app.use('/admin/api/v1', adminRouter);
+
+
 app.listen(PORT, () => {
     console.log(`Server listening at port ${PORT}`);
 });
