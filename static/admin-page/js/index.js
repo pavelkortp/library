@@ -51,6 +51,7 @@ function create(e) {
         body: formData,
     })
     .then(response => {
+        console.log(response)
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status}`);
         }
@@ -60,7 +61,7 @@ function create(e) {
         if (data.success) {
             swal({
                 title: 'Чудово',
-                text: 'Книгу успішно додано!',
+                text: data.msg,
                 type: 'success',
                 confirmButtonColor: '#27AE60',
                 confirmButtonText: 'Закрити',
@@ -70,7 +71,7 @@ function create(e) {
         } else {
             swal({
                 title: 'Погані новини',
-                text: 'При додаванні книги виникла помилка(',
+                text: data.msg,
                 type: 'warning',
                 confirmButtonColor: '#27AE60',
                 confirmButtonText: 'Закрити',

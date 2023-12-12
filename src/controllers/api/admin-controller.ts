@@ -1,7 +1,8 @@
 import {Request, Response} from 'express';
 import {BookModel} from '../../models/book-model.js';
 import {save, removeById} from '../../repositories/books-repository.js';
-import {adminBooksData} from "../../dto/books-dto.js";
+import {adminBooksData} from '../../dto/books-dto.js';
+import {migrator} from "../../migrator/migrator.js";
 
 
 /**
@@ -45,33 +46,24 @@ export const removeBook = async (req: Request, res: Response): Promise<void> => 
  * @param res HTML admin-page with books.
  */
 export const createBook = async (req: Request, res: Response): Promise<void> => {
-    const book: {
-        title: string,
-        year: string,
-        language: string,
-        author1: string,
-        author2: string,
-        author3: string,
-        description: string,
-        pages: string,
-        rating: string,
-        isbn: string
-    } = req.body;
-    const image = req.file;
-    let success = await save(
-        new BookModel(
-            book.title,
-            parseInt(book.year),
-            [book.author1, book.author2, book.author3],
-            book.language,
-            book.description,
-            parseInt(book.pages),
-            parseInt(book.rating),
-            image!,
-            book.isbn
-        )
-    );
+    const book = await getBookFromRequest(req.body, req.file!);
+    let success = await save(book);
+    console.log(success)
     res.json({success});
+}
+
+const getBookFromRequest = async (book: CreationData, image: Express.Multer.File) => {
+    return new BookModel(
+        book.title,
+        parseInt(book.year),
+        migrator.version == 'v2' ? [book.author1, book.author2, book.author3] : [book.author1],
+        book.language,
+        book.description,
+        parseInt(book.pages),
+        parseInt(book.rating),
+        image,
+        book.isbn
+    )
 }
 
 

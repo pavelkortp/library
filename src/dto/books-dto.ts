@@ -120,7 +120,7 @@ export const fullBookData = async (id: number) => {
             success: true
         };
     }
-    return {success: false};
+    return {success: false, msg:'Книгу не знайдено'};
 }
 
 /**

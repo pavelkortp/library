@@ -13,4 +13,4 @@ mainRouter.get('/', getHomePage);
 mainRouter.get('/books/:id', getBookPage);
 mainRouter.get('/search', getSearchedPage);
 mainRouter.get('/admin', getAdminPage);
-mainRouter.all('*', getErrorPage)
+// mainRouter.all('*', getErrorPage)

@@ -47,3 +47,17 @@ declare type ResponseData = {
     success:boolean
 }
 
+declare type CreationData = {
+    title:string,
+    year:string,
+    isbn:string,
+    language:string,
+    pages:string,
+    author1:string,
+    author2:string,
+    author3:string,
+    description:string,
+    rating:string
+    image:Express.Multer.File | undefined
+}
+
