@@ -1,4 +1,6 @@
 import {Request, Response} from 'express';
+import {BookModel} from "../../models/book-model.js";
+import {migrator} from "../../migrator/migrator.js";
 
 /**
  * Max length for description column in db.
@@ -15,6 +17,11 @@ const MAX_COLUMN_LENGTH = 100;
  */
 const FORBIDDEN_SYMBOLS = /[;<>/^*&()$=]/;
 
+const DEFAULT_FILTER: Filter = 'new';
+
+const DEFAULT_OFFSET = 0;
+const DEFAULT_LIMIT = 20;
+
 /**
  * Validates book_id param
  * @param req HTTP request with query-params
@@ -29,6 +36,7 @@ export const validate_book_id = async (req: Request, res: Response, next: Functi
         await next();
     }
 }
+
 
 /**
  *
@@ -45,33 +53,6 @@ export const validate_page = async (req: Request, res: Response, next: Function)
     }
 }
 
-/**
- * Validates request to api
- * @param req HTTP request with query-params
- * @param res HTTP response
- * @param next callback
- */
-export const validate_request_data = async (req: Request, res: Response, next: Function) => {
-    const filter = req.query.filter as string;
-    const search = req.query.search as string;
-    const year = req.query.year as string;
-    const author = req.query.author as string;
-    const offset = req.query.offset as string;
-    const limit = req.query.limit as string;
-    console.log(year)
-    if (
-        filter && filter != 'new' && filter != 'all' && filter != 'popular' ||
-        search && search.match(FORBIDDEN_SYMBOLS) ||
-        year && parseInt(year) <= 0 ||
-        author && parseInt(author) <= 0 ||
-        offset && parseInt(offset) < 0 ||
-        limit && parseInt(limit) < 0
-    ) {
-        res.status(400).json({success: false, msg: 'Запит містить некоректні дані'})
-    } else {
-        await next();
-    }
-}
 
 /**
  * validates requests to admin/api
@@ -96,9 +77,59 @@ export const validate_creation_data = async (req: Request, res: Response, next: 
         !newBook.description || newBook.description.length >= MAX_DESCRIPTION_LENGTH || newBook.description.match(FORBIDDEN_SYMBOLS) ||
         !newBook.rating || parseInt(newBook.rating) <= 0
     ) {
-        res.status(404).json({success: false, msg: 'Введені некоректні дані'});
+        res.status(400).json({success: false, msg: 'Введені некоректні дані'});
     } else {
         await next();
     }
-
 }
+
+export const escapeHtml = (input: string): string => {
+    return input.replace(/[&<>"']/g, (match: string): string => {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[match] || '';
+    });
+}
+
+export const isFilter = (s: string): s is Filter => {
+    return ['all', 'new', 'popular'].includes(s);
+};
+
+type NotValidRequest = {
+    filter?: string,
+    search?: string,
+    year?: string,
+    author?: string,
+    offset?: string,
+    limit?: string
+}
+export const getRequestData = async (data: NotValidRequest): Promise<RequestData> => {
+    return {
+        filter: data.filter && isFilter(data.filter) ? data.filter : DEFAULT_FILTER,
+        search: data.search,
+        year: data.year ? parseInt(data.year) : undefined,
+        author: data.author ? parseInt(data.author) : undefined,
+        offset: data.offset && parseInt(data.offset) ? parseInt(data.offset) : DEFAULT_OFFSET,
+        limit: data.limit && parseInt(data.limit) ? parseInt(data.limit) : DEFAULT_LIMIT,
+    }
+};
+
+export const getBookFromRequest = async (book: CreationData, image: Express.Multer.File) => {
+    return new BookModel(
+        book.title,
+        parseInt(book.year),
+        migrator.version == 'v2' ? [book.author1, book.author2, book.author3] : [book.author1],
+        book.language,
+        book.description,
+        parseInt(book.pages),
+        parseInt(book.rating),
+        image,
+        book.isbn
+    )
+}
+
+

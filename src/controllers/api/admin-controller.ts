@@ -3,6 +3,7 @@ import {BookModel} from '../../models/book-model.js';
 import {save, removeById} from '../../repositories/books-repository.js';
 import {adminBooksData} from '../../dto/books-dto.js';
 import {migrator} from "../../migrator/migrator.js";
+import {getBookFromRequest} from "./request-validator.js";
 
 
 /**
@@ -52,19 +53,7 @@ export const createBook = async (req: Request, res: Response): Promise<void> => 
     res.json({success});
 }
 
-const getBookFromRequest = async (book: CreationData, image: Express.Multer.File) => {
-    return new BookModel(
-        book.title,
-        parseInt(book.year),
-        migrator.version == 'v2' ? [book.author1, book.author2, book.author3] : [book.author1],
-        book.language,
-        book.description,
-        parseInt(book.pages),
-        parseInt(book.rating),
-        image,
-        book.isbn
-    )
-}
+
 
 
 

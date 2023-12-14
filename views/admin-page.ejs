@@ -73,18 +73,18 @@
     </div>
 </div>
 <div class="container">
-    <form action="http://localhost:3000/admin/api/v1/books/create" method="post" enctype="multipart/form-data"
+    <form action="admin/api/v1/books/create" method="post" enctype="multipart/form-data"
           class="was-validated d-flex" id="bookForm">
         <div class="container">
             <div class="mb-3">
-                <input type="text" name="title" placeholder="Назва книжечки..." required>
+                <input type="text" name="title" placeholder="Назва книжечки..." maxlength="100" required>
             </div>
             <div class="mb-3">
                 <input type="number" name="year" placeholder="Рік видання" required>
-                <input type="number" name="isbn" placeholder="ISBN" required>
+                <input type="number" name="isbn" placeholder="ISBN" required maxlength="100">
             </div>
             <div class="mb-3">
-                <input type="text" name="language" placeholder="Мова" required>
+                <input type="text" name="language" placeholder="Мова" maxlength="100" required>
                 <input type="number" name="pages" placeholder="Кількість сторінок" required>
             </div>
             <div class="mb-3">
@@ -97,20 +97,22 @@
             </script>
             <img id="frame" src="" width="15%" class="img-fluid"/>
 
+<!--            <button class="btn btn-primary"  type="submit">Додати книжку</button>-->
             <button class="btn btn-primary" id="create" type="submit">Додати книжку</button>
         </div>
         <div class="container">
             <div class="mb-3">
-                <input type="text" name="author1" placeholder="Автор 1">
+                <input type="text" name="author1" placeholder="Автор 1" maxlength="100" required>
             </div>
             <div class="mb-3">
-                <input type="text" name="author2" placeholder="Автор 2">
+                <input type="text" name="author2" placeholder="Автор 2" maxlength="100">
             </div>
             <div class="mb-3">
-                <input type="text" name="author3" placeholder="Автор 3">
+                <input type="text" name="author3" placeholder="Автор 3" maxlength="100">
             </div>
             <div class="mb-3">
                     <textarea class="form-control is-invalid" name="description" placeholder="Опис цієї книжечки"
+                              maxlength="1000"
                               required></textarea>
                 <div class="invalid-feedback">
                     Please enter a message in the textarea.

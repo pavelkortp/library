@@ -1,8 +1,9 @@
 import {Request, Response} from 'express';
 import {increaseBookClicks} from '../../repositories/books-repository.js';
 import {shortBooksData, fullBookData} from '../../dto/books-dto.js';
+import {getRequestData} from "./request-validator.js";
 
-const DEFAULT_FILTER: Filter = 'new';
+
 
 /**
  * Renders book-page
@@ -37,15 +38,7 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
  * @param res HTML page wich contains all books.
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
-    const request: RequestData = {
-        filter: req.query.filter as Filter,
-        search: req.query.search as string,
-        year: parseInt(req.query.year as string),
-        author: parseInt(req.query.author as string),
-        offset: parseInt(req.query.offset as string || '0'),
-        limit: parseInt(req.query.limit as string || '20')
-    };
-
+    const request: RequestData = await getRequestData(req.query);
     const response = await shortBooksData(request);
     res.json(response);
 }

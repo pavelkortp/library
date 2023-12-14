@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import {escapeHtml} from "./api/request-validator.js";
 
 /**
  * Renders main page.
@@ -24,7 +25,7 @@ export const getBookPage = async (req: Request, res: Response): Promise<void> =>
  * @param res HTML page with results of searching.
  */
 export const getSearchedPage = async (req: Request, res: Response): Promise<void> => {
-    res.render('search-page', { search: req.query.search });
+    res.render('search-page', { search: escapeHtml(req.query.search as string)});
 }
 
 /**

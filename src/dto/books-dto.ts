@@ -1,5 +1,6 @@
 import {BookModel} from "../models/book-model.js";
 import {findById, getAll} from "../repositories/books-repository.js";
+import {escapeHtml} from "../controllers/api/request-validator.js";
 
 /**
  * Count of books per one page on admin panel.
@@ -100,7 +101,7 @@ export const shortBooksData = async (params: RequestData): Promise<ResponseData>
                 amount: allBooks.length
             },
             filter: params.filter,
-            search: params.search,
+            search: params.search? escapeHtml(params.search): undefined,
             offset: params.offset,
             limit: params.limit
         },

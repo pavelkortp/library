@@ -22,42 +22,42 @@ declare type RequestData = {
  * Response data format to admin panel.
  */
 declare type AdminResponseData = {
-    data?:{
-        books:AdminBookDTO[],
-        totalPages:number,
-        page:number
+    data?: {
+        books: AdminBookDTO[],
+        totalPages: number,
+        page: number
     },
-    success:boolean
+    success: boolean
 }
 
 /**
  * Response data to main page or search page.
  */
 declare type ResponseData = {
-    data:{
-        books:BookDTO[],
-        total:{
-            amount:number
+    data: {
+        books: BookDTO[],
+        total: {
+            amount: number
         }
         filter: Filter,
         search?: string,
         offset: number,
         limit: number
     }
-    success:boolean
+    success: boolean
 }
 
 declare type CreationData = {
-    title:string,
-    year:string,
-    isbn:string,
-    language:string,
-    pages:string,
-    author1:string,
-    author2:string,
-    author3:string,
-    description:string,
-    rating:string
-    image:Express.Multer.File | undefined
+    title: string,
+    year: string,
+    isbn: string,
+    language: string,
+    pages: string,
+    author1: string,
+    author2: string,
+    author3: string,
+    description: string,
+    rating: string
+    image: Express.Multer.File | undefined
 }
 
