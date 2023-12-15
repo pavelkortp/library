@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import {BookModel} from "../../models/book-model.js";
-import {migrator} from "../../migrator/migrator.js";
+import {BookModel} from '../../models/book-model.js';
+import {migrator} from '../../migrator/migrator.js';
 
 /**
  * Max length for description column in db.
@@ -17,9 +17,19 @@ const MAX_COLUMN_LENGTH = 100;
  */
 const FORBIDDEN_SYMBOLS = /[;<>/^*&()$=]/;
 
+/**
+ * Default filter value for main page.
+ */
 const DEFAULT_FILTER: Filter = 'new';
 
+/**
+ * Default offset.
+ */
 const DEFAULT_OFFSET = 0;
+
+/**
+ * Starts books limit on main page.
+ */
 const DEFAULT_LIMIT = 20;
 
 /**
@@ -35,8 +45,7 @@ export const validate_book_id = async (req: Request, res: Response, next: Functi
     } else {
         await next();
     }
-}
-
+};
 
 /**
  *
@@ -51,8 +60,7 @@ export const validate_page = async (req: Request, res: Response, next: Function)
     } else {
         await next();
     }
-}
-
+};
 
 /**
  * validates requests to admin/api
@@ -61,7 +69,7 @@ export const validate_page = async (req: Request, res: Response, next: Function)
  * @param next callback
  */
 export const validate_creation_data = async (req: Request, res: Response, next: Function) => {
-    const newBook: CreationData = req.body;
+    const newBook: BookCreationData = req.body;
     newBook.image = req.file;
     if (!newBook.image) {
         res.status(404).json({success: false, msg: 'Помилка при обробленні картинки'});
@@ -81,8 +89,13 @@ export const validate_creation_data = async (req: Request, res: Response, next: 
     } else {
         await next();
     }
-}
+};
 
+/**
+ * Replaces html characters with their safe counterparts.
+ * @param input string with html.
+ * @return safe line.
+ */
 export const escapeHtml = (input: string): string => {
     return input.replace(/[&<>"']/g, (match: string): string => {
         return {
@@ -93,21 +106,21 @@ export const escapeHtml = (input: string): string => {
             "'": '&#39;'
         }[match] || '';
     });
-}
+};
 
+/**
+ * Checks if current sting is Filter.
+ * @param s any string.
+ */
 export const isFilter = (s: string): s is Filter => {
     return ['all', 'new', 'popular'].includes(s);
 };
 
-type NotValidRequest = {
-    filter?: string,
-    search?: string,
-    year?: string,
-    author?: string,
-    offset?: string,
-    limit?: string
-}
-export const getRequestData = async (data: NotValidRequest): Promise<RequestData> => {
+/**
+ * Converts an invalid request to a valid one and returns it.
+ * @param data any data which can be sent by users on api/v1/books
+ */
+export const getRequestData = async (data: NotValidRequestData): Promise<RequestData> => {
     return {
         filter: data.filter && isFilter(data.filter) ? data.filter : DEFAULT_FILTER,
         search: data.search,
@@ -118,7 +131,12 @@ export const getRequestData = async (data: NotValidRequest): Promise<RequestData
     }
 };
 
-export const getBookFromRequest = async (book: CreationData, image: Express.Multer.File) => {
+/**
+ * Creates a BookModel from a request and returns it.
+ * @param book unprocessed version of the book sent by the user.
+ * @param image book image.
+ */
+export const getBookFromRequest = async (book: BookCreationData, image: Express.Multer.File) => {
     return new BookModel(
         book.title,
         parseInt(book.year),
@@ -129,7 +147,7 @@ export const getBookFromRequest = async (book: CreationData, image: Express.Mult
         parseInt(book.rating),
         image,
         book.isbn
-    )
-}
+    );
+};
 
 

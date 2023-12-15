@@ -7,7 +7,7 @@
 declare type Filter = 'all' | 'new' | 'popular';
 
 /**
- * Requested data, which can be sand on server as query params.
+ * Processed secure data coming from users.
  */
 declare type RequestData = {
     filter: Filter,
@@ -17,6 +17,18 @@ declare type RequestData = {
     offset: number,
     limit: number
 }
+
+/**
+ * Request data, which sends by users.
+ */
+declare type NotValidRequestData = {
+    filter?: string,
+    search?: string,
+    year?: string,
+    author?: string,
+    offset?: string,
+    limit?: string
+};
 
 /**
  * Response data format to admin panel.
@@ -47,7 +59,10 @@ declare type ResponseData = {
     success: boolean
 }
 
-declare type CreationData = {
+/**
+ * Data which sends by user from admin panel to create new book.
+ */
+declare type BookCreationData = {
     title: string,
     year: string,
     isbn: string,
@@ -60,4 +75,6 @@ declare type CreationData = {
     rating: string
     image: Express.Multer.File | undefined
 }
+
+
 

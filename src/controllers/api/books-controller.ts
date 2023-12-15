@@ -1,9 +1,7 @@
 import {Request, Response} from 'express';
 import {increaseBookClicks} from '../../repositories/books-repository.js';
 import {shortBooksData, fullBookData} from '../../dto/books-dto.js';
-import {getRequestData} from "./request-validator.js";
-
-
+import {getRequestData} from './request-validator.js';
 
 /**
  * Renders book-page
@@ -35,7 +33,7 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
 /**
  * Renders home books-page with books.
  * @param req HTTP Request
- * @param res HTML page wich contains all books.
+ * @param res HTML page which contains all books.
  */
 export const getBooks = async (req: Request, res: Response): Promise<void> => {
     const request: RequestData = await getRequestData(req.query);

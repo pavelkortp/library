@@ -1,16 +1,12 @@
 import {Request, Response} from 'express';
-import {BookModel} from '../../models/book-model.js';
 import {save, removeById} from '../../repositories/books-repository.js';
 import {adminBooksData} from '../../dto/books-dto.js';
-import {migrator} from "../../migrator/migrator.js";
-import {getBookFromRequest} from "./request-validator.js";
-
+import {getBookFromRequest} from './request-validator.js';
 
 /**
  * Default page number.
  */
 export const DEFAULT_PAGE: number = 1;
-
 
 /**
  * Returns page with books.
@@ -21,7 +17,7 @@ export const getBooksTable = async (req: Request, res: Response): Promise<void> 
     const page = parseInt(req.query.page as string) || DEFAULT_PAGE;
     const response = await adminBooksData(page);
     res.json(response);
-}
+};
 
 /**
  * Removes book from storage by id.
@@ -39,7 +35,7 @@ export const removeBook = async (req: Request, res: Response): Promise<void> => 
     } finally {
         res.json({success});
     }
-}
+};
 
 /**
  * Creates new book and saves it to db
@@ -49,9 +45,20 @@ export const removeBook = async (req: Request, res: Response): Promise<void> => 
 export const createBook = async (req: Request, res: Response): Promise<void> => {
     const book = await getBookFromRequest(req.body, req.file!);
     let success = await save(book);
-    console.log(success)
     res.json({success});
-}
+};
+
+
+/**
+ * NOT IMPLEMENTED YET
+ * @param req
+ * @param res
+ */
+export const searchImage = async (req: Request, res: Response): Promise<void> => {
+    const search = '';
+    const searchResponse = await (await fetch('')).json();
+    const items:{link:string}[] = (await searchResponse).items;
+};
 
 
 
