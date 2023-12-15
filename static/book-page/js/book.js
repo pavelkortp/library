@@ -30,20 +30,3 @@ $('.btnBookID').click(function () {
         })
     });
 });
-
-
-
-// $('.rating').click(function(){
-//     doAjaxQuery('PATCH', '/api/v1/books/' + pathname.substr(bookIdPosition) + '?rating=true', null, function (res) {
-//         swal({
-//             title: 'Чудово',
-//             text: "Вашу оцінку враховано",
-//             type: 'success',
-//             closeOnConfirm: false,
-//             animation: 'slide-from-top',
-//             icon: "success",
-//             confirmButtonColor: '#27AE60',
-//             showLoaderOnConfirm: true
-//         })
-//     });
-// })

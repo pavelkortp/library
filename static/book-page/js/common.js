@@ -116,11 +116,18 @@ var view = {
         $('#main').after('<div id="test-modal" class="mfp-hide white-popup-block"><h1>' + title + '</h1><p>' + text + '</p><p><a class="popup-modal-dismiss" href="#">X</a></p></div>');
     },
     showError: function (text) {
-        swal('Ооопс!', text, 'error');
+        swal({
+            title: 'Ооопс!',
+            text: text,
+            type: 'error',
+
+        },function (){
+            window.location.href = 'http://localhost:3000';
+        });
     },
     showSuccess: function (text) {
         // console.log(text);
-        swal('Отлично!', text, 'success');
+        swal('Чудово!', text, 'success');
     },
     showSubscribe: function (text, bookId) {
         swal({
