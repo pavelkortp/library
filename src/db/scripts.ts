@@ -3,7 +3,6 @@ import {readFile, writeFile} from 'fs/promises';
 import {BookModel} from '../models/book-model.js';
 import {connection} from '../config/db-connection.js';
 
-
 /**
  * Establishes connection with the database.
  */
@@ -13,7 +12,7 @@ export const connect = async () => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 /**
  * Returns sql query from .sql
@@ -22,7 +21,7 @@ export const connect = async () => {
  */
 export const getSqlQuery = async (name: string, version: 'v1' | 'v2' = 'v1'): Promise<string> => {
     return await readFile(`src/sql/${version}/${name}.sql`, 'utf-8');
-}
+};
 
 /**
  * Converts table entry to BookModel
@@ -43,15 +42,14 @@ const toBookModel = (entry: RowDataPacket) => {
         entry.views,
         entry.clicks
     );
-
-}
+};
 
 /**
  * Creates tables books, authors ... if not exists
  */
 export const createTables = async (): Promise<void> => {
     await createTable(connection, 'src/sql/v1/create-books-table.sql');
-}
+};
 
 /**
  * Creates tables if not exist.
@@ -61,7 +59,7 @@ export const createTables = async (): Promise<void> => {
 const createTable = async (db: Connection, scryptPath: string): Promise<void> => {
     const q = await readFile(scryptPath, 'utf-8');
     await db.execute(q);
-}
+};
 
 /**
  * Returns all book's table entries.
@@ -84,7 +82,7 @@ export const getAllBooks = async (filter: Filter, search?: string, year?: number
         return rows.map(toBookModel).filter((e) => e.year == year);
     }
     return rows.map(toBookModel);
-}
+};
 
 /**
  * Creates new entry in book's table.
@@ -114,7 +112,7 @@ export const createBook = async (book: BookModel): Promise<boolean> => {
         return false;
     }
     return false;
-}
+};
 
 /**
  * Searches and returns book from 'books' table or undefined.
@@ -130,7 +128,7 @@ export const getBookById = async (id: number): Promise<BookModel | null> => {
         return toBookModel(row[0]);
     }
     return null;
-}
+};
 
 /**
  * Updates book's statistics values (clicks or views)
@@ -145,8 +143,7 @@ export const updateBookData = async (id: number, option: 'views' | 'clicks' = 'v
     } catch (err) {
         return false;
     }
-
-}
+};
 
 /**
  * Removes book entry in books.
@@ -160,8 +157,7 @@ export const removeBookById = async (id: number): Promise<boolean> => {
     } catch (err) {
         return false;
     }
-
-}
+};
 
 /**
  * Returns all books id which marks as deleted.
@@ -170,7 +166,7 @@ export const getDeletedId = async (): Promise<number[]> => {
     const getAllId: string = await getSqlQuery('get-deleted-id');
     const [rows] = await connection.query<RowDataPacket[]>(getAllId);
     return rows.map((e) => e.id);
-}
+};
 
 ///////////v2
 
@@ -181,22 +177,32 @@ export const getDeletedId = async (): Promise<number[]> => {
  * @param authorId books from a particular author.
  * @param year books of a certain year.
  */
-export const getAllEntries = async (filter: Filter, search?: string, authorId?: number, year?: number): Promise<BookModel[]> => {
+export const getAllEntries = async (filter: Filter, search?: string, authorId?: number, year?: number):
+    Promise<BookModel[]> => {
     let sql;
     let rows;
-    if (search) {
-        sql = await getSqlQuery(`search-${filter}-entries`, 'v2');
-        [rows] = await connection.query<RowDataPacket[]>(sql, [`%${search}%`]);
-    } else {
-        sql = await getSqlQuery(`get-${filter}-entries`, 'v2');
-        [rows] = await connection.query<RowDataPacket[]>(sql);
+    let values = [];
+
+    if (authorId) {
+        values.push(authorId.toString());
     }
+
+    if (search) {
+        sql = await getSqlQuery(`search-${filter}-entries${authorId ? '-by-author' : ''}`, 'v2');
+        values.push(`%${search}%`);
+    } else {
+        sql = await getSqlQuery(`get-${filter}-entries${authorId ? '-by-author' : ''}`, 'v2');
+    }
+
+    [rows] = await connection.query<RowDataPacket[]>(sql, values);
+
     if (year) {
         return rows.map(toBookModel).filter((e) => e.year == year);
     }
-    return rows.map(toBookModel);
 
-}
+    return rows.map(toBookModel);
+};
+
 
 /**
  * Searches book by id and return it or null if book not found.
@@ -209,7 +215,7 @@ export const findEntry = async (id: number): Promise<BookModel | null> => {
         return toBookModel(row[0]);
     }
     return null;
-}
+};
 
 /**
  * Creates new entry in books_authors table.
@@ -233,7 +239,7 @@ export const createEntry = async (book: BookModel): Promise<boolean> => {
     await writeFile(`static/img/books/${bookId}.jpg`, book.image!.buffer);
 
     return true;
-}
+};
 
 /**
  * Creates new book in books table and return id. <br>
@@ -262,7 +268,7 @@ const createBook2 = async (book: BookModel): Promise<number> => {
         return 0;
     }
     return 0;
-}
+};
 
 /**
  * Creates new author in author's table. <br>
@@ -282,7 +288,7 @@ const createAuthor = async (name: string): Promise<number> => {
         return await getAuthorByName(name);
     }
     return id;
-}
+};
 
 /**
  * Searches and returns author id from 'authors' or 0.
@@ -295,6 +301,6 @@ const getAuthorByName = async (name: string): Promise<number> => {
         return res[0].id;
     }
     return 0;
-}
+};
 
 
