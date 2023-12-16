@@ -8,8 +8,8 @@
         "build": "rd /s /q dist && tsc",
         "start": "node dist/app.js",
         "bs": "npm run build && npm run start",
-        "migrate_up": "node dist/migrator/up.js",
-        "migrate_down": "node dist/migrator/down.js"
+        "migrate_up": "npm run build && node dist/migrator/up.js",
+        "migrate_down": "npm run build && node dist/migrator/down.js"
     },
     "keywords": [],
     "author": "",
