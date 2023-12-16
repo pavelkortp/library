@@ -203,7 +203,6 @@ export const getAllEntries = async (filter: Filter, search?: string, authorId?: 
     return rows.map(toBookModel);
 };
 
-
 /**
  * Searches book by id and return it or null if book not found.
  * @param id unique number.

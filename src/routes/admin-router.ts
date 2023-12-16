@@ -1,7 +1,8 @@
 import express from 'express';
-import {getBooksTable, createBook, removeBook, searchImage} from '../controllers/api/admin-controller.js';
 import multer from 'multer';
-import {validate_book_id, validate_creation_data, validate_page} from "../controllers/api/request-validator.js";
+
+import {getBooksTable, createBook, removeBook, searchImage} from '../controllers/api/admin-controller.js';
+import {validate_book_id, validate_creation_data, validate_page} from '../controllers/api/request-validator.js';
 
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});

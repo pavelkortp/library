@@ -1,6 +1,6 @@
-import {BookModel} from "../models/book-model.js";
-import {findById, getAll} from "../repositories/books-repository.js";
-import {escapeHtml} from "../controllers/api/request-validator.js";
+import {BookModel} from '../models/book-model.js';
+import {findById, getAll} from '../repositories/books-repository.js';
+import {escapeHtml} from '../controllers/api/request-validator.js';
 
 /**
  * Count of books per one page on admin panel.
@@ -18,6 +18,11 @@ class BookDTO {
     ) {
     };
 
+    /**
+     * Creates BookDTO from BookModel
+     * @param book default book.
+     * @return new BookDTO.
+     */
     static toBookDTO(book: BookModel): BookDTO {
         return new BookDTO(book.id, book.title, book.authors)
     };
@@ -40,6 +45,11 @@ class FullBookDTO extends BookDTO {
         super(id, title, author);
     }
 
+    /**
+     * Creates FullBookDTO from BookModel
+     * @param book default book.
+     * @return new FullBookDTO.
+     */
     static toFullBookDTO(book: BookModel): FullBookDTO {
         return new FullBookDTO(
             book.id,
@@ -72,7 +82,7 @@ class AdminBookDTO extends BookDTO {
     /**
      * Creates AdminBookDTO from BookModel
      * @param book default book.
-     * @return new
+     * @return new AdminBookDTO
      */
     static toAdminBookDTO(book: BookModel): AdminBookDTO {
         return new AdminBookDTO(

@@ -6,5 +6,5 @@ export const booksRouter = express.Router();
 
 booksRouter.get('', getBooks);
 booksRouter.get('/:book_id', validate_book_id, getBook);
-booksRouter.patch('/:book_id', increaseClicks);
+booksRouter.patch('/:book_id',validate_book_id, increaseClicks);
 

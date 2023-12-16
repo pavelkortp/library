@@ -55,6 +55,9 @@ export class BookModel {
         return this._language;
     }
 
+    /**
+     * Book's authors.
+     */
     get authors(): string[] {
         return this._authors;
     }
@@ -94,7 +97,9 @@ export class BookModel {
         return this._views;
     }
 
-
+    /**
+     * Returns unique International Standard Book Number.
+     */
     get isbn(): string {
         return this._isbn;
     }

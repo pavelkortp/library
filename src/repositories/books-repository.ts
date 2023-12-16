@@ -9,11 +9,11 @@ import {
     removeBookById,
     updateBookData
 } from '../db/scripts.js';
-import {migrator} from "../migrator/migrator.js";
+import {migrator} from '../migrator/migrator.js';
 
 
 /**
- * Satored book in db.
+ * Stored book in db.
  * @param book new book.
  */
 export const save = async (book: BookModel): Promise<boolean> => {
@@ -27,7 +27,8 @@ export const save = async (book: BookModel): Promise<boolean> => {
  * Returns all books from store.
  * @returns array of books.
  */
-export const getAll = async (filter: Filter = 'all', search?: string, authorId?: number, year?: number): Promise<BookModel[]> => {
+export const getAll = async (filter: Filter = 'all', search?: string, authorId?: number, year?: number):
+    Promise<BookModel[]> => {
     if (migrator.version == 'v1') {
         return await getAllBooks(filter, search, year);
     }

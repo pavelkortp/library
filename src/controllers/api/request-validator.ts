@@ -74,22 +74,48 @@ export const validate_creation_data = async (req: Request, res: Response, next: 
     if (!newBook.image) {
         res.status(404).json({success: false, msg: 'Помилка при обробленні картинки'});
     } else if (
-        !newBook.title?.trim() || newBook.title.length >= MAX_COLUMN_LENGTH || newBook.title.match(FORBIDDEN_SYMBOLS) ||
-        !parseInt(newBook.year) || parseInt(newBook.year) <= 0 ||
-        !newBook.isbn?.trim() || newBook.isbn.length >= MAX_COLUMN_LENGTH || newBook.isbn.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.language?.trim() || newBook.language.length >= MAX_COLUMN_LENGTH || newBook.language.match(FORBIDDEN_SYMBOLS) ||
-        !parseInt(newBook.pages) || parseInt(newBook.pages) <= 0 ||
-        !newBook.author1?.trim() || newBook.author1.length >= MAX_COLUMN_LENGTH || newBook.author1.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.author2?.trim() || newBook.author2.length >= MAX_COLUMN_LENGTH || newBook.author2.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.author3?.trim() || newBook.author3.length >= MAX_COLUMN_LENGTH || newBook.author3.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.description?.trim() || newBook.description.length >= MAX_DESCRIPTION_LENGTH || newBook.description.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.rating?.trim() || parseInt(newBook.rating) <= 0
+        isNotValidString(newBook.title) ||
+        isNotValidString(newBook.language) ||
+        isNotValidString(newBook.isbn) ||
+        isNotValidString(newBook.author1) ||
+        isNotValidString(newBook.author2) ||
+        isNotValidString(newBook.author3) ||
+        isNotValidString(newBook.description, MAX_DESCRIPTION_LENGTH) ||
+        isNotValidNumber(newBook.year) ||
+        isNotValidNumber(newBook.pages) ||
+        isNotValidNumber(newBook.rating)
     ) {
         res.status(400).json({success: false, msg: 'Введені некоректні дані'});
     } else {
         await next();
     }
 };
+
+/**
+ * Checks if string param is not valid
+ * @param input string param from request
+ * @param length max length of string param.
+ */
+const isNotValidString = (input: string, length: number = MAX_COLUMN_LENGTH): boolean => {
+    return !input?.trim() || input.length >= length || !!input.match(FORBIDDEN_SYMBOLS);
+};
+
+/**
+ * Checks if string param is not valid number
+ * @param input string param which must be number from request
+ */
+const isNotValidNumber = (input: string): boolean => {
+    return !parseInt(input) || parseInt(input) <= 0;
+};
+
+/**
+ * Checks if current sting is Filter.
+ * @param input any string.
+ */
+export const isFilter = (input: string): input is Filter => {
+    return ['all', 'new', 'popular'].includes(input);
+};
+
 
 /**
  * Replaces html characters with their safe counterparts.
@@ -106,14 +132,6 @@ export const escapeHtml = (input: string): string => {
             "'": '&#39;'
         }[match] || '';
     });
-};
-
-/**
- * Checks if current sting is Filter.
- * @param s any string.
- */
-export const isFilter = (s: string): s is Filter => {
-    return ['all', 'new', 'popular'].includes(s);
 };
 
 /**

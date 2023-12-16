@@ -29,7 +29,6 @@ export const increaseClicks = async (req: Request, res: Response): Promise<void>
     }
 }
 
-
 /**
  * Renders home books-page with books.
  * @param req HTTP Request

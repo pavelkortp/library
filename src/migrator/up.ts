@@ -1,4 +1,4 @@
-import {migrator} from "./migrator.js";
+import {migrator} from './migrator.js';
 
 await migrator.up();
 

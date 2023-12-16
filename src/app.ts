@@ -6,7 +6,7 @@ import {adminRouter} from './routes/admin-router.js';
 import {mainRouter} from './routes/pages-router.js';
 
 import {connect, createTables} from './db/scripts.js';
-import {backup, softRemove} from "./cron.js";
+import {backup, softRemove} from './cron.js';
 
 export const app: Express = express();
 const PORT = 3000;

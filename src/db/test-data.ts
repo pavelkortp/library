@@ -1,16 +1,12 @@
 import { readFile } from 'fs/promises';
-import { createBook } from './scripts.js';
-import { BookModel } from '../models/book-model.js';
+import {migrator} from '../migrator/migrator.js';
+import {connection} from "../config/db-connection.js";
 
 export const fillBooksTable = async () => {
-    const books: BookModel[] = JSON.parse(await readFile('./test-books.json', 'utf-8'));
-
-    books.forEach(async (e) => {
-        try {
-            createBook(e);
-        } catch (err) {
-            console.log(`${e} data already exists`);
-        }
-    });
-
+    const sql = await readFile(`src/sql/backup/test-data-${migrator.version}.sql`,'utf-8');
+    try {
+        await connection.execute(sql);
+    }catch (err){
+        console.log('Test data already exists');
+    }
 }
