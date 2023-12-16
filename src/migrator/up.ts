@@ -1,3 +1,4 @@
 import {migrator} from "./migrator.js";
 
-await migrator.up()
+await migrator.up();
+

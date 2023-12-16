@@ -1,5 +1,8 @@
+import {RowDataPacket} from 'mysql2/promise';
 import {readFile, writeFile} from 'fs/promises';
-import {connection} from "../config/db-connection.js";
+import {connection} from '../config/db-connection.js';
+
+
 
 /**
  * Current db version:<br>
@@ -45,9 +48,23 @@ const createAuthorsTable = async (): Promise<void> => {
     await connection.execute(sql);
 };
 
+const getAuthorsColumn = async (): Promise<string[]> => {
+    const sql: string = await readFile(`src/sql/migrations/up/get-authors.sql`, 'utf-8');
+    const [rows] = await connection.query<RowDataPacket[]>(sql);
+    return rows.map((e) => e.author + '');
+}
+
 const fillAuthorsTable = async (): Promise<void> => {
     const sql: string = await readFile(`src/sql/migrations/up/fill-authors-table.sql`, 'utf-8');
-    await connection.execute(sql);
+
+    const authors = await getAuthorsColumn();
+    const a: string[][] = authors.map((e) => e.split(',').map((name) => name.trim()));
+
+    const names = new Set<string>(([] as string[]).concat(...a));
+
+    for (const name of names) {
+        await connection.query<RowDataPacket[]>(sql, [name]);
+    }
 };
 
 const createBooksAuthorsTable = async (): Promise<void> => {
@@ -56,8 +73,27 @@ const createBooksAuthorsTable = async (): Promise<void> => {
 };
 
 const fillBooksAuthorsTable = async (): Promise<void> => {
-    const sql: string = await readFile(`src/sql/migrations/up/fill-books_authors-table.sql`, 'utf-8');
-    await connection.execute(sql);
+    const insertValues: string = await readFile(`src/sql/migrations/up/fill-books_authors-table.sql`, 'utf-8');
+
+    const getBooks: string = await readFile(`src/sql/migrations/up/get-books.sql`, 'utf-8');
+    const [books] = await connection.query<RowDataPacket[]>(getBooks);
+
+    const getAuthors: string = await readFile(`src/sql/migrations/up/get-authors-table.sql`, 'utf-8');
+    const [authors] = await connection.query<RowDataPacket[]>(getAuthors);
+
+    for (const book of books) {
+        const bookAuthors: string[] = book.author.split(',');
+        const bookId: number = book.id;
+        const authorsIds: number[] = bookAuthors
+            .map((name) => authors
+                .find((entry) => {
+                    return entry.name.trim() == name.trim()
+                })!.id);
+
+        for (const authorId of authorsIds) {
+            await connection.execute(insertValues, [bookId, authorId]);
+        }
+    }
 };
 
 const removeAuthorColumnFromBooks = async (): Promise<void> => {
@@ -89,6 +125,8 @@ export const migrator = {
     up: async function () {
         if (this.version == 'v1') {
             await migrateUp();
+            console.log('The migration was successful');
+            this.version = 'v2';
         } else {
             console.log('version v2 already exists')
         }
@@ -96,6 +134,8 @@ export const migrator = {
     down: async function () {
         if (this.version == 'v2') {
             await migrateDown();
+            console.log('The migration was successful');
+            this.version = 'v1';
         } else {
             console.log('version v1 already exists')
         }

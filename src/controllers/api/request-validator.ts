@@ -140,7 +140,7 @@ export const getBookFromRequest = async (book: BookCreationData, image: Express.
     return new BookModel(
         book.title,
         parseInt(book.year),
-        migrator.version == 'v2' ? [book.author1, book.author2, book.author3] : [book.author1],
+        migrator.version == 'v2' ? [book.author1.trim(), book.author2.trim(), book.author3.trim()] : [book.author1.trim()],
         book.language,
         book.description,
         parseInt(book.pages),
