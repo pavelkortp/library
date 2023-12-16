@@ -21,12 +21,12 @@ CREATE TABLE IF NOT EXISTS `books` (
   `views` int NOT NULL DEFAULT '0',
   `clicks` int NOT NULL DEFAULT '0',
   `creation_date` datetime NOT NULL,
-  `author` varchar(100) DEFAULT NULL,
   `deleted` datetime DEFAULT NULL,
   `isbn` varchar(100) DEFAULT NULL,
+  `author` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE = InnoDB AUTO_INCREMENT = 54 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 72 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: books
@@ -44,9 +44,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -60,9 +60,9 @@ VALUES
     11,
     0,
     '2023-12-02 19:39:06',
-    '[\"321\",\"312\"]',
     NULL,
-    NULL
+    NULL,
+    'Дмитро Левицький'
   );
 INSERT INTO
   `books` (
@@ -76,9 +76,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -92,9 +92,9 @@ VALUES
     8,
     0,
     '2023-12-02 19:39:06',
-    '[\"Другий Автор\",\"\"]',
     NULL,
-    NULL
+    NULL,
+    'Кочегар Нечипоренко'
   );
 INSERT INTO
   `books` (
@@ -108,9 +108,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -124,9 +124,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -140,9 +140,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -156,9 +156,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -172,9 +172,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -188,9 +188,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -204,9 +204,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -220,9 +220,9 @@ VALUES
     32,
     1,
     '2023-12-02 19:39:06',
-    'Павло Журбицький ',
     NULL,
-    NULL
+    NULL,
+    'Павло Журбицький '
   );
 INSERT INTO
   `books` (
@@ -236,9 +236,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -252,9 +252,9 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -268,9 +268,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -284,9 +284,9 @@ VALUES
     19,
     1,
     '2023-12-02 19:39:06',
-    'АВТОР ',
     NULL,
-    NULL
+    NULL,
+    'Марк Цукербергер'
   );
 INSERT INTO
   `books` (
@@ -300,9 +300,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -316,9 +316,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -332,9 +332,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -348,9 +348,9 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'АААААААА ',
     NULL,
-    NULL
+    NULL,
+    'Адольф Бауман'
   );
 INSERT INTO
   `books` (
@@ -364,9 +364,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -380,9 +380,9 @@ VALUES
     3,
     1,
     '2023-12-02 19:39:06',
-    'АВТОР ',
     NULL,
-    NULL
+    NULL,
+    'Марк Цукербергер'
   );
 INSERT INTO
   `books` (
@@ -396,9 +396,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -412,9 +412,9 @@ VALUES
     2,
     1,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -428,9 +428,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -444,9 +444,9 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
-    NULL
+    NULL,
+    'Білл Воротарський'
   );
 INSERT INTO
   `books` (
@@ -460,9 +460,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -476,9 +476,9 @@ VALUES
     8,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -492,9 +492,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -508,9 +508,9 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -524,9 +524,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -540,9 +540,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
-    NULL
+    NULL,
+    'Білл Воротарський'
   );
 INSERT INTO
   `books` (
@@ -556,9 +556,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -572,9 +572,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
-    NULL
+    NULL,
+    'Білл Воротарський'
   );
 INSERT INTO
   `books` (
@@ -588,9 +588,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -604,9 +604,9 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -620,9 +620,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -636,9 +636,9 @@ VALUES
     11,
     0,
     '2023-12-02 19:39:06',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -652,9 +652,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -668,9 +668,9 @@ VALUES
     5,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
-    NULL
+    NULL,
+    'Білл Воротарський'
   );
 INSERT INTO
   `books` (
@@ -684,9 +684,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -700,9 +700,9 @@ VALUES
     5,
     1,
     '2023-12-03 00:45:16',
-    'Другий Автор ',
     NULL,
-    NULL
+    NULL,
+    'Білл Воротарський'
   );
 INSERT INTO
   `books` (
@@ -716,9 +716,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -732,9 +732,9 @@ VALUES
     3,
     0,
     '2023-12-03 17:42:20',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -748,9 +748,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -764,9 +764,9 @@ VALUES
     1,
     0,
     '2023-12-03 17:42:31',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -780,9 +780,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -796,9 +796,9 @@ VALUES
     3,
     0,
     '2023-12-03 17:42:40',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -812,9 +812,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -828,9 +828,9 @@ VALUES
     1,
     0,
     '2023-12-03 17:42:47',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -844,9 +844,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -860,9 +860,9 @@ VALUES
     0,
     0,
     '2023-12-03 17:43:01',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -876,9 +876,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -889,12 +889,12 @@ VALUES
     'english',
     412,
     2,
-    3,
+    4,
     2,
     '2023-12-03 17:44:03',
-    'Третій Автор Другий Автор',
     NULL,
-    NULL
+    NULL,
+    'Володимир Зеленчук'
   );
 INSERT INTO
   `books` (
@@ -908,9 +908,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -924,9 +924,9 @@ VALUES
     2,
     0,
     '2023-12-03 17:44:11',
-    'Третій Автор Другий Автор',
     NULL,
-    NULL
+    NULL,
+    'Володимир Зеленчук'
   );
 INSERT INTO
   `books` (
@@ -940,9 +940,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -956,9 +956,9 @@ VALUES
     6,
     0,
     '2023-12-03 17:44:26',
-    'Третій Автор Другий Автор',
     NULL,
-    NULL
+    NULL,
+    'Володимир Зеленчук'
   );
 INSERT INTO
   `books` (
@@ -972,9 +972,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -988,9 +988,9 @@ VALUES
     0,
     0,
     '2023-12-03 17:46:30',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -1004,9 +1004,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1020,9 +1020,9 @@ VALUES
     2,
     1,
     '2023-12-03 17:46:39',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -1036,9 +1036,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1052,9 +1052,9 @@ VALUES
     0,
     0,
     '2023-12-03 17:46:53',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -1068,9 +1068,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1081,12 +1081,12 @@ VALUES
     'english',
     324,
     2,
-    12,
+    13,
     3,
     '2023-12-03 17:48:26',
-    'Третій Автор ',
     NULL,
-    NULL
+    NULL,
+    'Дарт Вейдер'
   );
 INSERT INTO
   `books` (
@@ -1100,9 +1100,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1116,9 +1116,9 @@ VALUES
     0,
     0,
     '2023-12-03 20:04:56',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1132,9 +1132,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1148,9 +1148,9 @@ VALUES
     0,
     0,
     '2023-12-03 20:05:13',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1164,9 +1164,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1180,9 +1180,9 @@ VALUES
     0,
     0,
     '2023-12-03 20:05:17',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1196,9 +1196,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1212,9 +1212,9 @@ VALUES
     5,
     2,
     '2023-12-03 20:05:19',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1228,9 +1228,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1244,9 +1244,9 @@ VALUES
     24,
     0,
     '2023-12-03 20:05:22',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1260,9 +1260,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1273,12 +1273,12 @@ VALUES
     'українська',
     324,
     2,
-    4,
+    5,
     1,
     '2023-12-03 20:05:25',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1292,9 +1292,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1308,9 +1308,9 @@ VALUES
     0,
     0,
     '2023-12-03 20:05:29',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
   );
 INSERT INTO
   `books` (
@@ -1324,9 +1324,9 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
-    `isbn`
+    `isbn`,
+    `author`
   )
 VALUES
   (
@@ -1340,9 +1340,137 @@ VALUES
     2,
     1,
     '2023-12-03 20:05:37',
-    'Перший автор ',
     NULL,
-    NULL
+    NULL,
+    'Федірко Крижанівськй'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`,
+    `author`
+  )
+VALUES
+  (
+    66,
+    'АВТОРСЬКА',
+    '[book.author1, book.author2, book.author3]',
+    231,
+    'українська',
+    324,
+    4,
+    0,
+    0,
+    '2023-12-10 17:44:08',
+    NULL,
+    '0',
+    'Боб Молодший'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`,
+    `author`
+  )
+VALUES
+  (
+    67,
+    'АВТОР23',
+    '[book.author1, book.author2, book.author3]',
+    231,
+    'українська',
+    324,
+    4,
+    0,
+    0,
+    '2023-12-10 17:45:12',
+    NULL,
+    '0',
+    'Дуейн Скаленко'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`,
+    `author`
+  )
+VALUES
+  (
+    68,
+    'АВТОР №№№',
+    'Перший авторПерший авторПерший авторПерший авторПерший авторПерший автор',
+    3214,
+    'українська',
+    234,
+    4,
+    0,
+    0,
+    '2023-12-10 17:45:50',
+    NULL,
+    '0',
+    'Іван Франківський'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`,
+    `author`
+  )
+VALUES
+  (
+    69,
+    'АВТОР2324',
+    'Перший авторПерший авторПерший авторПерший авторПерший авторПерший автор',
+    3214,
+    'українська',
+    234,
+    4,
+    0,
+    0,
+    '2023-12-10 17:46:10',
+    NULL,
+    '0',
+    'Кочегар Нечипоренко'
   );
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

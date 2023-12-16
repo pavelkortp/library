@@ -7,6 +7,17 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 # ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: authors
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `authors` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+# ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: books
 # ------------------------------------------------------------
 
@@ -21,12 +32,81 @@ CREATE TABLE IF NOT EXISTS `books` (
   `views` int NOT NULL DEFAULT '0',
   `clicks` int NOT NULL DEFAULT '0',
   `creation_date` datetime NOT NULL,
-  `author` varchar(100) DEFAULT NULL,
   `deleted` datetime DEFAULT NULL,
   `isbn` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE = InnoDB AUTO_INCREMENT = 54 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+# ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: books_authors
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `books_authors` (
+  `book_id` int NOT NULL,
+  `author_id` int NOT NULL,
+  PRIMARY KEY (`book_id`, `author_id`),
+  KEY `author_id` (`author_id`),
+  CONSTRAINT `books_authors_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`),
+  CONSTRAINT `books_authors_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: authors
+# ------------------------------------------------------------
+
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (7, 'Адольф Бауман');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (8, 'Білл Воротарський');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (10, 'Боб Молодший');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (9, 'Володимир Зеленчук');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (3, 'Дарт Вейдер');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (1, 'Дмитро Левицький');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (11, 'Дуейн Скаленко');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (12, 'Іван Франківський');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (2, 'Кочегар Нечипоренко');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (6, 'Марк Цукербергер');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (5, 'Павло Журбицький');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (13, 'Перший автор');
+INSERT INTO
+  `authors` (`id`, `name`)
+VALUES
+  (4, 'Федірко Крижанівськй');
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: books
@@ -44,7 +124,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -60,7 +139,6 @@ VALUES
     11,
     0,
     '2023-12-02 19:39:06',
-    '[\"321\",\"312\"]',
     NULL,
     NULL
   );
@@ -76,7 +154,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -92,7 +169,6 @@ VALUES
     8,
     0,
     '2023-12-02 19:39:06',
-    '[\"Другий Автор\",\"\"]',
     NULL,
     NULL
   );
@@ -108,7 +184,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -124,7 +199,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -140,7 +214,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -156,7 +229,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -172,7 +244,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -188,7 +259,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -204,7 +274,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -220,7 +289,6 @@ VALUES
     32,
     1,
     '2023-12-02 19:39:06',
-    'Павло Журбицький ',
     NULL,
     NULL
   );
@@ -236,7 +304,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -252,7 +319,6 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -268,7 +334,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -284,7 +349,6 @@ VALUES
     19,
     1,
     '2023-12-02 19:39:06',
-    'АВТОР ',
     NULL,
     NULL
   );
@@ -300,7 +364,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -316,7 +379,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -332,7 +394,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -348,7 +409,6 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'АААААААА ',
     NULL,
     NULL
   );
@@ -364,7 +424,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -380,7 +439,6 @@ VALUES
     3,
     1,
     '2023-12-02 19:39:06',
-    'АВТОР ',
     NULL,
     NULL
   );
@@ -396,7 +454,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -412,7 +469,6 @@ VALUES
     2,
     1,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -428,7 +484,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -444,7 +499,6 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
     NULL
   );
@@ -460,7 +514,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -476,7 +529,6 @@ VALUES
     8,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -492,7 +544,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -508,7 +559,6 @@ VALUES
     1,
     0,
     '2023-12-02 19:39:06',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -524,7 +574,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -540,7 +589,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
     NULL
   );
@@ -556,7 +604,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -572,7 +619,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
     NULL
   );
@@ -588,7 +634,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -604,7 +649,6 @@ VALUES
     0,
     0,
     '2023-12-02 19:39:06',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -620,7 +664,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -636,7 +679,6 @@ VALUES
     11,
     0,
     '2023-12-02 19:39:06',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -652,7 +694,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -668,7 +709,6 @@ VALUES
     5,
     0,
     '2023-12-02 19:39:06',
-    'Другий Автор ',
     NULL,
     NULL
   );
@@ -684,7 +724,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -700,7 +739,6 @@ VALUES
     5,
     1,
     '2023-12-03 00:45:16',
-    'Другий Автор ',
     NULL,
     NULL
   );
@@ -716,7 +754,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -732,7 +769,6 @@ VALUES
     3,
     0,
     '2023-12-03 17:42:20',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -748,7 +784,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -764,7 +799,6 @@ VALUES
     1,
     0,
     '2023-12-03 17:42:31',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -780,7 +814,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -796,7 +829,6 @@ VALUES
     3,
     0,
     '2023-12-03 17:42:40',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -812,7 +844,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -828,7 +859,6 @@ VALUES
     1,
     0,
     '2023-12-03 17:42:47',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -844,7 +874,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -860,7 +889,6 @@ VALUES
     0,
     0,
     '2023-12-03 17:43:01',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -876,7 +904,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -892,7 +919,6 @@ VALUES
     4,
     2,
     '2023-12-03 17:44:03',
-    'Третій Автор Другий Автор',
     NULL,
     NULL
   );
@@ -908,7 +934,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -924,7 +949,6 @@ VALUES
     2,
     0,
     '2023-12-03 17:44:11',
-    'Третій Автор Другий Автор',
     NULL,
     NULL
   );
@@ -940,7 +964,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -956,7 +979,6 @@ VALUES
     6,
     0,
     '2023-12-03 17:44:26',
-    'Третій Автор Другий Автор',
     NULL,
     NULL
   );
@@ -972,7 +994,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -988,7 +1009,6 @@ VALUES
     0,
     0,
     '2023-12-03 17:46:30',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -1004,7 +1024,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1020,7 +1039,6 @@ VALUES
     2,
     1,
     '2023-12-03 17:46:39',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -1036,7 +1054,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1052,7 +1069,6 @@ VALUES
     0,
     0,
     '2023-12-03 17:46:53',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -1068,7 +1084,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1081,10 +1096,9 @@ VALUES
     'english',
     324,
     2,
-    12,
+    13,
     3,
     '2023-12-03 17:48:26',
-    'Третій Автор ',
     NULL,
     NULL
   );
@@ -1100,7 +1114,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1116,7 +1129,6 @@ VALUES
     0,
     0,
     '2023-12-03 20:04:56',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1132,7 +1144,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1148,7 +1159,6 @@ VALUES
     0,
     0,
     '2023-12-03 20:05:13',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1164,7 +1174,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1180,7 +1189,6 @@ VALUES
     0,
     0,
     '2023-12-03 20:05:17',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1196,7 +1204,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1212,7 +1219,6 @@ VALUES
     5,
     2,
     '2023-12-03 20:05:19',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1228,7 +1234,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1244,7 +1249,6 @@ VALUES
     24,
     0,
     '2023-12-03 20:05:22',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1260,7 +1264,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1273,10 +1276,9 @@ VALUES
     'українська',
     324,
     2,
-    4,
+    5,
     1,
     '2023-12-03 20:05:25',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1292,7 +1294,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1308,7 +1309,6 @@ VALUES
     0,
     0,
     '2023-12-03 20:05:29',
-    'Перший автор ',
     NULL,
     NULL
   );
@@ -1324,7 +1324,6 @@ INSERT INTO
     `views`,
     `clicks`,
     `creation_date`,
-    `author`,
     `deleted`,
     `isbn`
   )
@@ -1340,10 +1339,348 @@ VALUES
     2,
     1,
     '2023-12-03 20:05:37',
-    'Перший автор ',
     NULL,
     NULL
   );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`
+  )
+VALUES
+  (
+    66,
+    'АВТОРСЬКА',
+    '[book.author1, book.author2, book.author3]',
+    231,
+    'українська',
+    324,
+    4,
+    0,
+    0,
+    '2023-12-10 17:44:08',
+    NULL,
+    '0'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`
+  )
+VALUES
+  (
+    67,
+    'АВТОР23',
+    '[book.author1, book.author2, book.author3]',
+    231,
+    'українська',
+    324,
+    4,
+    0,
+    0,
+    '2023-12-10 17:45:12',
+    NULL,
+    '0'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`
+  )
+VALUES
+  (
+    68,
+    'АВТОР №№№',
+    'Перший авторПерший авторПерший авторПерший авторПерший авторПерший автор',
+    3214,
+    'українська',
+    234,
+    4,
+    0,
+    0,
+    '2023-12-10 17:45:50',
+    NULL,
+    '0'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`
+  )
+VALUES
+  (
+    69,
+    'АВТОР2324',
+    'Перший авторПерший авторПерший авторПерший авторПерший авторПерший автор',
+    3214,
+    'українська',
+    234,
+    4,
+    0,
+    0,
+    '2023-12-10 17:46:10',
+    NULL,
+    '0'
+  );
+INSERT INTO
+  `books` (
+    `id`,
+    `title`,
+    `description`,
+    `year`,
+    `language`,
+    `pages`,
+    `rating`,
+    `views`,
+    `clicks`,
+    `creation_date`,
+    `deleted`,
+    `isbn`
+  )
+VALUES
+  (
+    74,
+    'Ggsf',
+    'Перший авторПерший авторПерший авторПерший авторПерший авторПерший авторПерший авторПерший автор',
+    2022,
+    'українська',
+    214,
+    5,
+    1,
+    0,
+    '2023-12-16 02:58:01',
+    NULL,
+    '32134241'
+  );
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: books_authors
+# ------------------------------------------------------------
+
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (1, 1);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (2, 2);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (69, 2);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (3, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (15, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (19, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (30, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (31, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (32, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (33, 3);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (4, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (5, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (7, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (9, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (12, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (14, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (18, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (22, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (23, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (24, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (25, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (26, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (34, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (35, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (36, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (37, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (38, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (39, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (41, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (42, 4);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (6, 5);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (8, 6);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (11, 6);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (10, 7);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (13, 8);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (16, 8);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (17, 8);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (20, 8);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (21, 8);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (27, 9);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (28, 9);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (29, 9);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (66, 10);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (67, 11);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (68, 12);
+INSERT INTO
+  `books_authors` (`book_id`, `author_id`)
+VALUES
+  (74, 13);
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
