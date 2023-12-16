@@ -23,7 +23,7 @@ const FORBIDDEN_SYMBOLS = /[;<>/^*&()$=]/;
 const DEFAULT_FILTER: Filter = 'new';
 
 /**
- * Default offset.
+ * Default page offset.
  */
 const DEFAULT_OFFSET = 0;
 
@@ -74,16 +74,16 @@ export const validate_creation_data = async (req: Request, res: Response, next: 
     if (!newBook.image) {
         res.status(404).json({success: false, msg: 'Помилка при обробленні картинки'});
     } else if (
-        !newBook.title || newBook.title.length >= MAX_COLUMN_LENGTH || newBook.title.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.title?.trim() || newBook.title.length >= MAX_COLUMN_LENGTH || newBook.title.match(FORBIDDEN_SYMBOLS) ||
         !parseInt(newBook.year) || parseInt(newBook.year) <= 0 ||
-        !newBook.isbn || newBook.isbn.length >= MAX_COLUMN_LENGTH || newBook.isbn.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.language || newBook.language.length >= MAX_COLUMN_LENGTH || newBook.language.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.isbn?.trim() || newBook.isbn.length >= MAX_COLUMN_LENGTH || newBook.isbn.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.language?.trim() || newBook.language.length >= MAX_COLUMN_LENGTH || newBook.language.match(FORBIDDEN_SYMBOLS) ||
         !parseInt(newBook.pages) || parseInt(newBook.pages) <= 0 ||
-        !newBook.author1 || newBook.author1.length >= MAX_COLUMN_LENGTH || newBook.author1.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.author2 || newBook.author2.length >= MAX_COLUMN_LENGTH || newBook.author2.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.author3 || newBook.author3.length >= MAX_COLUMN_LENGTH || newBook.author3.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.description || newBook.description.length >= MAX_DESCRIPTION_LENGTH || newBook.description.match(FORBIDDEN_SYMBOLS) ||
-        !newBook.rating || parseInt(newBook.rating) <= 0
+        !newBook.author1?.trim() || newBook.author1.length >= MAX_COLUMN_LENGTH || newBook.author1.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.author2?.trim() || newBook.author2.length >= MAX_COLUMN_LENGTH || newBook.author2.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.author3?.trim() || newBook.author3.length >= MAX_COLUMN_LENGTH || newBook.author3.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.description?.trim() || newBook.description.length >= MAX_DESCRIPTION_LENGTH || newBook.description.match(FORBIDDEN_SYMBOLS) ||
+        !newBook.rating?.trim() || parseInt(newBook.rating) <= 0
     ) {
         res.status(400).json({success: false, msg: 'Введені некоректні дані'});
     } else {
@@ -137,10 +137,11 @@ export const getRequestData = async (data: NotValidRequestData): Promise<Request
  * @param image book image.
  */
 export const getBookFromRequest = async (book: BookCreationData, image: Express.Multer.File) => {
+    const authors = [book.author1.trim(), book.author2.trim(), book.author3.trim()]
     return new BookModel(
         book.title,
         parseInt(book.year),
-        migrator.version == 'v2' ? [book.author1.trim(), book.author2.trim(), book.author3.trim()] : [book.author1.trim()],
+        migrator.version == 'v2' ? authors : [authors.join()],
         book.language,
         book.description,
         parseInt(book.pages),
