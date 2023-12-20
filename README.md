@@ -42,7 +42,11 @@ also can take a query params
 take a querry param **increase_clicks=true**
 
 ## **Admin api routes**
-**GET localhost:3000/admin/api/v1/books** - by default returns a list of books
-**DELETE localhost:3000/admin/api/v1/books/id** - gently deletes the book (the book is 
+1) **GET localhost:3000/admin/api/v1/books** - by default returns a list of books,
+2) **DELETE localhost:3000/admin/api/v1/books/id** - gently deletes the book (the book is 
 marked in the database as completed and remains on the site for some time until CRON 
 is triggered, more information about this can be found in cron.ts)
+3) **POST localhost:3000/admin/api/v1/books** - creates new book
+
+## **FRONT**
+All frontend(js and css) stored in **static** folder, ejs templates in **views**
