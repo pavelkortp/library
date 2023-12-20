@@ -22,11 +22,11 @@ By default app works on port 3000
 You can change it in app.ts
 
 ## **front routes**:
-localhost:3000/ - main page with books
-localhost:3000/books/id - personal book page
-localhost:3000/search - result search page 
-localhost:3000/admin - admin panel
-localhost:3000/img/books/id - personal book image
+* **localhost:3000/** - main page with books
+* **localhost:3000/books/id** - personal book page
+* **localhost:3000/search** - result search page 
+* **localhost:3000/admin** - admin panel
+* **localhost:3000/img/books/id** - personal book image
 
 ## **api routes**
 **GET localhost:3000/api/v1/books** - by default returns a list of books,
