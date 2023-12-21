@@ -15,7 +15,7 @@ And use npm **migrate_up** asfter if you need second version
 2. Go to the project folder: `cd library`
 3. Set up dependencies: `npm install`
 4. Input your db login, pass and db name in db-config.ts
-5. Start the project: `npm bs`
+5. Start the project: `npm run bs`
 
 ## How to use
 By default app works on port 3000
